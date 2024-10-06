@@ -1,5 +1,5 @@
 <?php
-class community {
+class Community {
     private $id;
     private $name;
     private $enrollkey;
