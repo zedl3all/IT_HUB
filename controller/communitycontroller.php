@@ -1,5 +1,5 @@
 <?php
-class communitycontroller {
+class CommunityController {
 
     public function create_commu($name,$enrollkey,$ta_id,$tag){
 
