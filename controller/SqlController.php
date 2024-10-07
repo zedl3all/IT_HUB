@@ -1,5 +1,7 @@
 <?php
 require_once '../model/User.php';
+require_once '../model/Answer.php';
+
 
 class SqlController {
     private $dsn = "mysql:host=localhost;dbname=test";
@@ -89,20 +91,19 @@ class SqlController {
 
     public function insert_answer(Answer $answer): bool {
         try {
-            $stmt = $this->obj->prepare("INSERT INTO answer (ans_anonymous, ans_reply, ans_create_date, q_id, u_id)VALUES (:anonymous, :reply, NOW(), :q_id, :u_id)
-            ");
- 
-            $stmt->bindParam(':anonymous', $answer->getAnonymousMode()); 
-            $stmt->bindParam(':reply', $answer->getReply());             
-            $stmt->bindParam(':q_id', $answer->getQuestionID());         
-            $stmt->bindParam(':u_id', $answer->getOwnerID());            
+            $stmt = $this->obj->prepare("INSERT INTO answer (ans_anonymous, ans_reply, ans_create_date, q_id, u_id) VALUES (:anonymous, :reply, NOW(), :q_id, :u_id)");
+
+            $stmt->bindParam(':anonymous', $answer->getMode());
+            $stmt->bindParam(':reply', $answer->getText());
+            $stmt->bindParam(':q_id', $answer->getQuestionID());
+            $stmt->bindParam(':u_id', $answer->getOwnerID());
+    
             return $stmt->execute();
         } catch (PDOException $e) {
             echo "Error: " . $e->getMessage();
             return false;
         }
-    }
-    
+    }    
 
 }
 
