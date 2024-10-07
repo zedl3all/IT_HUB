@@ -18,5 +18,8 @@ class AnswerController{
     public function updateAns(){
         $this->answer->setQuestion($this->question_id);
     }
+    public function deleteAnswer($answer_id){
+        
+    }
 }
 ?>
