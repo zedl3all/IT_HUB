@@ -7,8 +7,8 @@ class User{
     public $email;
     public $role;
     public $createdate;
-    public function public function __construct(Type $var = null) {
-        $this->var = $var;
+    public function public function __construct() {
+        
     }
 }
 ?>
