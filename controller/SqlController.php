@@ -67,6 +67,43 @@ class SqlController {
             return null; // คืนค่า null ในกรณีเกิดข้อผิดพลาด
         }
     }
+
+    public function insert_user(User $user): bool {
+        try {
+            $stmt = $this->obj->prepare("INSERT INTO user (u_name, u_lastname, u_username, u_email, u_role, u_createdate) VALUES (:name, :lastname, :username, :email, :role, :createdate)");
+    
+            // Binding parameters
+            $stmt->bindParam(':name', $user->firstname);
+            $stmt->bindParam(':lastname', $user->last_name);
+            $stmt->bindParam(':username', $user->username);
+            $stmt->bindParam(':email', $user->email);
+            $stmt->bindParam(':role', $user->role);
+            $stmt->bindParam(':createdate', $user->createdate);
+    
+            return $stmt->execute(); // คืนค่า true ถ้าสำเร็จ, false ถ้าไม่สำเร็จ
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+            return false; // คืนค่า false ในกรณีเกิดข้อผิดพลาด
+        }
+    }
+
+    public function insert_answer(Answer $answer): bool {
+        try {
+            $stmt = $this->obj->prepare("INSERT INTO answers (question_id, owner_id, a_anonymous_mode, text) VALUES (:question_id, :owner_id, :mode, :text)");
+    
+            $stmt->bindParam(':question_id', $answer->getQuestionID());
+            $stmt->bindParam(':owner_id', $answer->getOwnerID());
+            $stmt->bindParam(':mode', $answer->getMode());
+            $stmt->bindParam(':text', $answer->getText());
+    
+            return $stmt->execute();
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+            return false;
+        }
+    }
+    
+
 }
 
 $test = new SqlController();
