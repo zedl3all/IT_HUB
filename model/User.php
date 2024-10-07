@@ -7,8 +7,5 @@ class User{
     public $email;
     public $role;
     public $createdate;
-    public function public function __construct() {
-        
-    }
 }
 ?>
