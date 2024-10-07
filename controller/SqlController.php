@@ -89,13 +89,13 @@ class SqlController {
 
     public function insert_answer(Answer $answer): bool {
         try {
-            $stmt = $this->obj->prepare("INSERT INTO answers (question_id, owner_id, a_anonymous_mode, text) VALUES (:question_id, :owner_id, :mode, :text)");
-    
-            $stmt->bindParam(':question_id', $answer->getQuestionID());
-            $stmt->bindParam(':owner_id', $answer->getOwnerID());
-            $stmt->bindParam(':mode', $answer->getMode());
-            $stmt->bindParam(':text', $answer->getText());
-    
+            $stmt = $this->obj->prepare("INSERT INTO answer (ans_anonymous, ans_reply, ans_create_date, q_id, u_id)VALUES (:anonymous, :reply, NOW(), :q_id, :u_id)
+            ");
+ 
+            $stmt->bindParam(':anonymous', $answer->getAnonymousMode()); 
+            $stmt->bindParam(':reply', $answer->getReply());             
+            $stmt->bindParam(':q_id', $answer->getQuestionID());         
+            $stmt->bindParam(':u_id', $answer->getOwnerID());            
             return $stmt->execute();
         } catch (PDOException $e) {
             echo "Error: " . $e->getMessage();
