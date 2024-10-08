@@ -9,7 +9,9 @@ class AnswerController{
 
     public function createAnswer($text, $mode){
         if ($this->checkText($text)){
-            $this->answer = new Answer($text, $mode);
+            $this->answer = new Answer($text, $mode, 1);
+            date_default_timezone_set("Asia/Bangkok");
+            $this->answer->setCreateDate(date("Y-m-d- H:i:s"));
         }
     }
     private function checkText($text){
@@ -20,6 +22,9 @@ class AnswerController{
     }
     public function deleteAnswer($answer_id){
         
+    }
+    public function getAnswer(){
+        return $this->answer;
     }
 }
 ?>
