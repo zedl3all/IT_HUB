@@ -5,7 +5,7 @@ class Answer{
     private $owner_id;
     private $a_anonymous_mode;
     private $text;
-    public public function __construct($text, $mode, $question_id) {
+    public function __construct($text, $mode, $question_id) {
         $this->text = $text;
         $this->a_anonymous_mode = $mode;
         $this->question_id = $question_id;
