@@ -89,7 +89,7 @@ class Community_Sql_Controller extends SqlController {
     }
 
     public function adduser($community, $user): bool {
-        $sql = "INSERT INTO community_user (c_id, u_id) VALUES ('$community->getID()', '$user->getId()')";
+        $sql = "INSERT INTO community_user (c_id, u_id, u_role) VALUES ('$community->getID()', '$user->getId()', 'Member')";
         return $this->query($sql);
     }
 
@@ -116,6 +116,16 @@ class Community_Sql_Controller extends SqlController {
 
     public function deleteCommunity($community): bool {
         $sql = "DELETE FROM community WHERE c_id = $community->getCommunityID()";
+        return $this->query($sql);
+    }
+
+    public function insertsubOwner($community, $user): bool {
+        $sql = "INSERT INTO community_user (c_id, u_id, u_role) VALUES ('$community->getCommunityID()', '$user->getId()', 'SubOwner')";
+        return $this->query($sql);
+    }
+
+    public function insertOwner($community, $user): bool {
+        $sql = "INSERT INTO community_user (c_id, u_id, u_role) VALUES ('$community->getCommunityID()', '$user->getId()', 'Owner')";
         return $this->query($sql);
     }
 }
