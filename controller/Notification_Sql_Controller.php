@@ -123,6 +123,11 @@ class Notification_Sql_Controller extends SqlController {
         }
     }
 
+    public function setSeenNotification($notification): bool {
+        $sql = "UPDATE notification SET n_is_seen = 1 WHERE n_id = $notification->getNotiID()";
+        return $this->query($sql);
+    }
+
     public function createNotification($c_id, $u_id, $anm_id, $n_is_seen): bool {
         $sql = "INSERT INTO notification (c_id, u_id, anm_id, n_is_seen) VALUES ($c_id, $u_id, $anm_id, $n_is_seen)";
         return $this->query($sql);
