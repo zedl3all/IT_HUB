@@ -1,7 +1,7 @@
 <?php
 require_once '../controller/Community_Sql_controller.php';
 class Community {
-    private $sqlcommu = new Community_Sql_controller;
+    private $sqlcommu;
 
     private $communityID;
     private $communityName;
@@ -15,6 +15,10 @@ class Community {
     private $C_User;
     private $C_question;
     private $C_announcement;
+
+    public function __construct(){
+        $this->sqlcommu = new Community_Sql_controller();
+    }
 
     public function getCommunityID(){
         return $this->communityID;
@@ -104,16 +108,15 @@ class Community {
         $this->C_User = $C_User;
     }
     public function checkEnrollkey($enrollKey){
-        return strcmp($this->getEnroll, $enrollKey);
+        return strcmp($this->enrollKey, $enrollKey);
     }
 
     public function insertUser($C_User){
-        $community = $this->getCommunityByID($communityID);
-        $this->$sqlcommu->adduser($community, $C_User);
+        $this->sqlcommu->adduser($this, $C_User);
     }
 
     public function getCommunityByID($communityID){
-        return $this->$sqlcommu->getCommunityByID($communityID);
+        return $this->sqlcommu->getCommunityByID($communityID);
     }
 
 }
