@@ -1,6 +1,6 @@
 <?php
-include '../model/Community.php';
-include '../controller/Community_Sql_controller.php';
+require_once '../model/Community.php';
+require_once 'Community_Sql_controller.php';
 class CommunityController {
     private $sqlcommu = new Community_Sql_controller;
 
@@ -12,9 +12,9 @@ class CommunityController {
         $community->setOwner($owner>getUserID());
         $community->setTag($tag->getTag());
 
-        $this->$sqlcommu->createCommunity($name, $description, $owner->getUserID());
+        $this->$sqlcommu->createCommunity($name, $description, $owner);
         $this->$sqlcommu->addenrollkey($community, $enroll);
-        $this->$sqlcommu->addtag($community, $tag->getTag());
+        $this->$sqlcommu->addtag($community, $tag);
 
     }
 
@@ -28,13 +28,13 @@ class CommunityController {
         $community->setDescription($description);
         $community->setTag($tag->getTag());
         $this->$sqlcommu->editCommunity($community, $name, $description);
-        $this->$sqlcommu->edittag($community, $tag->getTag());
+        $this->$sqlcommu->edittag($community, $tag);
 
     }
 
     public function insertSubOwner(Community $community, User $subowner){
         $community = $this->$sqlcommu->getCommunityByID($id);
-        $this->$sqlcommu->insertsubOwner($community, $subowner->getuserID());
+        $this->$sqlcommu->insertsubOwner($community, $subowner);
     }
 
 }
