@@ -1,5 +1,6 @@
 <?php
-// User_Sql_Controller.php
+
+require_once 'SqlController.php';
 require_once '../model/User.php';
 
 class User_Sql_Controller extends SqlController {

@@ -1,4 +1,8 @@
 <?php
+
+require_once 'SqlController.php';
+require_once '../model/Announcement.php';
+require_once '../model/Tag.php';
 class Announcement_Sql_Controller extends SqlController {
     public function getAnnouncements(): array {
         $sql = "SELECT * FROM announcement";

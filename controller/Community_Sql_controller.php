@@ -1,4 +1,10 @@
 <?php
+
+require_once 'SqlController.php';
+require_once '../model/Community.php';
+require_once '../model/Tag.php';
+require_once '../model/User.php';
+
 class Community_Sql_Controller extends SqlController {
     public function getCommunities(): array {
         $sql = "SELECT * FROM community";

@@ -1,4 +1,8 @@
 <?php
+require_once 'SqlController.php';
+require_once '../model/Notification.php';
+require_once '../model/Community.php';
+require_once '../model/User.php';
 class Notification_Sql_Controller extends SqlController {
     public function getNotifications(): array {
         $sql = "SELECT * FROM notification";

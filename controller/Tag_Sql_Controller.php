@@ -1,4 +1,8 @@
 <?php
+require_once 'SqlController.php';
+require_once '../model/Tag.php';
+require_once '../model/Community.php';
+require_once '../model/Announcement.php';
 class Tag_Sql_Controller extends SqlController {
     public function getTags(): array {
         $sql = "SELECT * FROM tag";
