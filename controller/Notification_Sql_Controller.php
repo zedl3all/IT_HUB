@@ -12,10 +12,10 @@ class Notification_Sql_Controller extends SqlController {
             $notifications = [];
             while($row = $result->fetch_assoc()) {
                 $notification = new Notification();
-                $notification->setNotiID($row['n_id']);
-                $notification->setCommuID($row['c_id']);
-                $notification->setUserID($row['u_id']);
-                $notification->setAnmID($row['anm_id']);
+                $notification->setNotificationId($row['n_id']);
+                $notification->setCommunityId($row['c_id']);
+                $notification->setUserId($row['u_id']);
+                $notification->setAnnouncementId($row['anm_id']);
                 $notification->setSeen($row['n_is_seen']);
                 $notifications[] = $notification;
             }
@@ -32,10 +32,10 @@ class Notification_Sql_Controller extends SqlController {
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
             $notification = new Notification();
-            $notification->setNotiID($row['n_id']);
-            $notification->setCommuID($row['c_id']);
+            $notification->setNotificationId($row['n_id']);
+            $notification->setCommunityId($row['c_id']);
             $notification->setUserID($row['u_id']);
-            $notification->setAnmID($row['anm_id']);
+            $notification->setAnnouncementId($row['anm_id']);
             $notification->setSeen($row['n_is_seen']);
             return $notification;
         } else {
@@ -51,10 +51,10 @@ class Notification_Sql_Controller extends SqlController {
             $notifications = [];
             while($row = $result->fetch_assoc()) {
                 $notification = new Notification();
-                $notification->setNotiID($row['n_id']);
-                $notification->setCommuID($row['c_id']);
+                $notification->setNotificationId($row['n_id']);
+                $notification->setCommunityId($row['c_id']);
                 $notification->setUserID($row['u_id']);
-                $notification->setAnmID($row['anm_id']);
+                $notification->setAnnouncementId($row['anm_id']);
                 $notification->setSeen($row['n_is_seen']);
                 $notifications[] = $notification;
             }
@@ -72,10 +72,10 @@ class Notification_Sql_Controller extends SqlController {
             $notifications = [];
             while($row = $result->fetch_assoc()) {
                 $notification = new Notification();
-                $notification->setNotiID($row['n_id']);
-                $notification->setCommuID($row['c_id']);
+                $notification->setNotificationId($row['n_id']);
+                $notification->setCommunityId($row['c_id']);
                 $notification->setUserID($row['u_id']);
-                $notification->setAnmID($row['anm_id']);
+                $notification->setAnnouncementId($row['anm_id']);
                 $notification->setSeen($row['n_is_seen']);
                 $notifications[] = $notification;
             }
@@ -93,10 +93,10 @@ class Notification_Sql_Controller extends SqlController {
             $notifications = [];
             while($row = $result->fetch_assoc()) {
                 $notification = new Notification();
-                $notification->setNotiID($row['n_id']);
-                $notification->setCommuID($row['c_id']);
+                $notification->setNotificationId($row['n_id']);
+                $notification->setCommunityId($row['c_id']);
                 $notification->setUserID($row['u_id']);
-                $notification->setAnmID($row['anm_id']);
+                $notification->setAnnouncementId($row['anm_id']);
                 $notification->setSeen($row['n_is_seen']);
                 $notifications[] = $notification;
             }
@@ -114,10 +114,10 @@ class Notification_Sql_Controller extends SqlController {
             $notifications = [];
             while($row = $result->fetch_assoc()) {
                 $notification = new Notification();
-                $notification->setNotiID($row['n_id']);
-                $notification->setCommuID($row['c_id']);
+                $notification->setNotificationId($row['n_id']);
+                $notification->setCommunityId($row['c_id']);
                 $notification->setUserID($row['u_id']);
-                $notification->setAnmID($row['anm_id']);
+                $notification->setAnnouncementId($row['anm_id']);
                 $notification->setSeen($row['n_is_seen']);
                 $notifications[] = $notification;
             }

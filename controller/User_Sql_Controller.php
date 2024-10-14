@@ -37,7 +37,7 @@ class User_Sql_Controller extends SqlController {
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
             $user = new User();
-            $user->setId($row['u_id']);
+            $user->setUserID($row['u_id']);
             $user->setFirstname($row['u_name']);
             $user->setLastname($row['u_lastname']);
             $user->setUsername($row['u_username']);
@@ -57,7 +57,7 @@ class User_Sql_Controller extends SqlController {
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
             $user = new User();
-            $user->setId($row['u_id']);
+            $user->setUserID($row['u_id']);
             $user->setFirstname($row['u_name']);
             $user->setLastname($row['u_lastname']);
             $user->setUsername($row['u_username']);
