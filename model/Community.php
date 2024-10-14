@@ -2,12 +2,12 @@
 class Community {
     private $id;
     private $name;
-    private $enroll;
+    private $enrollkey;
     private $tag;
-    private $amout;
+    private $amount;
     private $owner;
     private $subowner;
-    private $create_date;
+    private $createdate;
     private $description;
     private $user;
     private $question;
@@ -29,11 +29,11 @@ class Community {
         $this->name = $name;
     }
 
-    public function getEnroll(){
+    public function getEnrollKey(){
         return $this->enrollkey;
     }
 
-    public function setEnroll($enroll){
+    public function setEnrollKey($enroll){
         $this->enroll = $enroll;
     }
     
@@ -45,52 +45,52 @@ class Community {
         $this->owner = $owner;
     }
 
-    public function gettag(){
+    public function getTag(){
         return $this->tag;
     }
 
-    public function settag($tag){
+    public function setTag($tag){
         $this->tag = $tag;
     }
 
-    public function getdescription(){
+    public function getDescription(){
         return $this->description;
     }
 
-    public function setdescription($description){
+    public function setDescription($description){
         $this->description = $description;
     }
 
-    public function getannouncement(){
+    public function getAnnouncement(){
         return $this->announcement;
     }
 
-    public function setannouncement($announcement){
+    public function setAnnouncement($announcement){
         $this->announcement = $announcement;
     }
 
-    public function getquestion(){
+    public function getQuestion(){
         return $this->question;
     }
 
-    public function setquestion($question){
+    public function setQuestion($question){
         $this->question = $question;
     }
 
-    public function getsubOwner(){
+    public function getSubOwner(){
         return $this->subowner;
     }
 
-    public function setsubOwner($subowner){
+    public function setSubOwner($subowner){
         $this->subowner = $subowner;
     }
 
     public function getDate(){
-        return $this->create_date;
+        return $this->createdate;
     }
 
-    public function setDate($create_date){
-        $this->create_date = $create_date;
+    public function setDate($createdate){
+        $this->createdate = $createdate;
     }
 
     public function getUser(){
@@ -100,7 +100,9 @@ class Community {
     public function setUser($user){
         $this->user = $user;
     }
-
+    public function getAmount(){
+        $this->amount;
+    }
     public function checkEnrollkey($enrollkey){
 
     }
