@@ -68,26 +68,51 @@
             <section>
                 <h2 style="border-top: 2px solid white; border-bottom: 2px solid white; margin-top: 16px; padding-top: 16px; padding-bottom: 16px;">Discover Community</h2>
                 <div class="community-grid">
-                    <!-- Repeat this block 4 times for "Discover Community" -->
-                    <div class="community-card">
-                        <div class="community-image">
-                            <i class="fas fa-image"></i>
-                        </div>
-                        <div class="community-info">Community name</div>
-                        <div class="community-info">1/67</div>
-                        <div class="locked-icon">
-                            <i class="fas fa-lock"></i>
+                    <div class="repeat-discover_commu">
+                        <div class="community-card discover_commu" >
+                            <div class="community-image">
+                                <i class="fas fa-image"></i>
+                            </div>
+                            <div class="community-info">Community name</div>
+                            <div class="community-info">1/67</div>
+                            <div class="locked-icon">
+                                <i class="fas fa-lock"></i>
+                            </div>
                         </div>
                     </div>
-                    <!-- End of repeated block -->
+                    <div class="repeat-discover_commu" >
+                        <div class="community-card discover_commu">
+                            <div class="community-image">
+                                <i class="fas fa-image"></i>
+                            </div>
+                            <div class="community-info">Community name</div>
+                            <div class="community-info">1/67</div>
+                            <div class="locked-icon">
+                                <i class="fas fa-lock"></i>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </section>
         </main>
     </div>
+
+    <div class="popup-overlay" id="popupOverlay">
+        <div class="popup" id="popup">
+            <span class="close" id="closePopup">&times;</span>
+            <div class="popup-content">
+                <p style="font-weight: bold; font-size: 24px; margin-bottom: 8px;">Community name 1/67</p>
+                <input type="enrollkey" placeholder="Enter your enroll key." id="enrollkeyInput">
+                <button onclick="submitForm()">Join</button>
+            </div>
+        </div>
+    </div>
+
     <div class="role-toggle">
         <button class="active">Student</button>
         <button>Teacher</button>
         <button>TA</button>
     </div>
+    <script src="HomePage.js"></script>
 </body>
 </html>
