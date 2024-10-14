@@ -1,48 +1,48 @@
 <?php
 class Community {
-    private $id;
-    private $name;
-    private $enrollkey;
+    private $communityID;
+    private $communityName;
+    private $enrollKey;
     private $tag;
-    private $amount;
-    private $owner;
-    private $subowner;
-    private $createdate;
-    private $description;
-    private $user;
-    private $question;
-    private $announcement;
+    private $c_amount_of_members;
+    private $C_Owner;
+    private $C_Subowner;
+    private $C_create_date;
+    private $C_description;
+    private $C_User;
+    private $C_question;
+    private $C_announcement;
 
     public function getCommunityID(){
-        return $this->id;
+        return $this->communityID;
     }
 
-    public function setCommunityID($id){
-        $this->id = $id;
+    public function setCommunityID($communityID){
+        $this->communityID = $communityID;
     }
 
     public function getCommunityName(){
-        return $this->name;
+        return $this->communityName;
     }
 
-    public function setCommunityName($name){
-        $this->name = $name;
+    public function setCommunityName($communityName){
+        $this->communityName = $communityName;
     }
 
     public function getEnroll(){
-        return $this->enrollkey;
+        return $this->enrollKey;
     }
 
-    public function setEnroll($enrollkey){
-        $this->enrollkey = $enrollkey;
+    public function setEnroll($enrollKey){
+        $this->enrollKey = $enrollKey;
     }
     
     public function getOwner(){
-        return $this->owner;
+        return $this->C_Owner;
     }
 
-    public function setOwner($owner){
-        $this->owner = $owner;
+    public function setOwner($C_Owner){
+        $this->C_Owner = $C_Owner;
     }
 
     public function getTag(){
@@ -54,64 +54,61 @@ class Community {
     }
 
     public function getCommunityDescription(){
-        return $this->description;
+        return $this->C_description;
     }
 
-    public function setCommunityDescription($description){
-        $this->description = $description;
+    public function setCommunityDescription($C_description){
+        $this->C_description = $C_description;
     }
 
     public function getAnnouncement(){
-        return $this->announcement;
+        return $this->C_announcement;
     }
 
-    public function setAnnouncement($announcement){
-        $this->announcement = $announcement;
+    public function setAnnouncement($C_announcement){
+        $this->C_announcement = $C_announcement;
     }
 
     public function getQuestion(){
-        return $this->question;
+        return $this->C_question;
     }
 
-    public function setQuestion($question){
-        $this->question = $question;
+    public function setQuestion($C_question){
+        $this->C_question = $C_question;
     }
 
     public function getSubOwner(){
-        return $this->subowner;
+        return $this->C_Subowner;
     }
 
-    public function setSubOwner($subowner){
-        $this->subowner = $subowner;
+    public function setSubOwner($C_Subowner){
+        $this->C_Subowner = $C_Subowner;
     }
 
     public function getCommunityCreateDate(){
-        return $this->createdate;
+        return $this->C_create_date;
     }
 
-    public function setCommunityCreateDate($createdate){
-        $this->createdate = $createdate;
+    public function setCommunityCreateDate($C_create_date){
+        $this->C_create_date = $C_create_date;
     }
 
     public function getUser(){
-        return $this->user;
+        return $this->C_User;
     }
 
-    public function setUser($user){
-        $this->user = $user;
+    public function setUser($C_User){
+        $this->C_User = $C_User;
     }
-    public function getAmount(){
-        $this->amount;
-    }
-    public function checkEnrollkey($enrollkey){
-
+    public function checkEnrollkey($enrollKey){
+        
     }
 
     public function insertUser($c_user){
 
     }
 
-    public function getCommunityByID($id){
+    public function getCommunityByID($communityID){
 
     }
 
