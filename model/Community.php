@@ -123,5 +123,9 @@ class Community {
         return $this->c_amount_of_members;
     }
 
+    public function setAmoutOfMembers($c_amount_of_members){
+        $this->c_amount_of_members = $c_amount_of_members;
+    }
+
 }
 ?>
