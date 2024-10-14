@@ -33,8 +33,8 @@ class Community {
         return $this->enrollkey;
     }
 
-    public function setEnrollKey($enroll){
-        $this->enroll = $enroll;
+    public function setEnrollKey($enrollkey){
+        $this->enrollkey = $enrollkey;
     }
     
     public function getOwner(){
