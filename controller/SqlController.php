@@ -1,7 +1,4 @@
 <?php
-require_once '../model/User.php';
-require_once '../model/Answer.php';
-
 class SqlController {
     private $db;
     private $host = 'localhost';
