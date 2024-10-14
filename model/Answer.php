@@ -5,7 +5,8 @@ class Answer{
     private $owner_id;
     private $a_anonymous_mode;
     private $text;
-    public public function __construct($text, $mode, $question_id) {
+    private $createdate;
+    public function __construct($text, $mode, $question_id) {
         $this->text = $text;
         $this->a_anonymous_mode = $mode;
         $this->question_id = $question_id;
@@ -36,6 +37,12 @@ class Answer{
     }
     public function setOwnerID($owner_id){
         $this->owner_id = $owner_id;
+    }
+    public function getCreateDate(){
+        return  $this->createdate;
+    }
+    public function setCreateDate($createdate){
+        $this->creatdate =  $createdate;
     }
 }
 
