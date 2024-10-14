@@ -1,21 +1,24 @@
+/* The `Page` class in PHP renders a home page with header, sidebar, community sections, and
+interactive popups. */
 <?php
+
+require_once "../controller/Community_Sql_controller.php";
+require_once "../model/Community.php";
+
 class Page {
+    private $sql_Community;
     private $myCommunities;
     private $discoverCommunities;
 
     public function __construct() {
-        // กำหนดข้อมูลชุมชน
-        $this->myCommunities = [
-            new Community("My Community 1", "1/67"),
-            new Community("My Community 2", "1/67"),
-        ];
 
-        $this->discoverCommunities = [
-            new Community("Discover Community 1", "10/100", true), // มีรหัสผ่าน
-            new Community("Discover Community 2", "5/50"),
-            new Community("Discover Community 3", "15/150", true), // มีรหัสผ่าน
-            new Community("Discover Community 4", "2/20"),
-        ];
+        $this->sql_Community = new Community_Sql_controller();
+        // กำหนดข้อมูลชุมชน
+        $this->myCommunities = [];
+
+        $temp = $this->sql_Community->getCommunityByID(1);
+        $temp->setEnroll("1234");
+        $this->discoverCommunities = [$temp];
     }
 
     public function renderHeader() {
@@ -49,15 +52,15 @@ class Page {
 
     public function renderCommunity($communities) {
         foreach ($communities as $community) {
-            if ($community->hasPassword) {
+            if ($community->getEnroll() != "") {
                 // Community ที่มีรหัสผ่าน
-                echo '<div class="repeat-commu" onclick="openPopup(\'' . htmlspecialchars($community->name) . '\')">
+                echo '<div class="repeat-commu" onclick="openPopup(\'' . htmlspecialchars($community->getCommunityName()) . '\')">
                         <div class="community-card">
                             <div class="community-image">
                                 <i class="fas fa-lock"></i>
                             </div>
-                            <div class="community-info">' . htmlspecialchars($community->name) . '</div>
-                            <div class="community-info">' . htmlspecialchars($community->memberCount) . '</div>
+                            <div class="community-info">' . htmlspecialchars($community->getCommunityName()) . '</div>
+                            <div class="community-info">' . htmlspecialchars($community->getAmoutOfMembers()) . '</div>
                         </div>
                     </div>';
             } else {
@@ -68,8 +71,8 @@ class Page {
                                 <div class="community-image">
                                     <i class="fas fa-image"></i>
                                 </div>
-                                <div class="community-info">' . htmlspecialchars($community->name) . '</div>
-                                <div class="community-info">' . htmlspecialchars($community->memberCount) . '</div>
+                                <div class="community-info">' . htmlspecialchars($community->getCommunityName()) . '</div>
+                                <div class="community-info">' . htmlspecialchars($community->getAmoutOfMembers()) . '</div>
                             </div>
                         </a>
                     </div>';
@@ -148,18 +151,6 @@ class Page {
               <script src="HomePage.js"></script>
               </body>
               </html>';
-    }
-}
-
-class Community {
-    public $name;
-    public $memberCount;
-    public $hasPassword;
-
-    public function __construct($name, $memberCount, $hasPassword = false) {
-        $this->name = $name;
-        $this->memberCount = $memberCount;
-        $this->hasPassword = $hasPassword;
     }
 }
 

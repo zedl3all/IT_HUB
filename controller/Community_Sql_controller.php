@@ -27,7 +27,7 @@ class Community_Sql_Controller extends SqlController {
     }
 
     public function getCommunityByID($id): Community{
-        $sql = "SELECT * FROM community WHERE id = $id";
+        $sql = "SELECT * FROM community WHERE c_id = $id";
         $result = $this->query($sql);
 
         if ($result->num_rows > 0) {
@@ -44,7 +44,7 @@ class Community_Sql_Controller extends SqlController {
     }
 
     public function getCommunityByName($name): Community{
-        $sql = "SELECT * FROM community WHERE name = $name";
+        $sql = "SELECT * FROM community WHERE c_name = $name";
         $result = $this->query($sql);
 
         if ($result->num_rows > 0) {
@@ -84,6 +84,11 @@ class Community_Sql_Controller extends SqlController {
 
     public function addenrollkey($community, $enrollkey): bool {
         $sql = "INSERT INTO community_enroll (c_id, ce_enrollkey) VALUES ('$community->getCommunityID()', '$enrollkey')";
+        return $this->query($sql);
+    }
+
+    public function getenrollkey($community): string {
+        $sql = "SELECT ce_enrollkey FROM community_enroll WHERE c_id = $community->getCommunityID()";
         return $this->query($sql);
     }
 

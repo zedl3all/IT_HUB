@@ -7,7 +7,7 @@ class Community {
     private $communityName;
     private $enrollKey;
     private $tag;
-    private $c_amount_of_members;
+    private $c_amount_of_members = 1;
     private $C_Owner;
     private $C_Subowner;
     private $C_create_date;
@@ -117,6 +117,10 @@ class Community {
 
     public function getCommunityByID($communityID){
         return $this->sqlcommu->getCommunityByID($communityID);
+    }
+
+    public function getAmoutOfMembers(){
+        return $this->c_amount_of_members;
     }
 
 }
