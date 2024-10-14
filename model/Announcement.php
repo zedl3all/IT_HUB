@@ -1,52 +1,52 @@
 <?php
 class Announcement{
-    private $idAn;
-    private $header;
-    private $detail;
+    private $anm_id;
+    private $title;
+    private $description;
     private $dateCreate;
-    private $tagAn;
-    private $userId;
+    private $anm_tag;
+    private $anm_userId;
     private $communityId;
-    public function setIdAn(int $idAn){
-        $this->idAn = $idAn;
+    public function setAnnouncementID(int $anm_id){
+        $this->anm_id = $anm_id;
     }
-    public function getIdAn(): int{
-        return $this->idAn;
+    public function getAnnouncementID(): int{
+        return $this->anm_id;
     }
-    public function setHeader(string $header){
-        $this->header = $header;
+    public function setAnnouncementTitle(string $title){
+        $this->title = $title;
     }
-    public function getHeader(): string{
-        return $this->header;
+    public function getAnnouncementTitle(): string{
+        return $this->title;
     }
-    public function setDetail(string $detail){
-        $this->detail = $detail;
+    public function setAnnouncementDescription(string $description){
+        $this->description = $description;
     }
-    public function getDetail(): string{
-        return $this->detail;
+    public function getAnnouncementDescription(): string{
+        return $this->description;
     }
-    public function setDateCreate(string $dateCreate){
+    public function setAnnouncementCreateDate(string $dateCreate){
         $this->dateCreate = $dateCreate;
     }
-    public function getDateCreate(): string{
+    public function getAnnouncementCreateDate(): string{
         return $this->dateCreate;
     }
-    public function setTagAn(array $tagAn){
-        $this->tagAn = $tagAn;
+    public function setAnnouncementTag(array $anm_tag){
+        $this->anm_tag = $anm_tag;
     }
-    public function getTagAn(): array{
-        return $this->tagAn;
+    public function getAnnouncementTag(): array{
+        return $this->anm_tag;
     }
-    public function setUserId(int $userId){
-        $this->userId = $userId;
+    public function setAnnouncementUserId(int $anm_userId){
+        $this->anm_userId = $anm_userId;
     }
-    public function getUserId(): int{
-        return $this->userId;
+    public function getAnnouncementUserId(): int{
+        return $this->anm_userId;
     }
-    public function setCommunityId(int $communityId){
+    public function setAnnouncementCommunityId(int $communityId){
         $this->communityId = $communityId;
     }
-    public function getCommunityId(): int{
+    public function getAnnouncementCommunityId(): int{
         return $this->communityId;
     }
 }
