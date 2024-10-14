@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <link rel="stylesheet" href="HomePage.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <a href="/Home Page/HomePage.html">&lt;i&gt; Hub</a>
+        </div>
+        <div class="search-container">
+            <input type="text" class="search-input" placeholder="Search <i>Hub">
+        </div>
+        <div class="user-section">
+            <div class="notification-bell">
+                <i class="fas fa-bell" id="bell-icon"></i>
+                <span class="notification-count" id="notification-count">1</span>
+            </div>
+            <div class="notification-icon"></div>
+            <div class="profile-icon"></div>
+        </div>
+    </header>
+    <div class="container">
+        <div class="left-sidebar">
+            <nav>
+                <a href="#" class="nav-item active"><i class="fas fa-home"></i> Home</a>
+                <a href="#" class="nav-item"><i class="fas fa-bullhorn"></i> Announcement</a>
+                <a href="#" class="nav-item"><i class="fas fa-user"></i> Profile Feed</a>
+            </nav>
+        </div>
+        <main>
+            <button class="create-community">Create Community</button>
+            <section>
+                <h2 style="border-bottom: 2px solid white; padding-bottom: 16px;">My Community</h2>
+                <div class="community-grid">
+                    <div class="repeat-commu">
+                        <a href="/Community Page/CommunityPage.html">
+                            <div class="community-card">
+                                <div class="community-image">
+                                    <i class="fas fa-image"></i>
+                                </div>
+                                <div class="community-info">Community name</div>
+                                <div class="community-info">1/67</div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="repeat-commu">
+                        <a href="/Community Page/CommunityPage.html">
+                            <div class="community-card">
+                                <div class="community-image">
+                                    <i class="fas fa-image"></i>
+                                </div>
+                                <div class="community-info">Community name</div>
+                                <div class="community-info">1/67</div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </section>
+            <section>
+                <h2 style="border-top: 2px solid white; border-bottom: 2px solid white; margin-top: 16px; padding-top: 16px; padding-bottom: 16px;">Discover Community</h2>
+                <div class="community-grid">
+                    <!-- repeat community -->
+                    <div class="repeat-discover_commu">
+                        <div class="community-card discover_commu" >
+                            <div class="community-image">
+                                <i class="fas fa-image"></i>
+                            </div>
+                            <div class="community-info">Community name</div>
+                            <div class="community-info">1/67</div>
+                            <div class="locked-icon">
+                                <i class="fas fa-lock"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- repeat community -->
+                    <div class="repeat-discover_commu" >
+                        <div class="community-card discover_commu">
+                            <div class="community-image">
+                                <i class="fas fa-image"></i>
+                            </div>
+                            <div class="community-info">Community name</div>
+                            <div class="community-info">1/67</div>
+                            <div class="locked-icon">
+                                <i class="fas fa-lock"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <div class="popup-overlay" id="popupOverlay">
+        <div class="popup" id="popup">
+            <span class="close" id="closePopup">&times;</span>
+            <div class="popup-content">
+                <p style="font-weight: bold; font-size: 24px; margin-bottom: 8px;">Community name 1/67</p>
+                <input type="enrollkey" placeholder="Enter your enroll key." id="enrollkeyInput">
+                <button onclick="submitForm()">Join</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="role-toggle">
+        <button class="active">Student</button>
+        <button>Teacher</button>
+        <button>TA</button>
+    </div>
+    <script src="HomePage.js"></script>
+</body>
+</html>
