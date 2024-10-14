@@ -23,10 +23,17 @@ class CommunityController {
     }
 
     public function edit_commu($name, $description, $tag){
+        $community = $this->$sqlcommu->getCommunityByID($id);
+        $community->setName($name);
+        $community->setDescription($description);
+        $community->setTag($tag->getTag());
+        $this->$sqlcommu->editCommunity($community, $name, $description);
+        $this->$sqlcommu->edittag($community, $tag->getTag());
 
     }
 
     public function insertSubOwner(Community $community, User $subowner){
+        $community = $this->$sqlcommu->getCommunityByID($id);
         $this->$sqlcommu->insertsubOwner($community, $subowner->getuserID());
     }
 
