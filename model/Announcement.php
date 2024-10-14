@@ -5,15 +5,8 @@ class Announcement{
     private $detail;
     private $dateCreate;
     private $tagAn;
-    private $userAn;
-    function __construct(int $idAn, string $header, string $detail, string $dateCreate, array $tagAn, int $userAn){
-        $this->idAn = $idAn;
-        $this->header = $header;
-        $this->detail = $detail;
-        $this->dateCreate = $dateCreate;
-        $this->tagAn = $tagAn;
-        $this->userAn = $userAn;
-    }
+    private $userId;
+    private $communityId;
     public function setIdAn(int $idAn){
         $this->idAn = $idAn;
     }
@@ -44,11 +37,17 @@ class Announcement{
     public function getTagAn(): array{
         return $this->tagAn;
     }
-    public function setUserAn(int $userAn){
-        $this->userAn = $userAn;
+    public function setUserId(int $userId){
+        $this->userId = $userId;
     }
-    public function getUserAn(): int{
-        return $this->userAn;
+    public function getUserId(): int{
+        return $this->userId;
+    }
+    public function setCommunityId(int $communityId){
+        $this->communityId = $communityId;
+    }
+    public function getCommunityId(): int{
+        return $this->communityId;
     }
 }
 ?>
