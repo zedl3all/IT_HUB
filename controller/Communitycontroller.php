@@ -12,29 +12,29 @@ class CommunityController {
         $community->setOwner($owner>getUserID());
         $community->setTag($tag->getTag());
 
-        $this->$sqlcommu->createCommunity($name, $description, $owner);
-        $this->$sqlcommu->addenrollkey($community, $enroll);
-        $this->$sqlcommu->addtag($community, $tag);
+        $this->sqlcommu->createCommunity($name, $description, $owner);
+        $this->sqlcommu->addenrollkey($community, $enroll);
+        $this->sqlcommu->addtag($community, $tag);
 
     }
 
     public function delete_commu(Community $community){
-        $this->$sqlcommu->deleteCommunity($community);
+        $this->sqlcommu->deleteCommunity($community);
     }
 
     public function edit_commu($name, $description, $tag){
-        $community = $this->$sqlcommu->getCommunityByID($id);
+        $community = $this->sqlcommu->getCommunityByID($id);
         $community->setName($name);
         $community->setDescription($description);
         $community->setTag($tag->getTag());
-        $this->$sqlcommu->editCommunity($community, $name, $description);
-        $this->$sqlcommu->edittag($community, $tag);
+        $this->sqlcommu->editCommunity($community, $name, $description);
+        $this->sqlcommu->edittag($community, $tag);
 
     }
 
     public function insertSubOwner(Community $community, User $subowner){
-        $community = $this->$sqlcommu->getCommunityByID($id);
-        $this->$sqlcommu->insertsubOwner($community, $subowner);
+        $community = $this->sqlcommu->getCommunityByID($id);
+        $this->sqlcommu->insertsubOwner($community, $subowner);
     }
 
 }
