@@ -13,27 +13,27 @@ class Community {
     private $question;
     private $announcement;
 
-    public function getID(){
+    public function getCommunityID(){
         return $this->id;
     }
 
-    public function setID($id){
+    public function setCommunityID($id){
         $this->id = $id;
     }
 
-    public function getName(){
+    public function getCommunityName(){
         return $this->name;
     }
 
-    public function setName($name){
+    public function setCommunityName($name){
         $this->name = $name;
     }
 
-    public function getEnrollKey(){
+    public function getEnroll(){
         return $this->enrollkey;
     }
 
-    public function setEnrollKey($enrollkey){
+    public function setEnroll($enrollkey){
         $this->enrollkey = $enrollkey;
     }
     
@@ -53,11 +53,11 @@ class Community {
         $this->tag = $tag;
     }
 
-    public function getDescription(){
+    public function getCommunityDescription(){
         return $this->description;
     }
 
-    public function setDescription($description){
+    public function setCommunityDescription($description){
         $this->description = $description;
     }
 
@@ -85,11 +85,11 @@ class Community {
         $this->subowner = $subowner;
     }
 
-    public function getDate(){
+    public function getCommunityCreateDate(){
         return $this->createdate;
     }
 
-    public function setDate($createdate){
+    public function setCommunityCreateDate($createdate){
         $this->createdate = $createdate;
     }
 

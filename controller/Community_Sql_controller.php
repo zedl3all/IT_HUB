@@ -90,8 +90,11 @@ class Community_Sql_Controller extends SqlController {
     public function addtag($community, $tag): bool {
         foreach ($tag as $t) {
             $sql = "INSERT INTO community_tag (c_id, t_id) VALUES ('$community->getID()', '$t->getID()')";
-            $this->query($sql);
+            if (!$this->query($sql)) {
+                return false;
+            }
         }
+        return true;
     }
 
     public function adduser($community, $user): bool {
