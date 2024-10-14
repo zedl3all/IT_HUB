@@ -1,49 +1,41 @@
 <?php
 class Answer{
     private $answer_id;
-    private $question_id;
-    private $owner_id;
-    private $a_anonymous_mode;
+    private $mode;
     private $text;
-    private $createdate;
-    public function __construct($text, $mode, $question_id) {
-        $this->text = $text;
-        $this->a_anonymous_mode = $mode;
-        $this->question_id = $question_id;
+    private $question_id;
+    private $user;
+
+    public function getAnswerId(){
+        return $this->answer_id;
     }
-    public function setQuestionID($question_id){
-        $this->question_id = $question_id; 
+    public function setAnswerId($answer_id){
+        $this->answer_id = $answer_id;
     }
-    public function  getQuestionID(){
-        return $this->question_id;
+    public function getMode(){
+        return $this->mode;
     }
-    public function setText($text){
-        $this->text = $text;
+    public function setMode($mode){
+        $this->mode = $mode;
     }
     public function getText(){
         return $this->text;
     }
-    public function setMode($mode){
-        $this->a_anonymous_mode = $mode;
+    public function setText($text){
+        $this->text = $text;
     }
-    public function getMode(){
-        return $this->a_anonymous_mode;
+    public function getQuestionId(){
+        return $this->question_id;
     }
-    public function setAnswerID($answer_id){
-        $this->answer_id;
+    public function setQuestionId($question_id){
+        $this->question_id = $question_id;
     }
-    public function getAnswerID(){
-        return $this->answer_id;
+    public function getUser(){
+        return $this->user;
     }
-    public function setOwnerID($owner_id){
-        $this->owner_id = $owner_id;
-    }
-    public function getCreateDate(){
-        return  $this->createdate;
-    }
-    public function setCreateDate($createdate){
-        $this->creatdate =  $createdate;
-    }
+    public function setUser($user){
+        $this->user = $user;
+    }   
 }
 
 ?>
