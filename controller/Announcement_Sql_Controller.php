@@ -71,5 +71,10 @@ class Announcement_Sql_Controller extends SqlController {
         return $this->query($sql);
     }
 
+    public function removeAnnouncement($announcement): bool {
+        $sql = "DELETE FROM announcement WHERE anm_id = $Anm->getAnnouncementID()";
+        return $this->query($sql);
+    }
+
 }
 ?>
