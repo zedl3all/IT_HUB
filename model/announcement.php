@@ -1,5 +1,5 @@
 <?php
-class announcement{
+class Announcement{
     private $idAn;
     private $header;
     private $detail;
