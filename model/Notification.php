@@ -6,10 +6,10 @@ class Notification{
     private $seen;
     private $community_id;
 
-    public function getID(){
+    public function getNotificationId(){
         return $this->id;
     }
-    public function setId($id){
+    public function setNotificationId($id){
         $this->id = $id;
     }
     public function getUserId(){
@@ -18,10 +18,10 @@ class Notification{
     public function setUserId($user_id){
         $this->user_id = $user_id;
     }
-    public function getAnmId(){
+    public function getAnnouncementId(){
         return $this->anm_id;
     }
-    public function setAnmId($anm_id){
+    public function setAnnouncementId($anm_id){
         $this->anm_id = $anm_id;
     }
     public function getSeen(){
