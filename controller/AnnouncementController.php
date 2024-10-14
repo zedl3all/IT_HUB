@@ -29,8 +29,16 @@ class AnnouncementController{
     $this->ANMSqlController->removeAnnouncement($an);
   } 
 
-  public function getAnnounements(){
+  public function getAnnounements(): array{
     return $this->ANMSqlController->getAnnouncements();
+  }
+
+  public function getAnnounementById(int $anm_id): Announcement{
+    return $this->ANMSqlController->getAnnouncementByID($anm_id);
+  }
+
+  public function getAnnounementByCommunity(int $communityId): array{
+    return $this->ANMSqlController->getAnnouncementsByCommunity($communityId);
   }
 
 }
