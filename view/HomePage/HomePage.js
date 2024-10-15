@@ -25,11 +25,11 @@ window.onload = function() {
 
 //Create Community Popup
 document.getElementById('closeCreatePopup').addEventListener('click', closeCreatePopup);
-        document.getElementById('createPopupOverlay').addEventListener('click', function(event) {
-            if (event.target === this) {
-                closeCreatePopup();
-            }
-        });
+document.getElementById('createPopupOverlay').addEventListener('click', function(event) {
+    if (event.target === this) {
+        closeCreatePopup();
+    }
+});
 
 document.addEventListener('DOMContentLoaded', function() {
     const closeCreatePopup = document.getElementById('closeCreatePopup');
@@ -48,6 +48,7 @@ document.addEventListener('DOMContentLoaded', function() {
     tagSelect.addEventListener('change', function() {
         if (this.value) {
             addTag(this.value);
+            removeOption(this.value);
             this.value = '';
         }
     });
@@ -73,8 +74,23 @@ document.addEventListener('DOMContentLoaded', function() {
         `;
         tag.querySelector('.tag-close').addEventListener('click', function() {
             tagContainer.removeChild(tag);
+            addOption(tagText);
         });
         tagContainer.appendChild(tag);
+    }
+
+    function removeOption(value) {
+        const option = tagSelect.querySelector(`option[value="${value}"]`);
+        if (option) {
+            option.remove();
+        }
+    }
+
+    function addOption(value) {
+        const option = document.createElement('option');
+        option.value = value;
+        option.textContent = value;
+        tagSelect.appendChild(option);
     }
 });
 
@@ -83,7 +99,7 @@ function CreateSubmit() {
     const enrollKey = document.getElementById('enrollKeyInput').value;
     const tags = Array.from(document.querySelectorAll('.tag')).map(tag => tag.textContent.trim());
     const description = document.getElementById('descriptionInput').value;
-    
+
     console.log('Community Created:', {
         communityName,
         enrollKey,
@@ -91,16 +107,33 @@ function CreateSubmit() {
         description
     });
 
-    communityNameInput.value = '';  // ล้าง input ของ community name
-    enrollKeyInput.value = '';  // ล้าง input ของ enroll key
-    descriptionInput.value = '';  // ล้าง input ของ description
+    // Clear input fields after submission
+    clearCreateForm();
 
-    // ล้าง tags ทั้งหมด
-    const tagContainer = document.getElementById('tagContainer');
-    tagContainer.innerHTML = ''; // ลบ tags ที่มีอยู่
-
-    
     closeCreatePopup();
+}
+
+function clearCreateForm() {
+    document.getElementById('communityNameInput').value = '';
+    document.getElementById('enrollKeyInput').value = '';
+    document.getElementById('descriptionInput').value = '';
+
+    // Clear all tags and restore options
+    const tagContainer = document.getElementById('tagContainer');
+    const tagSelect = document.getElementById('tagSelect');
+    
+    // Restore all options
+    const defaultOptions = ['Math', 'Problem Solving', 'Coding', 'Information'];
+    tagSelect.innerHTML = '<option value="">Select Tag:</option>';
+    defaultOptions.forEach(option => {
+        const optionElement = document.createElement('option');
+        optionElement.value = option;
+        optionElement.textContent = option;
+        tagSelect.appendChild(optionElement);
+    });
+
+    // Clear tags
+    tagContainer.innerHTML = '';
 }
 
 function openCreatePopup() {
@@ -108,16 +141,17 @@ function openCreatePopup() {
 }
 
 function closeCreatePopup() {
+    clearCreateForm();
     document.getElementById('createPopupOverlay').style.display = 'none';
 }
 
-//Join Community Popup
+// Join Community Popup
 document.getElementById('closeJoinPopup').addEventListener('click', closePopupFunc);
-        document.getElementById('createPopupOverlay').addEventListener('click', function(event) {
-            if (event.target === this) {
-                closeCreatePopup();
-            }
-        });
+document.getElementById('createPopupOverlay').addEventListener('click', function(event) {
+    if (event.target === this) {
+        closeCreatePopup();
+    }
+});
 
 document.addEventListener('DOMContentLoaded', function () {
     const popupOverlay = document.getElementById('joinPopupOverlay');
@@ -126,18 +160,15 @@ document.addEventListener('DOMContentLoaded', function () {
     const enrollkeyInput = document.getElementById('enrollkeyInput');
     const communityCards = document.querySelectorAll('.discover_commu');
 
-    // Function to open the popup
     function openPopup() {
         popupOverlay.style.display = 'block';
         document.getElementById('joinPopupOverlay').style.display = 'block';
     }
 
-    // Event listeners
     communityCards.forEach(card => {
-        card.addEventListener('click', openPopup); // Open popup when the card is clicked
+        card.addEventListener('click', openPopup);
     });
 
-    // Close the popup when clicking outside the popup content
     popupOverlay.addEventListener('click', function (event) {
         if (event.target === popupOverlay) {
             closePopupFunc();
@@ -145,21 +176,19 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-// Function to close the join popup (defined globally)
 function closePopupFunc() {
     const popupOverlay = document.getElementById('joinPopupOverlay');
     popupOverlay.style.display = 'none';
+    document.getElementById('enrollkeyInput').value = '';
 }
 
-// Function to submit the join form
 function JoinSubmit() {
     const enrollkeyInput = document.getElementById('enrollkeyInput');
     const enrollkey = enrollkeyInput.value;
-    // Add your form submission logic here
+
     console.log(`Enroll key submitted: ${enrollkey}`);
 
-    // หลังจากการ Submit ล้างข้อมูลที่เคยกรอกไว้
-    enrollkeyInput.value = '';  // ล้าง input ของ enroll key
+    enrollkeyInput.value = '';
 
-    closePopupFunc(); // Close the popup after form submission
+    closePopupFunc();
 }
