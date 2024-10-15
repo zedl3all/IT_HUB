@@ -1,9 +1,9 @@
 <?php
 
-require_once '..//controller//Sql/Community_Sql_controller.php';
-require_once '..//controller//Sql//User_Sql_controller.php';
-require_once '..//model//Community.php';
-require_once '..//model//User.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/ISAD/controller/Sql/Community_Sql_controller.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/ISAD/controller/Sql//User_Sql_controller.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/ISAD/model/Community.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/ISAD/model/User.php';
 class HomePage {
     private $community_sql_controller = null;
     private $user_sql_controller = null;
