@@ -1,14 +1,87 @@
-document.getElementById('closePopup').addEventListener('click', closePopup);
+// ฟังก์ชันสำหรับเลือก Role
+function selectRole(role) {
+    const createCommunityBtn = document.querySelector('.create-community');
+
+    // Reset active class สำหรับปุ่ม role ทั้งหมด
+    document.querySelectorAll('.role-toggle button').forEach(btn => {
+        btn.classList.remove('active');
+    });
+
+    // ตั้ง active class สำหรับปุ่มที่เลือก
+    document.getElementById(role + 'Btn').classList.add('active');
+
+    // แสดงปุ่ม "Create Community" เฉพาะ Teacher
+    if (role === 'teacher') {
+        createCommunityBtn.style.display = 'inline-block';
+    } else {
+        createCommunityBtn.style.display = 'none';
+    }
+}
+
+// ตั้ง Role เริ่มต้นเป็น Student
+window.onload = function() {
+    selectRole('student');
+};
+
+//Create Community Popup
+document.getElementById('closeCreatePopup').addEventListener('click', closeCreatePopup);
         document.getElementById('createPopupOverlay').addEventListener('click', function(event) {
             if (event.target === this) {
-                closePopup();
+                closeCreatePopup();
             }
         });
+
+document.addEventListener('DOMContentLoaded', function() {
+    const closeCreatePopup = document.getElementById('closeCreatePopup');
+    const createPopupOverlay = document.getElementById('createPopupOverlay');
+    const tagSelect = document.getElementById('tagSelect');
+    const addCustomTagBtn = document.getElementById('addCustomTagBtn');
+    const customTagInput = document.getElementById('customTagInput');
+    const tagContainer = document.getElementById('tagContainer');
+
+    createPopupOverlay.addEventListener('click', function(event) {
+        if (event.target === this) {
+            closeCreatePopup();
+        }
+    });
+
+    tagSelect.addEventListener('change', function() {
+        if (this.value) {
+            addTag(this.value);
+            this.value = '';
+        }
+    });
+
+    addCustomTagBtn.addEventListener('click', function() {
+        customTagInput.style.display = customTagInput.style.display === 'none' ? 'block' : 'none';
+    });
+
+    customTagInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            addTag(this.value);
+            this.value = '';
+            this.style.display = 'none';
+        }
+    });
+
+    function addTag(tagText) {
+        const tag = document.createElement('div');
+        tag.className = 'tag';
+        tag.innerHTML = `
+            ${tagText}
+            <span class="tag-close">&times;</span>
+        `;
+        tag.querySelector('.tag-close').addEventListener('click', function() {
+            tagContainer.removeChild(tag);
+        });
+        tagContainer.appendChild(tag);
+    }
+});
 
 function CreateSubmit() {
     const communityName = document.getElementById('communityNameInput').value;
     const enrollKey = document.getElementById('enrollKeyInput').value;
-    const tags = document.getElementById('tagsInput').value;
+    const tags = Array.from(document.querySelectorAll('.tag')).map(tag => tag.textContent.trim());
     const description = document.getElementById('descriptionInput').value;
     
     console.log('Community Created:', {
@@ -18,22 +91,24 @@ function CreateSubmit() {
         description
     });
     
-    closePopup();
+    closeCreatePopup();
 }
 
-// Function to open the create popup
 function openCreatePopup() {
     document.getElementById('createPopupOverlay').style.display = 'block';
 }
 
-// Function to close the create popup
 function closeCreatePopup() {
     document.getElementById('createPopupOverlay').style.display = 'none';
 }
 
-function closePopup() {
-    document.getElementById('createPopupOverlay').style.display = 'none';
-}
+//Join Community Popup
+document.getElementById('closeJoinPopup').addEventListener('click', closePopupFunc);
+        document.getElementById('createPopupOverlay').addEventListener('click', function(event) {
+            if (event.target === this) {
+                closeCreatePopup();
+            }
+        });
 
 document.addEventListener('DOMContentLoaded', function () {
     const popupOverlay = document.getElementById('joinPopupOverlay');
@@ -52,9 +127,6 @@ document.addEventListener('DOMContentLoaded', function () {
     communityCards.forEach(card => {
         card.addEventListener('click', openPopup); // Open popup when the card is clicked
     });
-
-    // Close the popup when the close button is clicked
-    closePopup.addEventListener('click', closePopupFunc);
 
     // Close the popup when clicking outside the popup content
     popupOverlay.addEventListener('click', function (event) {

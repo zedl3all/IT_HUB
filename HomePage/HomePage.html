@@ -120,7 +120,7 @@
 
     <div class="createPopup-overlay" id="createPopupOverlay">
         <div class="createPopup" id="createPopup">
-            <span class="close" id="closePopup">&times;</span>
+            <span class="close" id="closeCreatePopup">&times;</span>
             <div class="createPopup-content">
                 <h2>Create Community</h2>
                 <p>Community name</p>
@@ -128,13 +128,18 @@
                 <p>Enroll Key</p>
                 <input type="text" placeholder="Enroll Key" id="enrollKeyInput">
                 <p>Tags</p>
-                <select>
-                        <option value="0">Select Tag:</option>
-                        <option value="1">Math</option>
-                        <option value="2">Problem Solving</option>
-                        <option value="3">Coding</option>
-                        <option value="4">Information</option>
-                </select>
+                <div class="tag-container" id="tagContainer"></div>
+                <div class="tag-input-container">
+                    <select id="tagSelect">
+                        <option value="">Select Tag:</option>
+                        <option value="Math">Math</option>
+                        <option value="Problem Solving">Problem Solving</option>
+                        <option value="Coding">Coding</option>
+                        <option value="Information">Information</option>
+                    </select>
+                    <button id="addCustomTagBtn">+</button>
+                </div>
+                <input type="text" id="customTagInput" placeholder="Add custom tag" style="display: none;">
                 <p>Description</p>
                 <textarea placeholder="Description" id="descriptionInput" rows="4"></textarea>
                 <button onclick="CreateSubmit()">Create</button>
@@ -144,7 +149,7 @@
 
     <div class="joinPopup-overlay" id="joinPopupOverlay">
         <div class="joinPopup" id="joinPopup">
-            <span class="close" id="closePopup">&times;</span>
+            <span class="close" id="closeJoinPopup">&times;</span>
             <div class="joinPopup-content">
                 <p style="font-weight: bold; font-size: 24px; margin-bottom: 8px;">Community name 1/67</p>
                 <input type="enrollkey" placeholder="Enter your enroll key." id="enrollkeyInput">
@@ -154,10 +159,10 @@
     </div>
 
     <div class="role-toggle">
-        <button class="active">Student</button>
-        <button>Teacher</button>
-        <button>TA</button>
+        <button id="studentBtn" onclick="selectRole('student')">Student</button>
+        <button id="teacherBtn" onclick="selectRole('teacher')">Teacher</button>
+        <button id="taBtn" onclick="selectRole('ta')">TA</button>
     </div>
-    <script src="HomePage.js"></script>
+    <script src="/HomePage/HomePage.js"></script>
 </body>
 </html>
