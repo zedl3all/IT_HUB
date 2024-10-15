@@ -12,7 +12,7 @@
 </head>
 <body>
     <header>
-        <div class="logo"><a href="/HomePage/HomePage.html">&lt;i&gt; Hub</a></div>
+        <div class="logo"><a href="/view/HomePage/HomePage.html">&lt;i&gt; Hub</a></div>
         <div class="search-container">
             <input type="search" class="search-input" placeholder="Search <i>Hub">
         </div>
@@ -29,11 +29,11 @@
     <div class="container">
         <!-- left side เป็นฝั่งของโดยรวม เช่น announcement จะเป็น announcement ของทุก commu ที่เราอยู่-->
         <nav class="left-sidebar">
-            <a href="/HomePage/HomePage.html" class="nav-item active">
+            <a href="/view/HomePage/HomePage.html" class="nav-item active">
                 <i class="fas fa-home"></i>
                 Home
             </a>
-            <a href="#" class="nav-item">
+            <a href="/view/AnnouncementPage/announcementPage.html" class="nav-item">
                 <i class="fas fa-bullhorn"></i>
                 Announcement
             </a>
@@ -66,7 +66,6 @@
                 </div>
             </div>
 
-            
             <!-- เป็นส่วน post content
             <div class="post-card">
                 <div class="post-header">
@@ -99,6 +98,11 @@
         <!-- right side เป็นฝั่งของ community เช่น เรียกดู announcement ของใน community ที่อยู่ ณ ตอนนั้น-->
         <div class="line-right">
             <aside class="right-sidebar">
+                <div class="settings-icon"  onclick="openEditPopup()">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M19.43 12.98c.04-.32.07-.66.07-1.01s-.03-.69-.07-1.01l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.68-.98l-.38-2.65C14.21 3.18 13.99 3 13.72 3h-3.44c-.27 0-.49.18-.53.43l-.38 2.65c-.61.25-1.16.58-1.68.98l-2.49-1c-.23-.08-.49 0-.61.22l-2 3.46c-.12.22-.07.49.12.64l2.11 1.65c-.04.32-.07.66-.07 1.01s.03.69.07 1.01l-2.11 1.65c-.19.15-.24.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1c.52.4 1.08.73 1.68.98l.38 2.65c.04.25.26.43.53.43h3.44c.27 0 .49-.18.53-.43l.38-2.65c.61-.25 1.16-.58 1.68-.98l2.49 1c.23.08.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"/>
+                    </svg>
+                </div>
                 <div class="community-image">
                     <svg viewBox="0 0 24 24">
                         <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zm-5-7l-3 3.72L9 13l-3 4h12l-4-5z"/>
@@ -125,5 +129,45 @@
             </aside>
         </div>
     </div>
+
+    <div class="editPopup-overlay" id="editPopupOverlay">
+        <div class="editPopup" id="editPopup">
+            <span class="close" id="closePopup">&times;</span>
+            <div class="editPopup-content">
+                <h2>EDIT COMMUNITY</h2>
+                <p>Community Name:</p>
+                <input type="text" id="communityNameInput" placeholder="Enter your new community name.">
+                <p>Community Description:</p>
+                <textarea id="communityDescriptionInput" placeholder="Enter your new description."></textarea>
+                <p>Tag:</p>
+                <div class="tag-container" id="tagContainer">
+                    <div class="tag">
+                        Old Tag <button class="remove-tag" onclick="removeTag(this)">×</button>
+                    </div>
+                    <div class="tag">
+                        Old Tag <button class="remove-tag" onclick="removeTag(this)">×</button>
+                    </div>
+                </div>
+                <div class="add-tag-container">
+                    <input type="text" class="add-tag-input" id="newTagInput" placeholder="Enter new tag">
+                    <button class="add-tag-button" onclick="addTag()">+</button>
+                </div>
+                <div>
+                    <button id="confirmButton" onclick="confirmEdit()">Confirm</button>
+                    <button onclick="cancelEdit()">Cancel</button>
+                    <button id="deleteButton" onclick="deleteCommunity()" style="background-color: #d9534f; display: none;">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="role-toggle">
+        <button id="studentBtn" onclick="selectRole('student')">Student</button>
+        <button id="teacherBtn" onclick="selectRole('teacher')">Teacher</button>
+        <button id="taBtn" onclick="selectRole('ta')">TA</button>
+    </div>
+
+    <script src="CommunityPage.js"></script>
 </body>
 </html>
