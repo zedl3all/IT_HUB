@@ -134,17 +134,17 @@ class Community_Sql_Controller extends SqlController {
     }
 
     public function insertsubOwner($community, $user): bool {
-        $sql = "INSERT INTO community_user (c_id, u_id, u_role) VALUES ('$community->getCommunityID()', '$user->getId()', 'SubOwner')";
+        $sql = "INSERT INTO community_user (c_id, u_id, u_role) VALUES ('$community->getCommunityID()', '$user->getUserID()', 'SubOwner')";
         return $this->query($sql);
     }
 
     public function insertOwner($community, $user): bool {
-        $sql = "INSERT INTO community_user (c_id, u_id, u_role) VALUES ('$community->getCommunityID()', '$user->getId()', 'Owner')";
+        $sql = "INSERT INTO community_user (c_id, u_id, u_role) VALUES ('$community->getCommunityID()', '$user->getUserID()', 'Owner')";
         return $this->query($sql);
     }
 
     public function getJoinedCommunities($user): array {
-        $sql = "SELECT * FROM community WHERE c_id IN (SELECT c_id FROM community_user WHERE u_id = $user->getId())";
+        $sql = "SELECT * FROM community WHERE c_id IN (SELECT c_id FROM community_user WHERE u_id = '$user->getUserID()')";
         $result = $this->query($sql);
 
         if ($result->num_rows > 0) {

@@ -31,7 +31,7 @@ class User_Sql_Controller extends SqlController {
     }
 
     public function getUserByID($id): User{
-        $sql = "SELECT * FROM user WHERE id = $id";
+        $sql = "SELECT * FROM user WHERE u_id = $id";
         $result = $this->query($sql);
 
         if ($result->num_rows > 0) {
@@ -51,7 +51,7 @@ class User_Sql_Controller extends SqlController {
     }
 
     public function getUserByUsername($username): User{
-        $sql = "SELECT * FROM user WHERE username = $username";
+        $sql = "SELECT * FROM user WHERE u_username = $username";
         $result = $this->query($sql);
 
         if ($result->num_rows > 0) {

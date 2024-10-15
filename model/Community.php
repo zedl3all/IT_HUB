@@ -1,5 +1,5 @@
 <?php
-require_once '../controller/Community_Sql_controller.php';
+require_once '../controller/Sql/Community_Sql_controller.php';
 class Community {
     private $sqlcommu;
 

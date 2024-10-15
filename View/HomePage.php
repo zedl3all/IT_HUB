@@ -1,8 +1,8 @@
 <?php
 
-require_once './/controller//Sql//Community_Sql_controller.php';
-require_once './/controller//Sql//User_Sql_controller.php';
-require_once './/model//Community.php';
+require_once '../controller/Sql/Community_Sql_controller.php';
+require_once '../controller/Sql/User_Sql_controller.php';
+require_once '../model/Community.php';
 class HomePage {
     private $community_sql_controller = null;
     private $user_sql_controller = null;
@@ -15,6 +15,7 @@ class HomePage {
         $this->community_sql_controller = new Community_Sql_controller();
         $this->user_sql_controller = new User_Sql_controller();
         $this->user = $this->user_sql_controller->getUserByID(1);
+        $this->user->getUserID();
         $this->Join_community = $this->community_sql_controller->getJoinedCommunities($this->user);
     }
 
