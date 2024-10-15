@@ -1,12 +1,12 @@
 <?php
 class User{
-    private $user_id;
-    private $firstname;
-    private $last_name;
-    private $username;
-    private $email;
-    private $role;
-    private $createdate;
+    private int $user_id;
+    private string $firstname;
+    private string $last_name;
+    private string $username;
+    private string $email;
+    private string $role;
+    private string $createdate;
 
     // public function __construct($user_id, $firstname, $last_name, $username, $email, $role, $createdate) {
     //     $this->user_id = $user_id;

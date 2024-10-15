@@ -1,9 +1,9 @@
 <?php
 
 require_once 'SqlController.php';
-require_once '../model/Community.php';
-require_once '../model/Tag.php';
-require_once '../model/User.php';
+require_once '..//model//Community.php';
+require_once '..//model//Tag.php';
+require_once '..//model//User.php';
 
 class Community_Sql_Controller extends SqlController {
     public function getCommunities(): array {
@@ -124,7 +124,7 @@ class Community_Sql_Controller extends SqlController {
     }
 
     public function removeuser($community, $user): bool {
-        $sql = "DELETE FROM community_user WHERE c_id = $community->getID() AND u_id = $user->getId()";
+        $sql = "DELETE FROM community_user WHERE c_id = $community->getID() AND u_id = {$user->getUserID()}";
         return $this->query($sql);
     }
 
@@ -134,17 +134,17 @@ class Community_Sql_Controller extends SqlController {
     }
 
     public function insertsubOwner($community, $user): bool {
-        $sql = "INSERT INTO community_user (c_id, u_id, u_role) VALUES ('$community->getCommunityID()', '$user->getUserID()', 'SubOwner')";
+        $sql = "INSERT INTO community_user (c_id, u_id, u_role) VALUES ('$community->getCommunityID()', {$user->getUserID()}, 'SubOwner')";
         return $this->query($sql);
     }
 
     public function insertOwner($community, $user): bool {
-        $sql = "INSERT INTO community_user (c_id, u_id, u_role) VALUES ('$community->getCommunityID()', '$user->getUserID()', 'Owner')";
+        $sql = "INSERT INTO community_user (c_id, u_id, u_role) VALUES ('$community->getCommunityID()', {$user->getUserID()}, 'Owner')";
         return $this->query($sql);
     }
 
     public function getJoinedCommunities($user): array {
-        $sql = "SELECT * FROM community WHERE c_id IN (SELECT c_id FROM community_user WHERE u_id = '$user->getUserID()')";
+        $sql = "SELECT * FROM community WHERE c_id IN (SELECT c_id FROM community_user WHERE u_id = {$user->getUserID()})";
         $result = $this->query($sql);
 
         if ($result->num_rows > 0) {

@@ -1,6 +1,6 @@
 <?php
 // Include the necessary files
-require_once '../User_Sql_Controller.php';
+require_once '..//User_Sql_Controller.php';
 
 // Create an instance of User_Sql_Controller
 $userController = new User_Sql_Controller();
