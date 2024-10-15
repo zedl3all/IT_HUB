@@ -2,24 +2,24 @@
 class Community {
     private $sqlcommu;
 
-    private $communityID;
-    private $communityName;
-    private $enrollKey;
-    private $tag;
-    private $c_amount_of_members = 1;
-    private $C_Owner;
-    private $C_Subowner;
-    private $C_create_date;
-    private $C_description;
-    private $C_User;
-    private $C_question;
-    private $C_announcement;
+    private int $communityID;
+    private String $communityName;
+    private String $enrollKey;
+    private array $tag;
+    private int $c_amount_of_members = 1;
+    private String $C_Owner;
+    private array $C_Subowner;
+    private String $C_create_date;
+    private String $C_description;
+    private array $C_User;
+    private array $C_question;
+    private array $C_announcement;
 
     public function __construct(){
         $this->sqlcommu = new Community_Sql_controller();
     }
 
-    public function getCommunityID(){
+    public function getCommunityID(): int{
         return $this->communityID;
     }
 
@@ -27,7 +27,7 @@ class Community {
         $this->communityID = $communityID;
     }
 
-    public function getCommunityName(){
+    public function getCommunityName(): String{
         return $this->communityName;
     }
 
@@ -35,7 +35,7 @@ class Community {
         $this->communityName = $communityName;
     }
 
-    public function getEnroll(){
+    public function getEnroll(): String{
         return $this->enrollKey;
     }
 
@@ -43,7 +43,7 @@ class Community {
         $this->enrollKey = $enrollKey;
     }
     
-    public function getOwner(){
+    public function getOwner(): String{
         return $this->C_Owner;
     }
 
@@ -51,7 +51,7 @@ class Community {
         $this->C_Owner = $C_Owner;
     }
 
-    public function getTag(){
+    public function getTag(): array{
         return $this->tag;
     }
 
@@ -59,7 +59,7 @@ class Community {
         $this->tag = $tag;
     }
 
-    public function getCommunityDescription(){
+    public function getCommunityDescription(): String{
         return $this->C_description;
     }
 
@@ -67,7 +67,7 @@ class Community {
         $this->C_description = $C_description;
     }
 
-    public function getAnnouncement(){
+    public function getAnnouncement(): array{
         return $this->C_announcement;
     }
 
@@ -75,7 +75,7 @@ class Community {
         $this->C_announcement = $C_announcement;
     }
 
-    public function getQuestion(){
+    public function getQuestion(): array{
         return $this->C_question;
     }
 
@@ -83,7 +83,7 @@ class Community {
         $this->C_question = $C_question;
     }
 
-    public function getSubOwner(){
+    public function getSubOwner(): array{
         return $this->C_Subowner;
     }
 
@@ -91,7 +91,7 @@ class Community {
         $this->C_Subowner = $C_Subowner;
     }
 
-    public function getCommunityCreateDate(){
+    public function getCommunityCreateDate(): String{
         return $this->C_create_date;
     }
 
@@ -99,14 +99,14 @@ class Community {
         $this->C_create_date = $C_create_date;
     }
 
-    public function getUser(){
+    public function getUser() :array{
         return $this->C_User;
     }
 
     public function setUser($C_User){
         $this->C_User = $C_User;
     }
-    public function checkEnrollkey($enrollKey){
+    public function checkEnrollkey($enrollKey): bool{
         return strcmp($this->enrollKey, $enrollKey);
     }
 
@@ -114,11 +114,11 @@ class Community {
         $this->sqlcommu->adduser($this, $C_User);
     }
 
-    public function getCommunityByID($communityID){
+    public function getCommunityByID($communityID): Community{
         return $this->sqlcommu->getCommunityByID($communityID);
     }
 
-    public function getAmoutOfMembers(){
+    public function getAmoutOfMembers(): int{
         return $this->c_amount_of_members;
     }
 
