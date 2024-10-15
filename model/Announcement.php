@@ -1,12 +1,12 @@
 <?php
 class Announcement{
-    private $anm_id;
-    private $title;
-    private $description;
-    private $dateCreate;
-    private $anm_tag;
-    private $anm_userId;
-    private $communityId;
+    private int $anm_id;
+    private string $title;
+    private string $description;
+    private string $dateCreate;
+    private array $anm_tag;
+    private int $anm_userId;
+    private int $communityId;
     public function setAnnouncementID(int $anm_id){
         $this->anm_id = $anm_id;
     }
