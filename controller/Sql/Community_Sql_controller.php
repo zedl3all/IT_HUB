@@ -164,7 +164,7 @@ class Community_Sql_Controller extends SqlController {
     }
 
     public function getUnJoinedCommunities($user): array {
-        $sql = "SELECT * FROM community WHERE c_id NOT IN (SELECT c_id FROM community_user WHERE u_id = $user->getId())";
+        $sql = "SELECT * FROM community WHERE c_id NOT IN (SELECT c_id FROM community_user WHERE u_id = {$user->getUserID()})";
         $result = $this->query($sql);
 
         if ($result->num_rows > 0) {

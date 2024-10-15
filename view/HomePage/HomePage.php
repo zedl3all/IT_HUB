@@ -1,31 +1,42 @@
 <?php
+// HomePage.php
 
 require_once $_SERVER['DOCUMENT_ROOT'].'/ISAD/model/Community.php';
 require_once $_SERVER['DOCUMENT_ROOT'].'/ISAD/model/User.php';
+
 class HomePage {
     private User $user;
     private array $unjoinedCommunities = [];
     private array $joinedCommunities = [];
 
+    // Getter และ Setter สำหรับ unjoinedCommunities
     public function getUnjoinedCommunities(): array {
         return $this->unjoinedCommunities;
     }
+
     public function setUnjoinedCommunities(array $unjoinedCommunities): void {
         $this->unjoinedCommunities = $unjoinedCommunities;
     }
+
+    // Getter และ Setter สำหรับ joinedCommunities
     public function getJoinedCommunities(): array {
         return $this->joinedCommunities;
     }
+
     public function setJoinedCommunities(array $joinedCommunities): void {
         $this->joinedCommunities = $joinedCommunities;
     }
+
+    // Getter และ Setter สำหรับ user
     public function getUser(): User {
         return $this->user;
     }
+
     public function setUser(User $user): void {
         $this->user = $user;
     }
 
+    // ฟังก์ชันเรนเดอร์หน้าเว็บ
     public function render() {
         echo $this->getHead();
         echo $this->getHeader();
@@ -36,13 +47,14 @@ class HomePage {
         echo $this->getScripts();
     }
 
+    // ส่วนของ head
     private function getHead(){
         return '
         <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>&lt;i&gt; Hub</title>
-            <link rel="stylesheet" href="..\view\HomePage\HomePage.css">
+            <link rel="stylesheet" href="/ISAD/view/HomePage/HomePage.css"> <!-- เปลี่ยนเป็น path ที่ถูกต้อง -->
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
             <style>
                 @import url(\'https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap\');
@@ -50,6 +62,7 @@ class HomePage {
         </head>';
     }
 
+    // ส่วนของ header
     private function getHeader() {
         return '
         <header>
@@ -70,6 +83,7 @@ class HomePage {
         </header>';
     }
 
+    // ส่วนของ container หลัก
     private function getContainer() {
         return '
         <div class="container">
@@ -88,6 +102,7 @@ class HomePage {
         </div>';
     }
 
+    // ส่วนของ My Community
     private function getMyCommunitySection() {
         if (empty($this->joinedCommunities)) {
             return '<section>
@@ -99,9 +114,9 @@ class HomePage {
         $cards = '';
         foreach ($this->joinedCommunities as $community) {
             $cards .= $this->renderCommunityCard(
-                htmlspecialchars($community->getCommunityName()),
-                htmlspecialchars($community->getAmoutOfMembers()),
-                htmlspecialchars(implode(' ', $community->getTag()))
+                $community->getCommunityName(),
+                $community->getAmoutOfMembers(),
+                implode(' ', $community->getTag())
             );
         }
         
@@ -114,6 +129,7 @@ class HomePage {
         </section>';
     }
 
+    // ส่วนของ Discover Community
     private function getDiscoverCommunitySection() {
         if (empty($this->unjoinedCommunities)) {
             return '<section>
@@ -125,9 +141,9 @@ class HomePage {
         $cards = '';
         foreach ($this->unjoinedCommunities as $community) {
             $cards .= $this->renderDiscoverCommunityCard(
-                htmlspecialchars($community->getCommunityName()),
-                htmlspecialchars($community->getAmoutOfMembers()),
-                htmlspecialchars(implode(' ', $community->getTag()))
+                $community->getCommunityName(),
+                $community->getAmoutOfMembers(),
+                implode(' ', $community->getTag())
             );
         }
     
@@ -140,6 +156,7 @@ class HomePage {
         </section>';
     }
 
+    // ฟังก์ชันสร้างการ์ดสำหรับ My Community
     private function renderCommunityCard($name, $members, $tags) {
         return '
         <div class="repeat-commu">
@@ -148,14 +165,15 @@ class HomePage {
                     <div class="community-image">
                         <i class="fas fa-image"></i>
                     </div>
-                    <div class="community-info">' . htmlspecialchars($name) . '</div>
-                    <div class="community-info">' . htmlspecialchars($members) . '</div>
-                    <div class="community-tags">' . htmlspecialchars($tags) . '</div>
+                    <div class="community-info">' . htmlspecialchars($name, ENT_QUOTES, 'UTF-8') . '</div>
+                    <div class="community-info">' . htmlspecialchars($members, ENT_QUOTES, 'UTF-8') . '</div>
+                    <div class="community-tags">' . htmlspecialchars($tags, ENT_QUOTES, 'UTF-8') . '</div>
                 </div>
             </a>
         </div>';
     }
 
+    // ฟังก์ชันสร้างการ์ดสำหรับ Discover Community
     private function renderDiscoverCommunityCard($name, $members, $tags) {
         return '
         <div class="repeat-discover_commu">
@@ -163,9 +181,9 @@ class HomePage {
                 <div class="community-image">
                     <i class="fas fa-image"></i>
                 </div>
-                <div class="community-info">' . htmlspecialchars($name) . '</div>
-                <div class="community-info">' . htmlspecialchars($members) . '</div>
-                <div class="community-tags">' . htmlspecialchars($tags) . '</div>
+                <div class="community-info">' . htmlspecialchars($name, ENT_QUOTES, 'UTF-8') . '</div>
+                <div class="community-info">' . htmlspecialchars($members, ENT_QUOTES, 'UTF-8') . '</div>
+                <div class="community-tags">' . htmlspecialchars($tags, ENT_QUOTES, 'UTF-8') . '</div>
                 <div class="locked-icon">
                     <i class="fas fa-lock"></i>
                 </div>
@@ -173,6 +191,7 @@ class HomePage {
         </div>';
     }
 
+    // ส่วนของ Create Popup
     private function getCreatePopup() {
         return '
         <div class="createPopup-overlay" id="createPopupOverlay">
@@ -205,6 +224,7 @@ class HomePage {
         </div>';
     }
 
+    // ส่วนของ Join Popup
     private function getJoinPopup() {
         return '
         <div class="joinPopup-overlay" id="joinPopupOverlay">
@@ -212,13 +232,14 @@ class HomePage {
                 <span class="close" id="closeJoinPopup">&times;</span>
                 <div class="joinPopup-content">
                     <p style="font-weight: bold; font-size: 24px; margin-bottom: 8px;">Community name 1/67</p>
-                    <input type="enrollkey" placeholder="Enter your enroll key." id="enrollkeyInput">
+                    <input type="text" placeholder="Enter your enroll key." id="enrollkeyInput"> <!-- แก้ type เป็น text -->
                     <button onclick="JoinSubmit()">Join</button>
                 </div>
             </div>
         </div>';
     }
 
+    // ส่วนของ Role Toggle
     private function getRoleToggle() {
         return '
         <div class="role-toggle">
@@ -228,12 +249,9 @@ class HomePage {
         </div>';
     }
 
+    // ส่วนของ Scripts
     private function getScripts() {
-        return '<script src="HomePage.js"></script>';
+        return '<script src="/ISAD/view/HomePage/HomePage.js"></script>'; // เปลี่ยนเป็น path ที่ถูกต้อง
     }
 }
-
-// To render the page, create an instance of HomePage and call the render method
-$page = new HomePage();
-$page->render();
 ?>
