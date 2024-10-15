@@ -1,15 +1,21 @@
 <?php
 
-require_once './/controller//Community_Sql_controller.php';
+require_once './/controller//Sql//Community_Sql_controller.php';
+require_once './/controller//Sql//User_Sql_controller.php';
 require_once './/model//Community.php';
 class HomePage {
-    private $community_sql_controller = new Community_Sql_controller();
+    private $community_sql_controller = null;
+    private $user_sql_controller = null;
     private $Join_community = [];
     private $UnJoin_community = [];
+    private $user = null;
 
     public function __construct() {
         // You can initialize any necessary properties or data here
-        $Join_community = $community_sql_controller->getJoinCommunity();
+        $this->community_sql_controller = new Community_Sql_controller();
+        $this->user_sql_controller = new User_Sql_controller();
+        $this->user = $this->user_sql_controller->getUserByID(1);
+        $this->Join_community = $this->community_sql_controller->getJoinedCommunities($this->user);
     }
 
     // This function will output the HTML content
