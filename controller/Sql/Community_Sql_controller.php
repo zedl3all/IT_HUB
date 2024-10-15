@@ -142,5 +142,45 @@ class Community_Sql_Controller extends SqlController {
         $sql = "INSERT INTO community_user (c_id, u_id, u_role) VALUES ('$community->getCommunityID()', '$user->getId()', 'Owner')";
         return $this->query($sql);
     }
+
+    public function getJoinedCommunities($user): array {
+        $sql = "SELECT * FROM community WHERE c_id IN (SELECT c_id FROM community_user WHERE u_id = $user->getId())";
+        $result = $this->query($sql);
+
+        if ($result->num_rows > 0) {
+            $communities = [];
+            while($row = $result->fetch_assoc()) {
+                $community = new Community();
+                $community->setCommunityID($row['c_id']);
+                $community->setCommunityName($row['c_name']);
+                $community->setCommunityDescription($row['c_description']);
+                $community->setCommunityCreateDate($row['c_create_date']);
+                $communities[] = $community;
+            }
+            return $communities;
+        } else {
+            return [];
+        }
+    }
+
+    public function getUnJoinedCommunities($user): array {
+        $sql = "SELECT * FROM community WHERE c_id NOT IN (SELECT c_id FROM community_user WHERE u_id = $user->getId())";
+        $result = $this->query($sql);
+
+        if ($result->num_rows > 0) {
+            $communities = [];
+            while($row = $result->fetch_assoc()) {
+                $community = new Community();
+                $community->setCommunityID($row['c_id']);
+                $community->setCommunityName($row['c_name']);
+                $community->setCommunityDescription($row['c_description']);
+                $community->setCommunityCreateDate($row['c_create_date']);
+                $communities[] = $community;
+            }
+            return $communities;
+        } else {
+            return [];
+        }
+    }
 }
 ?>
