@@ -1,11 +1,20 @@
 <?php
-require_once "../model/Community.php";
+require_once $_SERVER['DOCUMENT_ROOT'].'/ISAD/model/User.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/ISAD/view/HomePage/HomePage.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/ISAD/view/HomePage/HomePage.css';
+require_once $_SERVER['DOCUMENT_ROOT'].'/ISAD/controller/Sql/Community_Sql_Controller.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/ISAD/controller/Sql/User_Sql_Controller.php';
 class Join_Leave_Controller{
     private $commusql;
     private $user;
-    public function __construct($user){
+    private $usersql;
+    private $homepage;
+    public function __construct(){
         $this->commusql = new Community_Sql_Controller();
-        $this->user = $user;
+        $this->usersql = new User_Sql_Controller();
+        $this->user = $this->usersql->getUserByID(1);
+        $this->homepage = new HomePage();
+        $this->homepage->setJoinedCommunities($this->commusql->getJoinedCommunities($this->user));
     }
     public function getCommusql(){
         return $this->commusql;
@@ -31,6 +40,11 @@ class Join_Leave_Controller{
         $this->commusql->removeuser($community, $user);
         echo"Remove success"; //รอแก้
     }
+    public function getHomePage(){
+    return $this->homepage;
+    }
 }
+$test = new Join_Leave_Controller();
+$test->getHomePage()->render();
 
 ?>

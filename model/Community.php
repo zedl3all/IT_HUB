@@ -3,9 +3,9 @@ class Community {
     private $sqlcommu;
 
     private int $communityID;
-    private String $communityName;
+    private String $communityName = "";
     private String $enrollKey;
-    private array $tag;
+    private array $tag = [];
     private int $c_amount_of_members = 1;
     private String $C_Owner;
     private array $C_Subowner;
