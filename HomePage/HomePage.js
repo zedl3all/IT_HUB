@@ -90,6 +90,15 @@ function CreateSubmit() {
         tags,
         description
     });
+
+    communityNameInput.value = '';  // ล้าง input ของ community name
+    enrollKeyInput.value = '';  // ล้าง input ของ enroll key
+    descriptionInput.value = '';  // ล้าง input ของ description
+
+    // ล้าง tags ทั้งหมด
+    const tagContainer = document.getElementById('tagContainer');
+    tagContainer.innerHTML = ''; // ลบ tags ที่มีอยู่
+
     
     closeCreatePopup();
 }
@@ -148,5 +157,9 @@ function JoinSubmit() {
     const enrollkey = enrollkeyInput.value;
     // Add your form submission logic here
     console.log(`Enroll key submitted: ${enrollkey}`);
+
+    // หลังจากการ Submit ล้างข้อมูลที่เคยกรอกไว้
+    enrollkeyInput.value = '';  // ล้าง input ของ enroll key
+
     closePopupFunc(); // Close the popup after form submission
 }
