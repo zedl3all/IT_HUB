@@ -11,6 +11,9 @@ class Join_Leave_Controller {
     private $homepage;
 
     public function __construct(){
+        ob_start();
+        session_start();
+        $_SESSION["role"];
         $this->commusql = new Community_Sql_Controller();
         $this->usersql = new User_Sql_Controller();
         $this->user = $this->usersql->getUserByID(1); // ควรทำให้ยืดหยุ่นขึ้น (ไม่ hard-coded ID)
@@ -32,6 +35,14 @@ class Join_Leave_Controller {
 
     public function setUser($user){
         $this->user = $user;
+    }
+
+    public function getUsersql(){
+        return $this->usersql;
+    }
+
+    public function setUsersql($usersql){
+        $this->usersql = $usersql;
     }
 
     public function setCommusql($commusql){
@@ -64,4 +75,12 @@ class Join_Leave_Controller {
 // สร้าง instance ของ controller และเรนเดอร์หน้า HomePage
 $controller = new Join_Leave_Controller();
 $controller->getHomePage()->render();
+if (isset($_GET["role"])) {
+    $_SESSION["role"] = $controller->getUsersql()->getUserByID($_GET["role"]);
+    //$_SESSION["role"] = $_GET["role"];
+    header("Location: " . $_SERVER['PHP_SELF']);
+    exit(); // หยุดการทำงานของสคริปต์หลังจากส่ง header
+} else {
+}
+ob_end_flush();
 ?>

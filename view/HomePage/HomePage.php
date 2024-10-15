@@ -1,8 +1,8 @@
 <?php
 // HomePage.php
 
-require_once $_SERVER['DOCUMENT_ROOT'].'/ISAD/model/Community.php';
-require_once $_SERVER['DOCUMENT_ROOT'].'/ISAD/model/User.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/ISAD/autoload.php';
+
 
 class HomePage {
     private User $user;
@@ -241,12 +241,25 @@ class HomePage {
 
     // ส่วนของ Role Toggle
     private function getRoleToggle() {
+        $role = $_SESSION['role']->getRole();
+
         return '
-        <div class="role-toggle">
-            <button id="studentBtn" onclick="selectRole(\'student\')">Student</button>
-            <button id="teacherBtn" onclick="selectRole(\'teacher\')">Teacher</button>
-            <button id="taBtn" onclick="selectRole(\'ta\')">TA</button>
-        </div>';
+            <div class="role-toggle">
+                <form action = "/ISAD/controller/Join_Leave_Controller.php" method="GET">
+                    <button name="role" value="1">Student</button>
+                    <button name="role" value="2">Teacher</button>
+                    <button name="role" value="3">TA</button>
+                </form>
+            </div>
+            <script>
+                var role = "'.$role.'";
+                const createCommunityBtn = document.querySelector(".create-community");
+                if (role == "T"){
+                    createCommunityBtn.style.display = "inline-block";
+                }else{
+                    createCommunityBtn.style.display = "none";
+                }
+            </script>';
     }
 
     // ส่วนของ Scripts
@@ -254,4 +267,5 @@ class HomePage {
         return '<script src="/ISAD/view/HomePage/HomePage.js"></script>'; // เปลี่ยนเป็น path ที่ถูกต้อง
     }
 }
+echo $_SESSION['role']->getFirstname();
 ?>
