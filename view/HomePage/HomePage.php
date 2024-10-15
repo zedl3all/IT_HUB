@@ -241,14 +241,14 @@ class HomePage {
 
     // ส่วนของ Role Toggle
     private function getRoleToggle() {
-        $role = $_SESSION['role']->getRole();
+        $role = $_SESSION["user_use_now"]->getRole();
 
         return '
             <div class="role-toggle">
                 <form action = "/ISAD/controller/Join_Leave_Controller.php" method="GET">
-                    <button name="role" value="1">Student</button>
-                    <button name="role" value="2">Teacher</button>
-                    <button name="role" value="3">TA</button>
+                    <button class = "nick" name="role" value="1">Student</button>
+                    <button class = "nick" name="role" value="2">Teacher</button>
+                    <button class = "nick" name="role" value="3">TA</button>
                 </form>
             </div>
             <script>
@@ -259,7 +259,12 @@ class HomePage {
                 }else{
                     createCommunityBtn.style.display = "none";
                 }
-            </script>';
+            </script>
+            <style>
+                .nick:hover{
+                    background-color: #2757A1;
+                    color: white;
+                }</style>';  
     }
 
     // ส่วนของ Scripts
@@ -267,5 +272,9 @@ class HomePage {
         return '<script src="/ISAD/view/HomePage/HomePage.js"></script>'; // เปลี่ยนเป็น path ที่ถูกต้อง
     }
 }
-echo $_SESSION['role']->getFirstname();
+if ($_SESSION["user_use_now"]){
+    echo $_SESSION["user_use_now"]->getFirstname();
+    echo " Role: ";
+    echo $_SESSION["user_use_now"]->getRole();
+}
 ?>
