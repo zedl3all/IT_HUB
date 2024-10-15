@@ -18,6 +18,9 @@ class AnnouncementAccess implements IAnnouncementAccess{
   public function getAnmsByCommunity(int $communityId): array{
     return $this->anmC->getAnnounementByCommunity($communityId);
   }
+  public function insertToCommu(array $anm, Community $community){
+    $community->setAnnouncement($anm);
+  }
 }
 
 ?>
