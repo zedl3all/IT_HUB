@@ -6,10 +6,6 @@ class CommunityPage {
         echo $this->getHead();
         echo $this->getHeader();
         echo $this->getContainer();
-        echo $this->getCreatePopup();
-        echo $this->getJoinPopup();
-        echo $this->getRoleToggle();
-        echo $this->getScripts();
     }
 
     private function getHead(){
