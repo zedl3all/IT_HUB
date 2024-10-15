@@ -5,7 +5,7 @@ require_once '../model/Announcement.php';
 require_once '../model/Tag.php';
 class Announcement_Sql_Controller extends SqlController {
     public function getAnnouncements(): array {
-        $sql = "SELECT * FROM announcement";
+        $sql = "SELECT * FROM announcement ORDER BY anm_create_date DESC";
         $result = $this->query($sql);
 
         if ($result->num_rows > 0) {
@@ -25,7 +25,7 @@ class Announcement_Sql_Controller extends SqlController {
     }
 
     public function getAnnouncementByID($id): Announcement{
-        $sql = "SELECT * FROM announcement WHERE id = $id";
+        $sql = "SELECT * FROM announcement WHERE id = $id ORDER BY anm_create_date DESC";
         $result = $this->query($sql);
 
         if ($result->num_rows > 0) {
@@ -42,7 +42,7 @@ class Announcement_Sql_Controller extends SqlController {
     }
 
     public function getAnnouncementsByCommunity($c_id): array {
-        $sql = "SELECT * FROM announcement WHERE c_id = $c_id";
+        $sql = "SELECT * FROM announcement WHERE c_id = $c_id ORDER BY anm_create_date DESC";
         $result = $this->query($sql);
 
         if ($result->num_rows > 0) {

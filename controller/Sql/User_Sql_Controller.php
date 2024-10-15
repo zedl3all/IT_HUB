@@ -81,5 +81,6 @@ class User_Sql_Controller extends SqlController {
                 VALUES ('$user->getId()', '$password')";
         return $this->query($sql);
     }
+    
 }
 ?>

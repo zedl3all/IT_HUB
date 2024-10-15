@@ -1,158 +1,181 @@
-/* The `Page` class in PHP renders a home page with header, sidebar, community sections, and
-interactive popups. */
 <?php
 
-require_once "../controller/Community_Sql_controller.php";
-require_once "../model/Community.php";
-
-class Page {
-    private $sql_Community;
-    private $myCommunities;
-    private $discoverCommunities;
+require_once './/controller//Community_Sql_controller.php';
+require_once './/model//Community.php';
+class HomePage {
+    private $community_sql_controller = new Community_Sql_controller();
+    private $Join_community = [];
+    private $UnJoin_community = [];
 
     public function __construct() {
-
-        $this->sql_Community = new Community_Sql_controller();
-        // กำหนดข้อมูลชุมชน
-        $this->myCommunities = [];
-
-        $temp = $this->sql_Community->getCommunityByID(1);
-        $temp->setEnroll("1234");
-        $this->discoverCommunities = [$temp];
+        // You can initialize any necessary properties or data here
+        $Join_community = $community_sql_controller->getJoinCommunity();
     }
 
-    public function renderHeader() {
-        echo '<header>
-                <div class="logo">
-                    <a href="HomePage.php">&lt;i&gt; Hub</a>
-                </div>
-                <div class="search-container">
-                    <input type="text" class="search-input" placeholder="Search <i>Hub">
-                </div>
-                <div class="user-section">
-                    <div class="notification-bell">
-                        <i class="fas fa-bell" id="bell-icon"></i>
-                        <span class="notification-count" id="notification-count">1</span>
-                    </div>
-                    <div class="notification-icon"></div>
-                    <div class="profile-icon"></div>
-                </div>
-            </header>';
+    // This function will output the HTML content
+    public function render() {
+        echo $this->getHead();
+        echo $this->getHeader();
+        echo $this->getMainContent();
+        echo $this->getPopup();
+        echo $this->getRoleToggle();
+        echo $this->getFooter();
     }
 
-    public function renderSidebar() {
-        echo '<div class="left-sidebar">
+    private function getHead(){
+        return '
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>&lt;i&gt; Hub</title>
+            <link rel="stylesheet" href="HomePage.css">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+            <style>
+                @import url(\'https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap\');
+            </style>
+        </head>';
+    }
+
+    // Get Header Section
+    private function getHeader() {
+        return '
+        <header>
+            <div class="logo">
+                <a href="HomePage.php">&lt;i&gt; Hub</a>
+            </div>
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="Search <i>Hub">
+            </div>
+            <div class="user-section">
+                <div class="notification-bell">
+                    <i class="fas fa-bell" id="bell-icon"></i>
+                    <span class="notification-count" id="notification-count">1</span>
+                </div>
+                <div class="notification-icon"></div>
+                <div class="profile-icon"></div>
+            </div>
+        </header>';
+    }
+
+    // Get Main Content Section
+    private function getMainContent() {
+        return '
+        <div class="container">
+            <div class="left-sidebar">
                 <nav>
                     <a href="#" class="nav-item active"><i class="fas fa-home"></i> Home</a>
                     <a href="#" class="nav-item"><i class="fas fa-bullhorn"></i> Announcement</a>
                     <a href="#" class="nav-item"><i class="fas fa-user"></i> Profile Feed</a>
                 </nav>
-            </div>';
-    }
-
-    public function renderCommunity($communities) {
-        foreach ($communities as $community) {
-            if ($community->getEnroll() != "") {
-                // Community ที่มีรหัสผ่าน
-                echo '<div class="repeat-commu" onclick="openPopup(\'' . htmlspecialchars($community->getCommunityName()) . '\')">
-                        <div class="community-card">
-                            <div class="community-image">
-                                <i class="fas fa-lock"></i>
-                            </div>
-                            <div class="community-info">' . htmlspecialchars($community->getCommunityName()) . '</div>
-                            <div class="community-info">' . htmlspecialchars($community->getAmoutOfMembers()) . '</div>
-                        </div>
-                    </div>';
-            } else {
-                // Community ที่ไม่มีรหัสผ่าน
-                echo '<div class="repeat-commu">
-                        <a href="CommunityPage.php">
-                            <div class="community-card">
-                                <div class="community-image">
-                                    <i class="fas fa-image"></i>
-                                </div>
-                                <div class="community-info">' . htmlspecialchars($community->getCommunityName()) . '</div>
-                                <div class="community-info">' . htmlspecialchars($community->getAmoutOfMembers()) . '</div>
-                            </div>
-                        </a>
-                    </div>';
-            }
-        }
-    }
-
-    public function render() {
-        // HTML Header
-        echo '<!DOCTYPE html>
-              <html lang="en">
-              <head>
-                  <meta charset="UTF-8">
-                  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                  <title>Home Page</title>
-                  <link rel="stylesheet" href="HomePage.css">
-                  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-                  <style>
-                      @import url(\'https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap\');
-                  </style>
-              </head>
-              <body>';
-
-        // Render Header and Sidebar
-        $this->renderHeader();
-        echo '<div class="container">';
-        $this->renderSidebar();
-
-        // Main Content
-        echo '<main>
+            </div>
+            <main>
                 <button class="create-community">Create Community</button>
                 <section>
                     <h2 style="border-bottom: 2px solid white; padding-bottom: 16px;">My Community</h2>
-                    <div class="community-grid">';
-        $this->renderCommunity($this->myCommunities);
-        echo '      </div>
-                    </section>
-                    <section>
-                        <h2 style="border-top: 2px solid white; border-bottom: 2px solid white; margin-top: 16px; padding-top: 16px; padding-bottom: 16px;">Discover Community</h2>
-                        <div class="community-grid">';
-        $this->renderCommunity($this->discoverCommunities);
-        echo '          </div>
-                    </section>
-                </main>
-              </div>
-              <div class="popup-overlay" id="popupOverlay" style="display:none;">
-                  <div class="popup" id="popup">
-                      <span class="close" id="closePopup" onclick="closePopup()">&times;</span>
-                      <div class="popup-content">
-                          <p style="font-weight: bold; font-size: 24px; margin-bottom: 8px;" id="popupTitle">Community name</p>
-                          <input type="password" placeholder="Enter your enroll key." id="enrollkeyInput">
-                          <button onclick="submitForm()">Join</button>
-                      </div>
-                  </div>
-              </div>
-              <div class="role-toggle">
-                  <button class="active">Student</button>
-                  <button>Teacher</button>
-                  <button>TA</button>
-              </div>
-              <script>
-                  function openPopup(communityName) {
-                      document.getElementById("popupTitle").innerText = communityName;
-                      document.getElementById("popupOverlay").style.display = "block";
-                  }
+                    <div class="community-grid">
+                        ' . $this->getCommunityCards() . '
+                    </div>
+                </section>
+                <section>
+                    <h2 style="border-top: 2px solid white; border-bottom: 2px solid white; margin-top: 16px; padding-top: 16px; padding-bottom: 16px;">Discover Community</h2>
+                    <div class="community-grid">
+                        ' . $this->getDiscoverCommunityCards() . '
+                    </div>
+                </section>
+            </main>
+        </div>';
+    }
 
-                  function closePopup() {
-                      document.getElementById("popupOverlay").style.display = "none";
-                  }
+    // Get Community Cards for "My Community" section
+    private function getCommunityCards() {
+        // You can replace the below static content with dynamic data or a loop fetching community information
+        return '
+        <div class="repeat-commu">
+            <a href="CommunityPage.php">
+                <div class="community-card">
+                    <div class="community-image">
+                        <i class="fas fa-image"></i>
+                    </div>
+                    <div class="community-info">Community name</div>
+                    <div class="community-info">1/67</div>
+                </div>
+            </a>
+        </div>
+        <div class="repeat-commu">
+            <a href="CommunityPage.php">
+                <div class="community-card">
+                    <div class="community-image">
+                        <i class="fas fa-image"></i>
+                    </div>
+                    <div class="community-info">Community name</div>
+                    <div class="community-info">1/67</div>
+                </div>
+            </a>
+        </div>';
+    }
 
-                  function submitForm() {
-                      // Implement your join logic here
-                      closePopup();
-                  }
-              </script>
-              <script src="HomePage.js"></script>
-              </body>
-              </html>';
+    // Get Community Cards for "Discover Community" section
+    private function getDiscoverCommunityCards() {
+        return '
+        <div class="repeat-discover_commu">
+            <div class="community-card discover_commu">
+                <div class="community-image">
+                    <i class="fas fa-image"></i>
+                </div>
+                <div class="community-info">Community name</div>
+                <div class="community-info">1/67</div>
+                <div class="locked-icon">
+                    <i class="fas fa-lock"></i>
+                </div>
+            </div>
+        </div>
+        <div class="repeat-discover_commu">
+            <div class="community-card discover_commu">
+                <div class="community-image">
+                    <i class="fas fa-image"></i>
+                </div>
+                <div class="community-info">Community name</div>
+                <div class="community-info">1/67</div>
+                <div class="locked-icon">
+                    <i class="fas fa-lock"></i>
+                </div>
+            </div>
+        </div>';
+    }
+
+    // Get Popup Section
+    private function getPopup() {
+        return '
+        <div class="popup-overlay" id="popupOverlay">
+            <div class="popup" id="popup">
+                <span class="close" id="closePopup">&times;</span>
+                <div class="popup-content">
+                    <p style="font-weight: bold; font-size: 24px; margin-bottom: 8px;">Community name 1/67</p>
+                    <input type="enrollkey" placeholder="Enter your enroll key." id="enrollkeyInput">
+                    <button onclick="submitForm()">Join</button>
+                </div>
+            </div>
+        </div>';
+    }
+
+    // Get Role Toggle Section
+    private function getRoleToggle() {
+        return '
+        <div class="role-toggle">
+            <button class="active">Student</button>
+            <button>Teacher</button>
+            <button>TA</button>
+        </div>';
+    }
+
+    // Get Footer Section
+    private function getFooter() {
+        return '<script src="HomePage.js"></script>';
     }
 }
 
-$page = new Page();
+// Create an instance of the HomePage class
+$page = new HomePage();
 $page->render();
+
+?>
