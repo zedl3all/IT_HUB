@@ -1,8 +1,10 @@
 <?php
 
 class AnnouncementAccess implements IAnnouncementAccess{
-  private $anmC = new AnnouncementController();
-  
+  private $anmC;
+  public function __construct(){
+    $this->anmC = new AnnouncementController();
+  }
   public function createAnm(String $title, String $description, User $anm_userId, Community $communityId, array $anm_tag): Announcement{
     return $this->anmC->createAnnouncement($title, $description, $anm_userId, $communityId, $anm_tag);
   }

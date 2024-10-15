@@ -1,46 +1,50 @@
 <?php
 
-require_once 'Announcement_Sql_Controller.php';
-require_once 'model/Announcement.php';
-require_once 'model/Community.php';
-require_once 'model/User.php';
-require_once 'model/Tag.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/ISAD/controller/Sql/Announcement_Sql_Controller.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/ISAD/model/Community.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/ISAD/model/Tag.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/ISAD/model/Community.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/ISAD/model/User.php';
 
-class AnnouncementController{
-  private $ANMSqlController = new Announcement_Sql_Controller();
-  public function createAnnouncement(String $title, String $description, User $anm_userId, Community $communityId, array $anm_tag): Announcement {
-    
-    $announcement = new Announcement();
-    $announcement->setAnnouncementTitle($title);
-    $announcement->setAnnouncementDescription($description);
-    $announcement->setAnnouncementUserId($anm_userId->getUserID());
-    $announcement->setAnnouncementCommunityId($communityId->getID());
-    $announcement->setAnnouncementTag($anm_tag);
-    
-    $this->ANMSqlController->createAnnouncement($title, $description, $anm_userId->getUserID(), $communityId->getID());
-    for ($i = 0; $i < count($anm_tag); $i++) {
-      $this->ANMSqlController->addtag($announcement, $anm_tag[$i]);
+class AnnouncementController {
+    private $ANMSqlController;
+
+    public function __construct() {
+        $this->ANMSqlController = new Announcement_Sql_Controller();
     }
-    return $announcement;
 
-  }
+    public function createAnnouncement(String $title, String $description, User $anm_userId, Community $communityId, array $anm_tag): Announcement {
+        $announcement = new Announcement();
+        $announcement->setAnnouncementTitle($title);
+        $announcement->setAnnouncementDescription($description);
+        $announcement->setAnnouncementUserId($anm_userId->getUserID());
+        $announcement->setAnnouncementCommunityId($communityId->getCommunityID());
+        $announcement->setAnnouncementTag($anm_tag);
 
-  public function deleteAnnouncement(Announcement $an){
-    $this->ANMSqlController->removeAnnouncement($an);
-  } 
+        $this->ANMSqlController->createAnnouncement($title, $description, $anm_userId->getUserID(), $communityId->getCommunityID());
 
-  public function getAnnounements(): array{
-    return $this->ANMSqlController->getAnnouncements();
-  }
+        for ($i = 0; $i < count($anm_tag); $i++) {
+            $this->ANMSqlController->addtag($announcement, $anm_tag[$i]);
+        }
 
-  public function getAnnounementById(int $anm_id): Announcement{
-    return $this->ANMSqlController->getAnnouncementByID($anm_id);
-  }
+        return $announcement;
+    }
 
-  public function getAnnounementByCommunity(int $communityId): array{
-    return $this->ANMSqlController->getAnnouncementsByCommunity($communityId);
-  }
+    public function deleteAnnouncement(Announcement $an) {
+        $this->ANMSqlController->removeAnnouncement($an);
+    }
 
+    public function getAnnounements(): array {
+        return $this->ANMSqlController->getAnnouncements();
+    }
+
+    public function getAnnounementById(int $anm_id): Announcement {
+        return $this->ANMSqlController->getAnnouncementByID($anm_id);
+    }
+
+    public function getAnnounementByCommunity(int $communityId): array {
+        return $this->ANMSqlController->getAnnouncementsByCommunity($communityId);
+    }
 }
 
 ?>
