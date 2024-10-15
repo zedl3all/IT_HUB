@@ -1,10 +1,8 @@
 <?php
 // Join_Leave_Controller.php
 
-require_once $_SERVER['DOCUMENT_ROOT'].'/ISAD/model/User.php';
-require_once $_SERVER['DOCUMENT_ROOT'].'/ISAD/view/HomePage/HomePage.php';
-require_once $_SERVER['DOCUMENT_ROOT'].'/ISAD/controller/Sql/Community_Sql_Controller.php';
-require_once $_SERVER['DOCUMENT_ROOT'].'/ISAD/controller/Sql/User_Sql_Controller.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/ISAD/autoload.php';
+
 
 class Join_Leave_Controller {
     private $commusql;
