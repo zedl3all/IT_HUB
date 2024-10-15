@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <<<<<<<< HEAD:View/HomePage.css
 * {
     margin: 0;
@@ -326,6 +327,8 @@ h2 {
 .popup button:hover{
     background-color: #113e68;
 ========
+=======
+>>>>>>> ISAD_Project/View
 * {
     margin: 0;
     padding: 0;
@@ -822,5 +825,8 @@ select{
     background-color: #1963A9;
     font-size: 16px;
 
+<<<<<<< HEAD
 >>>>>>>> ISAD_Project/View:HomePage/HomePage.css
+=======
+>>>>>>> ISAD_Project/View
 }
