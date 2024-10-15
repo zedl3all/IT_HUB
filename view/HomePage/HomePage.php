@@ -1,5 +1,31 @@
 <?php
+
+require_once $_SERVER['DOCUMENT_ROOT'].'/ISAD/model/Community.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/ISAD/model/User.php';
 class HomePage {
+    private User $user;
+    private array $unjoinedCommunities = [];
+    private array $joinedCommunities = [];
+
+    public function getUnjoinedCommunities(): array {
+        return $this->unjoinedCommunities;
+    }
+    public function setUnjoinedCommunities(array $unjoinedCommunities): void {
+        $this->unjoinedCommunities = $unjoinedCommunities;
+    }
+    public function getJoinedCommunities(): array {
+        return $this->joinedCommunities;
+    }
+    public function setJoinedCommunities(array $joinedCommunities): void {
+        $this->joinedCommunities = $joinedCommunities;
+    }
+    public function getUser(): User {
+        return $this->user;
+    }
+    public function setUser(User $user): void {
+        $this->user = $user;
+    }
+
     public function render() {
         echo $this->getHead();
         echo $this->getHeader();
@@ -63,23 +89,53 @@ class HomePage {
     }
 
     private function getMyCommunitySection() {
+        if (empty($this->joinedCommunities)) {
+            return '<section>
+                        <h2 style="border-bottom: 2px solid white; padding-bottom: 16px;">My Community</h2>
+                        <p>No communities joined yet.</p>
+                    </section>';
+        }
+        
+        $cards = '';
+        foreach ($this->joinedCommunities as $community) {
+            $cards .= $this->renderCommunityCard(
+                htmlspecialchars($community->getCommunityName()),
+                htmlspecialchars($community->getAmoutOfMembers()),
+                htmlspecialchars(implode(' ', $community->getTag()))
+            );
+        }
+        
         return '
         <section>
             <h2 style="border-bottom: 2px solid white; padding-bottom: 16px;">My Community</h2>
             <div class="community-grid">
-                ' . $this->renderCommunityCard('Community name', '1/67', '#coding #information #discussion') . '
-                ' . $this->renderCommunityCard('Community name', '1/67', '#coding #information #discussion') . '
+                ' . $cards . '
             </div>
         </section>';
     }
 
     private function getDiscoverCommunitySection() {
+        if (empty($this->unjoinedCommunities)) {
+            return '<section>
+                        <h2 style="border-top: 2px solid white; border-bottom: 2px solid white; margin-top: 16px; padding-top: 16px; padding-bottom: 16px;">Discover Community</h2>
+                        <p>No communities to discover.</p>
+                    </section>';
+        }
+    
+        $cards = '';
+        foreach ($this->unjoinedCommunities as $community) {
+            $cards .= $this->renderDiscoverCommunityCard(
+                htmlspecialchars($community->getCommunityName()),
+                htmlspecialchars($community->getAmoutOfMembers()),
+                htmlspecialchars(implode(' ', $community->getTag()))
+            );
+        }
+    
         return '
         <section>
             <h2 style="border-top: 2px solid white; border-bottom: 2px solid white; margin-top: 16px; padding-top: 16px; padding-bottom: 16px;">Discover Community</h2>
             <div class="community-grid">
-                ' . $this->renderDiscoverCommunityCard('Community name', '1/67', '#coding #information #discussion') . '
-                ' . $this->renderDiscoverCommunityCard('Community name', '1/67', '#coding #information #discussion') . '
+                ' . $cards . '
             </div>
         </section>';
     }
