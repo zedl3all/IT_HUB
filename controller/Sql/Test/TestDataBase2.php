@@ -1,6 +1,6 @@
 <?php
 // Include the necessary files
-require_once '../controller/Community_Sql_Controller.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/ISAD/controller/Sql/Community_Sql_Controller.php';
 
 // Create an instance of User_Sql_Controller
 $Community_Sql_Controller = new Community_Sql_Controller();

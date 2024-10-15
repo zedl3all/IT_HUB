@@ -1,7 +1,7 @@
 <?php
 
 require_once 'SqlController.php';
-require_once '..//model//User.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/ISAD/model/User.php';
 
 class User_Sql_Controller extends SqlController {
 

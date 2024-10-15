@@ -1,8 +1,8 @@
 <?php
 
 require_once 'SqlController.php';
-require_once '../model/Announcement.php';
-require_once '../model/Tag.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'ISAD/model/Announcement.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'ISAD/model/Tag.php';
 class Announcement_Sql_Controller extends SqlController {
     public function getAnnouncements(): array {
         $sql = "SELECT * FROM announcement ORDER BY anm_create_date DESC";
