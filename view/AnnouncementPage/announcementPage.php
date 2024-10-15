@@ -86,6 +86,32 @@ class AnnouncementPage {
     private function getFooter() {
         return '';
     }
+
+    private function getpost(){
+        return '<div class="post-card">
+                    <div class="post-header">
+                        <div class="post-user">
+                            <div class="profile-icon"><i class="fas fa-bullhorn"></i></div>
+                            <strong>Announcement</strong>
+                        </div>
+                        <span class="post-time">1 days ago</span>
+                    </div>
+                    <div class="post-content">Post Content</div>
+                    <div class="post-tags">
+                        <span class="post-tag" id="tag1">#code</span>
+                        <span class="post-tag" id="tag2">#announcement</span>
+                    </div>
+                    <div class="line-post" style="border-top: 2px solid #90A7BA; margin-bottom: 8px;"></div>
+                    <div class="post-author" style="margin-bottom: 16px; margin-top: 16px;">
+                        <div class="profile-icon user-profile"><i class="fas fa-user"></i></div>
+                        <div>Post by : Firstname Lastname</div>
+                    </div>
+                    <div class="post-author">
+                        <div class="profile-icon user-profile"><i class="fa-solid fa-users"></i></div>
+                        <div>Community : Community name</div>
+                    </div>
+                </div>';
+    }
 }
 
 ?>
