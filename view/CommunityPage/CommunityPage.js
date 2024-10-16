@@ -2,26 +2,97 @@
 function selectRole(role) {
     const settingIconBtn = document.querySelector('.settings-icon');
     const deleteBtn = document.getElementById('deleteButton');
+    const editPopup = document.getElementById('editPopup');
+    const announcementBtn = document.querySelector('.announcement-btn');
+    const postTypeSelect = document.getElementById('postTypeSelect');
 
-    // Reset active class สำหรับปุ่ม role ทั้งหมด
+    // Reset active class for all role buttons
     document.querySelectorAll('.role-toggle button').forEach(btn => {
         btn.classList.remove('active');
     });
 
-    // ตั้ง active class สำหรับปุ่มที่เลือก
+    // Set active class for selected button
     document.getElementById(role + 'Btn').classList.add('active');
 
-    // แสดงปุ่ม "Create Community" เฉพาะ Teacher
     if (role === 'teacher') {
         settingIconBtn.style.display = 'inline-block';
         deleteBtn.style.display = 'inline-block';
+        announcementBtn.style.display = 'inline-block';
+        updatePostTypeOptions(['Announcement', 'Question', 'Poll']);
     } 
-    else if (role === 'ta'){
+    else if (role === 'ta') {
         settingIconBtn.style.display = 'inline-block';
         deleteBtn.style.display = 'none';
+        announcementBtn.style.display = 'inline-block';
+        updatePostTypeOptions(['Announcement', 'Question', 'Poll']);
     }
     else {
         settingIconBtn.style.display = 'none';
+        announcementBtn.style.display = 'none';
+        updatePostTypeOptions(['Question', 'Poll']);
+    }
+}
+
+function updatePostTypeOptions(options) {
+    const postTypeSelect = document.getElementById('postTypeSelect');
+    
+    postTypeSelect.innerHTML = '';
+    options.forEach(option => {
+        const optionElement = document.createElement('option');
+        optionElement.value = option.toLowerCase();
+        optionElement.textContent = option;
+        postTypeSelect.appendChild(optionElement);
+    });
+}
+
+function expandPostCreator(postType) {
+    const postCreator = document.querySelector('.post-creator');
+    const expandedPostCreator = document.querySelector('.expanded-post-creator');
+    const postTypeSelect = document.getElementById('postTypeSelect');
+
+    postCreator.style.display = 'none';
+    expandedPostCreator.style.display = 'block';
+
+    if (typeof postType === 'string') {
+        postTypeSelect.value = postType.toLowerCase();
+    } else {
+        // Set to the default value if postType is not a string
+        postTypeSelect.value = postTypeSelect.options[0].value;
+    }
+
+    // Add event listener for clicking outside
+    document.addEventListener('click', handleClickOutside);
+}
+
+function collapsePostCreator() {
+    const postCreator = document.querySelector('.post-creator');
+    const expandedPostCreator = document.querySelector('.expanded-post-creator');
+
+    postCreator.style.display = 'block';
+    expandedPostCreator.style.display = 'none';
+
+    // Remove event listener for clicking outside
+    document.removeEventListener('click', handleClickOutside);
+}
+
+function resetPostCreatorFields() {
+    document.querySelector('.post-topic').value = '';
+    document.querySelector('.post-details').value = '';
+    document.getElementById('selectedTags').innerHTML = '';
+}
+
+function handleClickOutside(event) {
+    const expandedPostCreator = document.querySelector('.expanded-post-creator');
+    const postInput = document.querySelector('.post-input');
+    const postTypeButtons = document.querySelectorAll('.post-type-btn');
+    const postTypeSelect = document.getElementById('postTypeSelect');
+
+    if (!expandedPostCreator.contains(event.target) && 
+        event.target !== postInput &&
+        !Array.from(postTypeButtons).includes(event.target) &&
+        event.target !== postTypeSelect) {
+        collapsePostCreator();
+        resetPostCreatorFields();
     }
 }
 
@@ -29,6 +100,80 @@ function selectRole(role) {
 window.onload = function() {
     selectRole('student');
 };
+
+document.addEventListener('DOMContentLoaded', function() {
+    const postCreator = document.querySelector('.post-creator');
+    const expandedPostCreator = document.querySelector('.expanded-post-creator');
+    const postInput = document.querySelector('.post-input');
+    const postTypeButton = document.getElementById('post-type-announcement');
+    const postType = document.querySelector('.post-type');
+    const closeButton = document.querySelector('.close-button');
+    const tagSelect = document.getElementById('tagSelect');
+    const selectedTags = document.getElementById('selectedTags');
+    const addCustomTagBtn = document.getElementById('addCustomTagBtn');
+    const customTagInput = document.getElementById('customTagInput');
+  
+    postInput.addEventListener('click', expandPostCreator);
+    closeButton.addEventListener('click', collapsePostCreator);
+  
+    postTypeButton.addEventListener('click', function() {
+        expandPostCreator();
+      });
+  
+    // Sample tags - replace with your actual tags
+    const initialTags = ['code', 'importants', 'exam', 'project'];
+    initialTags.forEach(tag => addOption(tag));
+
+    tagSelect.addEventListener('change', function() {
+        if (this.value) {
+            addTag(this.value);
+            removeOption(this.value);
+            this.value = '';
+        }
+    });
+
+    addCustomTagBtn.addEventListener('click', function() {
+        customTagInput.style.display = customTagInput.style.display === 'none' ? 'inline-block' : 'none';
+    });
+
+    customTagInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter' && this.value.trim()) {
+            addTag(this.value.trim());
+            this.value = '';
+            this.style.display = 'none';
+        }
+    });
+
+    function addTag(tagText) {
+        const tag = document.createElement('div');
+        tag.className = 'tag';
+        tag.innerHTML = `${tagText} <button onclick="removeTag(this)">×</button>`;
+        selectedTags.appendChild(tag);
+    }
+
+    function removeTag(button) {
+        const tag = button.parentElement;
+        const tagText = tag.textContent.trim().slice(0, -1); // ลบตัวอักษร '×'
+        addOption(tagText);
+        tag.remove();
+    }
+
+    function removeOption(value) {
+        const option = tagSelect.querySelector(`option[value="${value}"]`);
+        if (option) option.remove();
+    }
+
+    function addOption(value) {
+        if (!tagSelect.querySelector(`option[value="${value}"]`)) {
+            const option = document.createElement('option');
+            option.value = option.textContent = value;
+            tagSelect.appendChild(option);
+        }
+    }
+
+    // เพิ่มฟังก์ชัน removeTag ให้กับ window object เพื่อให้สามารถเรียกใช้จาก onclick ได้
+    window.removeTag = removeTag;
+  });
 
 let originalData = {
     name: '',

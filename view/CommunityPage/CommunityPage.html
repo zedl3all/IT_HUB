@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="CommunityPage.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
+        @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css');
     </style>
 </head>
 <body>
@@ -22,7 +23,7 @@
                 <span class="notification-count" id="notification-count">1</span>
             </div>
             <div class="notification-icon"></div>
-            <div class="profile-icon"></div>
+            <div class="profile-icon"><i class="fas fa-user"></i></i></div>
         </div>
     </header>
 
@@ -46,53 +47,94 @@
         <main class="main-content">
             <div class="post-creator">
                 <div class="create-post-header">
-                    <div class="profile-icon"><i class="fas fa-user"></i></div> <!-- รูป profile ยืด-->
-                    <input type="text" class="post-input" placeholder="Create Announcement, Question or Poll">
-                </div>
-                <hr><br>
-                <div class="post-actions">
-                    <button class="post-type-btn">
-                        <i class="fas fa-bullhorn"></i>
-                        Announcement
-                    </button>
-                    <button class="post-type-btn">
-                        <i class="fas fa-question-circle"></i>
-                        Question
-                    </button>
-                    <button class="post-type-btn">
-                        <i class="fas fa-poll"></i>
-                        Poll
-                    </button>
-                </div>
-            </div>
-
-            <!-- เป็นส่วน post content
-            <div class="post-card">
-                <div class="post-header">
-                    <div class="post-user">
-                        <div class="profile-icon"><i class="fas fa-user"></i></div>
-                        <div>
-                            <div>Firstname Lastname</div>
-                            <div class="post-time">Just now</div>
-                        </div>
+                    <div class="profile-icon">
+                        <i class="fas fa-user"></i></i>
                     </div>
-                    <i class="fas fa-ellipsis-h threedot"></i>
+                    <input type="text" class="post-input" placeholder="You can post something here.." style="height: 50px;"></input>
+                </div>
+                <hr>
+                <div class="post-actions">
+                    <button class="post-type-btn announcement-btn" id="post-type-announcement" onclick="expandPostCreator('announcement')">
+                        <i class="fas fa-bullhorn"></i> Announcement
+                    </button>
+                    <button class="post-type-btn" id="post-type-question" onclick="expandPostCreator('question')">
+                        <i class="fas fa-question-circle"></i> Question
+                    </button>
+                    <button class="post-type-btn" id="post-type-poll" onclick="expandPostCreator('poll')">
+                        <i class="fas fa-poll"></i> Poll
+                    </button>
+                </div>
+            </div>            
+              
+              <div class="expanded-post-creator" style="display: none;">
+                <div class="post-header">
+                  <div class="profile-icon">
+                    <i class="fas fa-user"></i></i>
+                  </div>
+                  <div class="profile-info">
+                    <div class="profile-name">Firstname Lastname</div>
+                    <div class="anonymous-mode" style="display: none;">
+                      <span>Anonymous Mode</span>
+                      <label class="switch">
+                        <input type="checkbox" id="anonymousToggle">
+                        <span class="slider round"></span>
+                      </label>
+                    </div>
+                  </div>
+                  <button class="close-button">×</button>
                 </div>
                 <div class="post-content">
-                    Post Content
+                  <div class="post-type-selector">
+                    <select id="postTypeSelect">
+                      <option value="announcement">Announcement</option>
+                      <option value="question">Question</option>
+                      <option value="poll">Poll</option>
+                    </select>
+                  </div>
+                  <input type="text" class="post-topic" placeholder="Add Topic...">
+                  <textarea class="post-details" placeholder="Add more details..."></textarea>
                 </div>
-                <div class="post-actions-bottom">
-                    <div class="action-btn">
-                        <i class="far fa-comment"></i>
-                        Comment
+                <div class="post-footer">
+                    <div class="tag-section">
+                        <p>Tags:</p>
+                        <div id="selectedTags" class="tag-container-post"></div>
+                        <div class="select-container">
+                            <select id="tagSelect">
+                                <option value="">Select Tag:</option>
+                            </select>
+                            <button id="addCustomTagBtn">+</button>
+                        </div>
+                        <input type="text" id="customTagInput" placeholder="Add custom tag" style="display: none;">
+                    </div>
+                    <button class="post-button">Post</button>
+                </div>
+              </div>
+
+              <div class="post-card">
+                <div class="post-header">
+                    <div class="post-user">
+                        <div class="profile-icon announcement-icon" style="margin-right: 0;">
+                            <i class="fas fa-bullhorn"></i>
+                        </div>
+                        <strong style="font-weight: bold;">Announcement</strong>
+                    </div>
+                    <span class="post-time">1 days ago</span>
+                </div>
+                <div class="post-content">
+                    <div id="Topic">Discrete Math Midterm score</div>
+                    <div id="Detail">sorry for who don't have scores announced.</div>
+                </div>
+                <div class="line-post"></div>
+                <div class="post-tags">
+                    <div class="tags-container">
+                        <span id="tag1" class="post-tag">#code</span>
+                        <span id="tag2" class="post-tag">#announcement</span>
+                    </div>
+                    <div class="mark-read-btn">
+                        <button>Mark As Read</button>
                     </div>
                 </div>
-                <div class="comment-input-container">
-                    <div class="profile-icon"><i class="fas fa-user"></i></div>
-                    <input type="text" class="comment-input" placeholder="Write a comment">
-                </div>
-            </div> -->
-
+            </div>
         </main>
         
         <!-- right side เป็นฝั่งของ community เช่น เรียกดู announcement ของใน community ที่อยู่ ณ ตอนนั้น-->
