@@ -90,7 +90,7 @@ class HomePage {
             <div class="left-sidebar">
                 <nav>
                     <a href="HomePage.html" class="nav-item active"><i class="fas fa-home"></i> Home</a>
-                    <a href="/view/AnnouncementPage/announcementPage.html" class="nav-item"><i class="fas fa-bullhorn"></i> Announcement</a>
+                    <a href="/ISAD/controller/AnnouncementController.php?Page=Anm" class="nav-item"><i class="fas fa-bullhorn"></i> Announcement</a>
                     <a href="#" class="nav-item"><i class="fas fa-user"></i> Profile Feed</a>
                 </nav>
             </div>

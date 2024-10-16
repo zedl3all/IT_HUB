@@ -1,10 +1,6 @@
 <?php
 
-require_once $_SERVER['DOCUMENT_ROOT'].'/ISAD/controller/Sql/Announcement_Sql_Controller.php';
-require_once $_SERVER['DOCUMENT_ROOT'].'/ISAD/model/Community.php';
-require_once $_SERVER['DOCUMENT_ROOT'].'/ISAD/model/Tag.php';
-require_once $_SERVER['DOCUMENT_ROOT'].'/ISAD/model/Community.php';
-require_once $_SERVER['DOCUMENT_ROOT'].'/ISAD/model/User.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/ISAD/autoload.php';
 
 class AnnouncementController {
     private $ANMSqlController;
@@ -47,4 +43,10 @@ class AnnouncementController {
     }
 }
 
+if (isset($_GET["Page"])) {
+    echo "Hello World";
+} else {
+    // Enter First Time
+    echo "Did not enter";
+}
 ?>
