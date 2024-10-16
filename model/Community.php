@@ -1,7 +1,5 @@
 <?php
 class Community {
-    private $sqlcommu;
-
     private int $communityID;
     private String $communityName = "";
     private String $enrollKey;
@@ -14,10 +12,6 @@ class Community {
     private array $C_User;
     private array $C_question;
     private array $C_announcement;
-
-    public function __construct(){
-        $this->sqlcommu = new Community_Sql_controller();
-    }
 
     public function getCommunityID(): int{
         return $this->communityID;
@@ -111,11 +105,7 @@ class Community {
     }
 
     public function insertUser($C_User){
-        $this->sqlcommu->adduser($this, $C_User);
-    }
-
-    public function getCommunityByID($communityID): Community{
-        return $this->sqlcommu->getCommunityByID($communityID);
+        array_push($this->C_User, $C_User);
     }
 
     public function getAmoutOfMembers(): int{
