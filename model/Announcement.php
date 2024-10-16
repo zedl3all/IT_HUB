@@ -4,9 +4,9 @@ class Announcement{
     private string $title;
     private string $description;
     private string $dateCreate;
-    private array $anm_tag;
-    private int $anm_userId;
-    private int $communityId;
+    private array $anm_tag = [];
+    private int $anm_userId = 0;
+    private int $communityId = 0;
     public function setAnnouncementID(int $anm_id){
         $this->anm_id = $anm_id;
     }

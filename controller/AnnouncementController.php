@@ -3,6 +3,9 @@
 require_once $_SERVER['DOCUMENT_ROOT'].'/ISAD/autoload.php';
 require_once $_SERVER['DOCUMENT_ROOT'].'/ISAD/view/AnnouncementPage/announcementPage.php';
 
+// เปิด output buffering
+ob_start();
+
 class AnnouncementController {
     private $ANMSqlController;
 
@@ -18,7 +21,7 @@ class AnnouncementController {
         $announcement->setAnnouncementCommunityId($communityId->getCommunityID());
         $announcement->setAnnouncementTag($anm_tag);
 
-        $this->ANMSqlController->createAnnouncement($title, $description, $anm_userId->getUserID(), $communityId->getCommunityID());
+        $this->ANMSqlController->createAnnouncement($title, $description, $communityId->getCommunityID(), u_id: $anm_userId->getUserID());
 
         for ($i = 0; $i < count($anm_tag); $i++) {
             $this->ANMSqlController->addtag($announcement, $anm_tag[$i]);
@@ -44,14 +47,17 @@ class AnnouncementController {
     }
 }
 
+// สร้างและเรียกใช้ AnnouncementPage
 $runPageAn = new AnnouncementPage();
 $runPageAn->render();
 
+// การตรวจสอบว่ามีค่าใน $_GET["Page"] และส่ง header
 if (isset($_GET["Page"])) {
-    echo "Hello World";
     header("Location: " . $_SERVER['PHP_SELF']);
-} else {
-    // Enter First Time
-    echo "Did not enter";
+    exit; // หยุดการทำงานหลังจากส่ง header
 }
+
+// ปิด output buffering และส่งข้อมูลที่บันทึกไว้
+ob_end_flush();
+
 ?>

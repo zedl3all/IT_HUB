@@ -2,12 +2,20 @@
 
 class AnnouncementPage {
     // This function will output the HTML content
+    private AnnouncementController $anmC;
+
+    // Constructor ที่สร้าง AnnouncementController
+    public function __construct() {
+        $this->anmC = new AnnouncementController();
+    }
+
     public function render() {
         echo '<!DOCTYPE html>';
         echo '<html lang="en">';
         echo $this->getHead();
         echo '<body>';
         echo $this->getHeader();
+        echo $this->getLeftSlideBar();
         echo $this->getMainContent();
         echo $this->getFooter();
         echo '</body>';
@@ -23,6 +31,12 @@ class AnnouncementPage {
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
             <link rel="stylesheet" href="/ISAD/view/AnnouncementPage/announcementPage.css">
             <style>
+                .post-card{
+                    margin-bottom: 30px;
+                }
+                .post-card:first-child{
+                    margin-top: 20px;
+                }   
                 @import url(\'https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap\');
             </style>
         </head>';
@@ -46,71 +60,63 @@ class AnnouncementPage {
         </header>';
     }
 
-    private function getMainContent() {
+    private function getLeftSlideBar() {
         return '
         <div class="container">
             <nav class="left-sidebar">
                 <a href="/ISAD/controller/Join_Leave_Controller.php" class="nav-item"><i class="fas fa-home"></i> Home</a>
-                <a href="/AnnouncementPage/announcementPage.html" class="nav-item active"><i class="fas fa-bullhorn"></i> Announcement</a>
+                <a href="#" class="nav-item active"><i class="fas fa-bullhorn"></i> Announcement</a>
                 <a href="#" class="nav-item"><i class="fas fa-user"></i> Profile Feed</a>
-            </nav>
-            <main class="main-content">
+            </nav>';
+    }
+
+    private function getMainContent() {
+        $announcements = $this->anmC->getAnnounements();
+        $output = '<main class="main-content">';
+    
+        if (!empty($announcements)) {
+            foreach ($announcements as $announcement) {
+                $output .= '
                 <div class="post-card">
                     <div class="post-header">
                         <div class="post-user">
                             <div class="profile-icon"><i class="fas fa-bullhorn"></i></div>
-                            <strong>Announcement</strong>
+                            <strong>' . htmlspecialchars($announcement->getAnnouncementTitle()) . '</strong>
                         </div>
-                        <span class="post-time">1 days ago</span>
+                        <span class="post-time">' . htmlspecialchars($announcement->getAnnouncementCreateDate()) . '</span>
                     </div>
-                    <div class="post-content">Post Content</div>
-                    <div class="post-tags">
-                        <span class="post-tag" id="tag1">#code</span>
-                        <span class="post-tag" id="tag2">#announcement</span>
-                    </div>
+                    <div class="post-content">' . htmlspecialchars($announcement->getAnnouncementDescription()) . '</div>
+                    <div class="post-tags">';
+                    
+                // เริ่มต้นการวนลูปเพื่อแสดง tags
+                $tags = $announcement->getAnnouncementTag(); // สมมติว่า getAnnouncementTag() คืนค่า array ของ tags
+                foreach ($tags as $tag) {
+                    $output .= '<span class="post-tag">#' . htmlspecialchars($tag) . '</span>';
+                }
+                
+                $output .= '</div>'; // ปิด div.post-tags
+                $output .= '
                     <div class="line-post" style="border-top: 2px solid #90A7BA; margin-bottom: 8px;"></div>
                     <div class="post-author" style="margin-bottom: 16px; margin-top: 16px;">
                         <div class="profile-icon user-profile"><i class="fas fa-user"></i></div>
-                        <div>Post by : Firstname Lastname</div>
+                        <div>Post by: ' . "UserId: " . htmlspecialchars($announcement->getAnnouncementUserId()) . '</div>
                     </div>
                     <div class="post-author">
                         <div class="profile-icon user-profile"><i class="fa-solid fa-users"></i></div>
-                        <div>Community : Community name</div>
+                        <div>Community: ' . "CommunityId: " . htmlspecialchars($announcement->getAnnouncementCommunityId()) . '</div>
                     </div>
-                </div>
-            </main>
-            <div style="margin-right: 264px;"></div>
-        </div>';
+                </div>'; // ปิด div.post-card
+            }
+        } else {
+            $output .= '<p>No announcements available.</p>';
+        }
+        $output .= '</main><div style="margin-right: 264px;"></div></div>';
+        return $output;
     }
+    
 
     private function getFooter() {
         return '';
-    }
-
-    private function getpost(){
-        return '<div class="post-card">
-                    <div class="post-header">
-                        <div class="post-user">
-                            <div class="profile-icon"><i class="fas fa-bullhorn"></i></div>
-                            <strong>Announcement</strong>
-                        </div>
-                        <span class="post-time">1 days ago</span>
-                    </div>
-                    <div class="post-content">Post Content</div>
-                    <div class="post-tags">
-                        <span class="post-tag" id="tag1">#code</span>
-                        <span class="post-tag" id="tag2">#announcement</span>
-                    </div>
-                    <div class="line-post" style="border-top: 2px solid #90A7BA; margin-bottom: 8px;"></div>
-                    <div class="post-author" style="margin-bottom: 16px; margin-top: 16px;">
-                        <div class="profile-icon user-profile"><i class="fas fa-user"></i></div>
-                        <div>Post by : Firstname Lastname</div>
-                    </div>
-                    <div class="post-author">
-                        <div class="profile-icon user-profile"><i class="fa-solid fa-users"></i></div>
-                        <div>Community : Community name</div>
-                    </div>
-                </div>';
     }
 }
 
