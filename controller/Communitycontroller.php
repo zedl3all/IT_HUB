@@ -8,6 +8,7 @@ class CommunityController {
     private $usersql;
     private $commupage;
     private $community;
+    private $c_id;
 
     public function __construct() {
         $this->sqlcommu = new Community_Sql_Controller();
@@ -16,21 +17,40 @@ class CommunityController {
         ob_start();
         session_start();
 
-        // Handle user session
-        if (isset($_SESSION["user_use_now"])) {
-            $this->user = $_SESSION["user_use_now"];
+        if (isset($_GET['c_id'])) {
+            $c_id = $_GET['c_id'];
+            $this->community = $this->sqlcommu->getCommunityByID($c_id);
+
+            // Use $community_id to fetch community details, for example from the database.
         } else {
-            $this->user = $this->usersql->getUserByID(1); // Default user ID
-            $_SESSION["user_use_now"] = $this->user;
+            // Handle the case where community_id is not provided
+            echo "Community ID not found!";
         }
 
-        // Handle community session
-        if (isset($_SESSION["community_id"])) {
-            $this->community = $_SESSION["community"];
+        if (isset($_GET['u_id'])) {
+            $u_id = $_GET['u_id'];
+            $this->user = $this->usersql->getUserByID($u_id);
+
+            // Use $community_id to fetch User details, for example from the database.
         } else {
-            $this->community = $this->sqlcommu->getCommunityByID(1);
-            $_SESSION["community"] = $this->community;
+            // Handle the case where community_id is not provided
+            echo "User ID not found!";
         }
+
+        // // Handle user session
+        // if (isset($_SESSION["user_use_now"])) {
+        //     $this->user = $_SESSION["user_use_now"];
+        // } else {
+        //     $this->user = $this->usersql->getUserByID(1); // Default user ID
+        //     $_SESSION["user_use_now"] = $this->user;
+        // }
+        // Handle community session
+        // if (isset($_SESSION["community_id"])) {
+        //     $this->community = $_SESSION["community"];
+        // } else {
+        //     $this->community = $this->sqlcommu->getCommunityByID($community_id);
+        //     $_SESSION["community"] = $this->community;
+        // }
 
         $announcements = $this->announcesql->getAnnouncementsByCommunity($this->community->getCommunityID());
 
