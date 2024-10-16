@@ -93,7 +93,7 @@ class AnnouncementController {
 // สร้างและเรียกใช้ AnnouncementPage
 $controller = new AnnouncementController();
 $controller->getAnnouncementPage()->render();
-$controller->createAnnouncement("Nickel", 'Helldadadadadadadadada', $_SESSION["user_use_now"], $_SESSION["community"], []);
+// $controller->createAnnouncement("Nickel", 'Helldadadadadadadadada', $_SESSION["user_use_now"], $_SESSION["community"], []);
 // การตรวจสอบว่ามีค่าใน $_GET["Page"] และส่ง header
 if (isset($_GET["Page"])) {
     header("Location: " . $_SERVER['PHP_SELF']);
