@@ -241,7 +241,19 @@ class CommunityPage {
                 </div>
                 <div class="community-info">
                     <p>Now you are in the</p>
-                    <div class="community-name">' . htmlspecialchars($this->community->getCommunityName()) . '</div><hr>
+
+                    <div class="community-name-wrapper">
+                        <div class="community-name">' . htmlspecialchars($this->community->getCommunityName()) . '</div>
+                        <i class="fa-solid fa-ellipsis" onclick="toggleLeaveOption()"></i>
+                    </div>
+    
+                    <div id="leave-option" class="leave-option hidden">
+                        <div class="leave-header">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span>Leave Community</span>
+                        </div>
+                    </div>
+
                     <div class="sidebar-actions">
                         <a href="#" class="sidebar-action">
                             <i class="fas fa-bullhorn"></i>
