@@ -1,8 +1,7 @@
 <?php
 require_once 'SqlController.php';
-require_once $_SERVER['DOCUMENT_ROOT'].'ISAD/model/Tag.php';
-require_once $_SERVER['DOCUMENT_ROOT'].'ISAD/model/Community.php';
-require_once $_SERVER['DOCUMENT_ROOT'].'ISAD/model/Announcement.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/ISAD/autoload.php';
+
 class Tag_Sql_Controller extends SqlController {
     public function getTags(): array {
         $sql = "SELECT * FROM tag";
@@ -22,7 +21,7 @@ class Tag_Sql_Controller extends SqlController {
         }
     }
 
-    public function getTagByID($id): Tag{
+    public function getTagByID(int $id): Tag{
         $sql = "SELECT * FROM tag WHERE t_id = $id";
         $result = $this->query($sql);
 
@@ -37,7 +36,7 @@ class Tag_Sql_Controller extends SqlController {
         }
     }
 
-    public function getTagByName($name): Tag{
+    public function getTagByName(string $name): Tag{
         $sql = "SELECT * FROM tag WHERE t_name = $name";
         $result = $this->query($sql);
 
@@ -52,13 +51,13 @@ class Tag_Sql_Controller extends SqlController {
         }
     }
 
-    public function createTag($name, $description): bool {
+    public function createTag(string $name, string $description): bool {
         $sql = "INSERT INTO tag (t_name, t_description) VALUES ('$name', '$description')";
         return $this->query($sql);
     }
 
-    public function getTagByCommunity($commu): array {
-        $sql = "SELECT * FROM tag WHERE t_id IN (SELECT t_id FROM community_tag WHERE c_id = $commu->getCommuID())";
+    public function getTagByCommunity(Community $commu): array {
+        $sql = "SELECT * FROM tag WHERE t_id IN (SELECT t_id FROM community_tag WHERE c_id = {$commu->getCommunityID()})";
         $result = $this->query($sql);
 
         if ($result->num_rows > 0) {
@@ -75,8 +74,8 @@ class Tag_Sql_Controller extends SqlController {
         }
     }
 
-    public function getTagByAnnouncement($anm): array {
-        $sql = "SELECT * FROM tag WHERE t_id IN (SELECT t_id FROM announcement_tag WHERE anm_id = $anm->getAnmID())";
+    public function getTagByAnnouncement(Announcement $anm): array {
+        $sql = "SELECT * FROM tag WHERE t_id IN (SELECT t_id FROM announcement_tag WHERE anm_id = {$anm->getAnnouncementID()})";
         $result = $this->query($sql);
 
         if ($result->num_rows > 0) {

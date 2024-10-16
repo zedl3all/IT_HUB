@@ -1,9 +1,7 @@
 <?php
 
 require_once 'SqlController.php';
-require_once $_SERVER['DOCUMENT_ROOT'].'/ISAD/model/Community.php';
-require_once $_SERVER['DOCUMENT_ROOT'].'/ISAD/model/Tag.php';
-require_once $_SERVER['DOCUMENT_ROOT'].'/ISAD/model/User.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/ISAD/autoload.php';
 
 class Community_Sql_Controller extends SqlController {
     public function getCommunities(): array {
@@ -26,7 +24,7 @@ class Community_Sql_Controller extends SqlController {
         }
     }
 
-    public function getCommunityByID($id): Community{
+    public function getCommunityByID(int $id): Community{
         $sql = "SELECT * FROM community WHERE c_id = $id";
         $result = $this->query($sql);
 
@@ -43,7 +41,7 @@ class Community_Sql_Controller extends SqlController {
         }
     }
 
-    public function getCommunityByName($name): Community{
+    public function getCommunityByName(string $name): Community{
         $sql = "SELECT * FROM community WHERE c_name = $name";
         $result = $this->query($sql);
 
@@ -60,8 +58,8 @@ class Community_Sql_Controller extends SqlController {
         }
     }
 
-    public function getCommunityByLast($user): Community{
-        $sql = "SELECT * FROM community WHERE c_create_date = (SELECT MAX(c_create_date) FROM community WHERE u_id = $user->getId())";
+    public function getCommunityByLast(User $user): Community{
+        $sql = "SELECT * FROM community WHERE c_create_date = (SELECT MAX(c_create_date) FROM community WHERE u_id = {$user->getUserID()})";
         $result = $this->query($sql);
 
         if ($result->num_rows > 0) {
@@ -77,24 +75,24 @@ class Community_Sql_Controller extends SqlController {
         }
     }
 
-    public function createCommunity($name, $description, $user): bool {
-        $sql = "INSERT INTO community (c_name, c_description, u_id) VALUES ('$name', '$description', $user->getId())";
+    public function createCommunity(string $name, string $description, User $user): bool {
+        $sql = "INSERT INTO community (c_name, c_description, u_id) VALUES ('$name', '$description', {$user->getUserID()})";
         return $this->query($sql);
     }
 
-    public function addenrollkey($community, $enrollkey): bool {
-        $sql = "INSERT INTO community_enroll (c_id, ce_enrollkey) VALUES ('$community->getCommunityID()', '$enrollkey')";
+    public function addenrollkey(Community $community, string $enrollkey): bool {
+        $sql = "INSERT INTO community_enroll (c_id, ce_enrollkey) VALUES ('{$community->getCommunityID()}', '$enrollkey')";
         return $this->query($sql);
     }
 
-    public function getenrollkey($community): string {
-        $sql = "SELECT ce_enrollkey FROM community_enroll WHERE c_id = $community->getCommunityID()";
+    public function getenrollkey(Community $community): string {
+        $sql = "SELECT ce_enrollkey FROM community_enroll WHERE c_id = {$community->getCommunityID()}";
         return $this->query($sql);
     }
 
-    public function addtag($community, $tag): bool {
-        foreach ($tag as $t) {
-            $sql = "INSERT INTO community_tag (c_id, t_id) VALUES ('$community->getID()', '$t->getID()')";
+    public function addtag(Community $community, array $tags): bool {
+        foreach ($tags as $t) {
+            $sql = "INSERT INTO community_tag (c_id, t_id) VALUES ('{$community->getCommunityID()}', '{$t->getTagID()}')";
             if (!$this->query($sql)) {
                 return false;
             }
@@ -102,48 +100,47 @@ class Community_Sql_Controller extends SqlController {
         return true;
     }
 
-    public function adduser($community, $user): bool {
-        $sql = "INSERT INTO community_user (c_id, u_id, u_role) VALUES ('$community->getID()', '$user->getId()', 'Member')";
+    public function adduser(Community $community, User $user): bool {
+        $sql = "INSERT INTO community_user (c_id, u_id, u_role) VALUES ('{$community->getCommunityID()}', '{$user->getUserID()}', 'Member')";
         return $this->query($sql);
     }
 
-    public function editCommunity($community, $name, $description): bool {
-        $sql = "UPDATE community SET c_name = '$name', c_description = '$description' WHERE c_id = $community->getCommunityID()";
+    public function editCommunity(Community $community, string $name, string $description): bool {
+        $sql = "UPDATE community SET c_name = '$name', c_description = '$description' WHERE c_id = {$community->getCommunityID()}";
         return $this->query($sql);
     }
 
-    private function deletetag($community): bool {
-        $sql = "DELETE FROM community_tag WHERE c_id = $community->getID()";
+    private function deletetag(Community $community): bool {
+        $sql = "DELETE FROM community_tag WHERE c_id = {$community->getCommunityID()}";
         return $this->query($sql);
     }
 
-    public function edittag($community, $tag): bool {
+    public function edittag(Community $community, array $tag): bool {
         $this->deletetag($community);
-        $sql = "INSERT INTO community_tag (c_id, t_id) VALUES ('$community->getID()', '$tag->getID()')";
+        return $this->addtag($community, $tag);
+    }
+
+    public function removeuser(Community $community, User $user): bool {
+        $sql = "DELETE FROM community_user WHERE c_id = {$community->getCommunityID()} AND u_id = {$user->getUserID()}";
         return $this->query($sql);
     }
 
-    public function removeuser($community, $user): bool {
-        $sql = "DELETE FROM community_user WHERE c_id = $community->getID() AND u_id = {$user->getUserID()}";
+    public function deleteCommunity(Community $community): bool {
+        $sql = "DELETE FROM community WHERE c_id = {$community->getCommunityID()}";
         return $this->query($sql);
     }
 
-    public function deleteCommunity($community): bool {
-        $sql = "DELETE FROM community WHERE c_id = $community->getCommunityID()";
+    public function insertsubOwner(Community $community, User $user): bool {
+        $sql = "INSERT INTO community_user (c_id, u_id, u_role) VALUES ('{$community->getCommunityID()}', {$user->getUserID()}, 'SubOwner')";
         return $this->query($sql);
     }
 
-    public function insertsubOwner($community, $user): bool {
-        $sql = "INSERT INTO community_user (c_id, u_id, u_role) VALUES ('$community->getCommunityID()', {$user->getUserID()}, 'SubOwner')";
+    public function insertOwner(Community $community, User $user): bool {
+        $sql = "INSERT INTO community_user (c_id, u_id, u_role) VALUES ('{$community->getCommunityID()}', {$user->getUserID()}, 'Owner')";
         return $this->query($sql);
     }
 
-    public function insertOwner($community, $user): bool {
-        $sql = "INSERT INTO community_user (c_id, u_id, u_role) VALUES ('$community->getCommunityID()', {$user->getUserID()}, 'Owner')";
-        return $this->query($sql);
-    }
-
-    public function getJoinedCommunities($user): array {
+    public function getJoinedCommunities(User $user): array {
         $sql = "SELECT * FROM community WHERE c_id IN (SELECT c_id FROM community_user WHERE u_id = {$user->getUserID()})";
         $result = $this->query($sql);
 
@@ -163,7 +160,7 @@ class Community_Sql_Controller extends SqlController {
         }
     }
 
-    public function getUnJoinedCommunities($user): array {
+    public function getUnJoinedCommunities(User $user): array {
         $sql = "SELECT * FROM community WHERE c_id NOT IN (SELECT c_id FROM community_user WHERE u_id = {$user->getUserID()})";
         $result = $this->query($sql);
 

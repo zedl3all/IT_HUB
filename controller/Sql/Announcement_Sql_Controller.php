@@ -1,8 +1,7 @@
 <?php
 
 require_once 'SqlController.php';
-require_once $_SERVER['DOCUMENT_ROOT'].'/ISAD/model/Announcement.php';
-require_once $_SERVER['DOCUMENT_ROOT'].'/ISAD/model/Tag.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/ISAD/autoload.php';
 class Announcement_Sql_Controller extends SqlController {
     public function getAnnouncements(): array {
         $sql = "SELECT * FROM announcement ORDER BY anm_create_date DESC";
@@ -24,7 +23,7 @@ class Announcement_Sql_Controller extends SqlController {
         }
     }
 
-    public function getAnnouncementByID($id): Announcement{
+    public function getAnnouncementByID(int $id): Announcement{
         $sql = "SELECT * FROM announcement WHERE id = $id ORDER BY anm_create_date DESC";
         $result = $this->query($sql);
 
@@ -41,7 +40,7 @@ class Announcement_Sql_Controller extends SqlController {
         }
     }
 
-    public function getAnnouncementsByCommunity($c_id): array {
+    public function getAnnouncementsByCommunity(int $c_id): array {
         $sql = "SELECT * FROM announcement WHERE c_id = $c_id ORDER BY anm_create_date DESC";
         $result = $this->query($sql);
 
@@ -61,18 +60,23 @@ class Announcement_Sql_Controller extends SqlController {
         }
     }
 
-    public function createAnnouncement($name, $discription, $c_id, $u_id): bool {
+    public function createAnnouncement(string $name, string $discription, int $c_id, int $u_id): bool {
         $sql = "INSERT INTO announcement (anm_name, anm_description, c_id, u_id) VALUES ('$name', '$discription', $c_id, $u_id)";
         return $this->query($sql);
     }
 
-    public function addtag($announcement, $tag): bool {
-        $sql = "INSERT INTO announcement_tag (anm_id, t_id) VALUES ($announcement->getAnnouncementID(), $tag->getTagID())";
-        return $this->query($sql);
+    public function addtag(Announcement $announcement, array $tags): bool {
+        foreach ($tags as $t) {
+            $sql = "INSERT INTO announcement_tag (anm_id, t_id) VALUES ('{$announcement->getAnnouncementID()}', '{$t->getTagID()}')";
+            if (!$this->query($sql)) {
+                return false;
+            }
+        }
+        return true;
     }
 
-    public function removeAnnouncement($announcement): bool {
-        $sql = "DELETE FROM announcement WHERE anm_id = $announcement->getAnnouncementID()";
+    public function removeAnnouncement(Announcement $announcement): bool {
+        $sql = "DELETE FROM announcement WHERE anm_id = {$announcement->getAnnouncementID()}";
         return $this->query($sql);
     }
 

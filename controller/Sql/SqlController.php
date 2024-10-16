@@ -16,12 +16,12 @@ class SqlController {
     }
 
     // ฟังก์ชันพื้นฐานสำหรับการดำเนินการกับฐานข้อมูล
-    public function query($sql) {
+    public function query(string $sql) {
         return $this->db->query($sql);
     }
 
     // ฟังก์ชันอื่นๆ ที่จำเป็น
-    public function escape($string) {
+    public function escape(string $string) {
         return $this->db->real_escape_string($string);
     }
 

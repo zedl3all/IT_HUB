@@ -1,8 +1,6 @@
 <?php
 require_once 'SqlController.php';
-require_once $_SERVER['DOCUMENT_ROOT'].'ISAD/model/Notification.php';
-require_once $_SERVER['DOCUMENT_ROOT'].'ISAD/model/Community.php';
-require_once $_SERVER['DOCUMENT_ROOT'].'ISAD/model/User.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/ISAD/autoload.php';
 class Notification_Sql_Controller extends SqlController {
     public function getNotifications(): array {
         $sql = "SELECT * FROM notification";
@@ -25,7 +23,7 @@ class Notification_Sql_Controller extends SqlController {
         }
     }
 
-    public function getNotificationByID($id): Notification{
+    public function getNotificationByID(int $id): Notification{
         $sql = "SELECT * FROM notification WHERE id = $id";
         $result = $this->query($sql);
 
@@ -43,8 +41,8 @@ class Notification_Sql_Controller extends SqlController {
         }
     }
 
-    public function getNotificationsByCommu($commu): array {
-        $sql = "SELECT * FROM notification WHERE c_id = $commu->getCommuID()";
+    public function getNotificationsByCommu(Community $commu): array {
+        $sql = "SELECT * FROM notification WHERE c_id = {$commu->getCommunityID()}";
         $result = $this->query($sql);
 
         if ($result->num_rows > 0) {
@@ -64,8 +62,8 @@ class Notification_Sql_Controller extends SqlController {
         }
     }
 
-    public function getNotificationsByUser($user): array {
-        $sql = "SELECT * FROM notification WHERE u_id = $user->getUserID()";
+    public function getNotificationsByUser(User $user): array {
+        $sql = "SELECT * FROM notification WHERE u_id = {$user->getUserID()}";
         $result = $this->query($sql);
 
         if ($result->num_rows > 0) {
@@ -85,8 +83,8 @@ class Notification_Sql_Controller extends SqlController {
         }
     }
 
-    public function getUnseenNotificationsByUser($user): array {
-        $sql = "SELECT * FROM notification WHERE u_id = $user->getUserID() AND n_is_seen = 0";
+    public function getUnseenNotificationsByUser(User $user): array {
+        $sql = "SELECT * FROM notification WHERE u_id = {$user->getUserID()} AND n_is_seen = 0";
         $result = $this->query($sql);
 
         if ($result->num_rows > 0) {
@@ -106,8 +104,8 @@ class Notification_Sql_Controller extends SqlController {
         }
     }
 
-    public function getSeenNotificationsByUser($user): array {
-        $sql = "SELECT * FROM notification WHERE u_id = $user->getUserID() AND n_is_seen = 1";
+    public function getSeenNotificationsByUser(User $user): array {
+        $sql = "SELECT * FROM notification WHERE u_id = {$user->getUserID()} AND n_is_seen = 1";
         $result = $this->query($sql);
 
         if ($result->num_rows > 0) {
@@ -127,12 +125,12 @@ class Notification_Sql_Controller extends SqlController {
         }
     }
 
-    public function setSeenNotification($notification): bool {
-        $sql = "UPDATE notification SET n_is_seen = 1 WHERE n_id = $notification->getNotiID()";
+    public function setSeenNotification(Notification $notification): bool {
+        $sql = "UPDATE notification SET n_is_seen = 1 WHERE n_id = {$notification->getNotificationId()}";
         return $this->query($sql);
     }
 
-    public function createNotification($c_id, $u_id, $anm_id, $n_is_seen): bool {
+    public function createNotification(int $c_id, int $u_id, int $anm_id, bool $n_is_seen): bool {
         $sql = "INSERT INTO notification (c_id, u_id, anm_id, n_is_seen) VALUES ($c_id, $u_id, $anm_id, $n_is_seen)";
         return $this->query($sql);
     }

@@ -1,7 +1,7 @@
 <?php
 
 require_once 'SqlController.php';
-require_once $_SERVER['DOCUMENT_ROOT'].'/ISAD/model/User.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/ISAD/autoload.php';
 
 class User_Sql_Controller extends SqlController {
 
@@ -30,7 +30,7 @@ class User_Sql_Controller extends SqlController {
         }
     }
 
-    public function getUserByID($id): User{
+    public function getUserByID(int $id): User{
         $sql = "SELECT * FROM user WHERE u_id = $id";
         $result = $this->query($sql);
 
@@ -50,7 +50,7 @@ class User_Sql_Controller extends SqlController {
         }
     }
 
-    public function getUserByUsername($username): User{
+    public function getUserByUsername(string $username): User{
         $sql = "SELECT * FROM user WHERE u_username = $username";
         $result = $this->query($sql);
 
@@ -70,15 +70,15 @@ class User_Sql_Controller extends SqlController {
         }
     }
 
-    public function createUser($name, $lastname, $username, $email, $role, $createdate): bool {
-        $sql = "INSERT INTO user (u_name, u_lastname, u_username, u_email, u_role, u_create_date) 
-                VALUES ('$name', '$lastname', '$username', '$email', '$role', '$createdate')";
+    public function createUser(string $name, string $lastname, string $username, string $email, string $role): bool {
+        $sql = "INSERT INTO user (u_name, u_lastname, u_username, u_email, u_role) 
+                VALUES ('$name', '$lastname', '$username', '$email', '$role')";
         return $this->query($sql);
     }
 
-    public function addPassword($user, $password): bool {
+    public function addPassword(User $user, string $password): bool {
         $sql = "INSERT INTO user_password (u_id, password)
-                VALUES ('$user->getId()', '$password')";
+                VALUES ('{$user->getUserID()}', '$password')";
         return $this->query($sql);
     }
     
