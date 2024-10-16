@@ -23,6 +23,10 @@ class CommunityPage {
         return $this->user;
     }
 
+    private function getUserFNametoShow() {
+        return htmlspecialchars($this->getUser()->getFirstname() . ' ' . $this->getUser()->getLastname());
+    }
+
     public function setUser(User $user): void {
         $this->user = $user;
     }
@@ -147,7 +151,7 @@ class CommunityPage {
                     <i class="fas fa-user"></i>
                 </div>
                 <div class="profile-info">
-                    <div class="profile-name">Firstname Lastname</div>
+                    <div class="profile-name">' . $this->getUserFNametoShow() . '</div>
                     <div class="anonymous-mode" style="display: none;">
                         <span>Anonymous Mode</span>
                         <label class="switch">
