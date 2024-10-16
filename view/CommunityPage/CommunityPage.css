@@ -558,10 +558,53 @@ hr{
     margin-bottom: 2rem;
 }
 
+.community-name-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
 .community-name {
     color: #DC5F00;
-    margin-bottom: 1rem;
     font-weight: bold;
+}
+
+.fa-ellipsis {
+    margin-left: 8px; 
+    color: #1864AB;
+    cursor: pointer;
+}
+
+.leave-option {
+    position: absolute;
+    top: 285px; 
+    right: 30px; 
+    width: 220px; 
+    padding: 1rem;
+    background-color: #F2F2F2;
+    border: 1px solid #CCCCCC;
+    border-radius: 10px;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 101;
+    display: none;
+    cursor: pointer;
+}
+
+.leave-header {
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    color: #2757A1;
+    font-size: 16px;
+}
+
+.leave-header i {
+    margin-right: 10px;
+}
+
+.leave-header span::selection {
+    border: none;
 }
 
 .right-sidebar hr{
