@@ -203,6 +203,7 @@ function addTag() {
         const tagContainer = document.getElementById('tagContainer');
         const newTag = document.createElement('div');
         newTag.className = 'tag';
+        tag.setAttribute('name', 'list-tag');
         newTag.innerHTML = `${tagName} <button class="remove-tag" onclick="removeTag(this)">×</button>`;
         tagContainer.appendChild(newTag);
         newTagInput.value = '';
