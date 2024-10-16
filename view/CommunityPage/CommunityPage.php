@@ -13,6 +13,7 @@ class CommunityPage {
         echo $this->getHeader();
         echo $this->getContainer();
         echo $this->getFooter();
+        echo $this->getScripts();
         echo '</body>';
         echo '</html>';
     }
@@ -114,7 +115,6 @@ class CommunityPage {
         return '
         <main class="main-content">
             ' . $this->getPostCreator() . '
-            ' . $this->getExpandedPostCreator() . '
             ' . $this->getPostAnnouncements() . '
         </main>';
     }
@@ -140,11 +140,7 @@ class CommunityPage {
                     <i class="fas fa-poll"></i> Poll
                 </button>
             </div>
-        </div>';
-    }
-
-    private function getExpandedPostCreator() {
-        return '
+        </div>
         <div class="expanded-post-creator" style="display: none;">
             <div class="post-header">
                 <div class="profile-icon">
@@ -291,6 +287,11 @@ class CommunityPage {
         <footer>
             <p>&copy; 2023 Community Page</p>
         </footer>';
+    }
+
+    // ส่วนของ Scripts
+    private function getScripts() {
+        return '<script src="/ISAD/view/CommunityPage/CommunityPage.js"></script>'; // เปลี่ยนเป็น path ที่ถูกต้อง
     }
 }
 
