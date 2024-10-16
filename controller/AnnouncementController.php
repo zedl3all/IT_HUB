@@ -1,7 +1,6 @@
 <?php
 
 require_once $_SERVER['DOCUMENT_ROOT'].'/ISAD/autoload.php';
-require_once $_SERVER['DOCUMENT_ROOT'].'/ISAD/view/AnnouncementPage/announcementPage.php';
 
 // เปิด output buffering
 ob_start();
@@ -91,8 +90,6 @@ class AnnouncementController {
 }
 
 // สร้างและเรียกใช้ AnnouncementPage
-$controller = new AnnouncementController();
-$controller->getAnnouncementPage()->render();
 // $controller->createAnnouncement("Nickel", 'Helldadadadadadadadada', $_SESSION["user_use_now"], $_SESSION["community"], []);
 // การตรวจสอบว่ามีค่าใน $_GET["Page"] และส่ง header
 if (isset($_GET["Page"])) {

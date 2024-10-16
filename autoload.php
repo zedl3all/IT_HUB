@@ -7,6 +7,8 @@ spl_autoload_register(function ($class_name) {
         $_SERVER['DOCUMENT_ROOT'].'/ISAD/view/HomePage/',
         $_SERVER['DOCUMENT_ROOT'].'/ISAD/controller/Sql/',
         $_SERVER['DOCUMENT_ROOT'].'/ISAD/view/CommunityPage/',
+        $_SERVER['DOCUMENT_ROOT'].'/ISAD/view/AnnouncementPage/',
+        $_SERVER['DOCUMENT_ROOT'].'/ISAD/view/CommunityPage/',
         // เพิ่ม path อื่นๆ ตามที่จำเป็น
     ];
 

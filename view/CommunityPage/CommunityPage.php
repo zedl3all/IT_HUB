@@ -99,7 +99,7 @@ class CommunityPage {
                 <i class="fas fa-home"></i>
                 Home
             </a>
-            <a href="/ISAD/controller/AnnouncementController.php" class="nav-item">
+            <a href="/ISAD/controller/Community_ANM_Controller.php" class="nav-item">
                 <i class="fas fa-bullhorn"></i>
                 Announcement
             </a>

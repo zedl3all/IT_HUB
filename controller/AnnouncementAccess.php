@@ -1,9 +1,13 @@
 <?php
 
+require_once $_SERVER['DOCUMENT_ROOT'].'/ISAD/autoload.php';
+require_once 'IAnnouncementAccess.php';
+require_once 'AnnouncementController.php';
 class AnnouncementAccess implements IAnnouncementAccess{
   private $anmC;
   public function __construct(){
     $this->anmC = new AnnouncementController();
+    $this->anmC->getAnnouncementPage()->render();
   }
   public function createAnm(String $title, String $description, User $anm_userId, Community $communityId, array $anm_tag): Announcement{
     return $this->anmC->createAnnouncement($title, $description, $anm_userId, $communityId, $anm_tag);
@@ -24,5 +28,4 @@ class AnnouncementAccess implements IAnnouncementAccess{
     $community->setAnnouncement($anm);
   }
 }
-
 ?>
