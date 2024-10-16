@@ -1,31 +1,35 @@
 <?php
-require_once '../model/Community.php';
-require_once 'Community_Sql_controller.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/ISAD/autoload.php';
 class CommunityController {
-    private $sqlcommu = new Community_Sql_controller;
+    private $sqlcommu;
+
+    public function __construct()
+    {
+        $this->sqlcommu = new Community_Sql_controller();
+    }
 
     public function create_commu(String $name, String $enroll, String $description, User $owner, Tag $tag): Community{
         $community = new Community();
-        $community->setName($name);
-        $community->setDescription($description);
+        $community->setCommunityName($name);
+        $community->setCommunityDescription($description);
         $community->setEnroll($enroll);
-        $community->setOwner($owner>getUserID());
-        $community->setTag($tag->getTag());
+        $community->setOwner($owner);
+        $community->setTag($tag);
 
         $this->sqlcommu->createCommunity($name, $description, $owner);
         $this->sqlcommu->addenrollkey($community, $enroll);
         $this->sqlcommu->addtag($community, $tag);
 
+        return $community;
     }
 
     public function delete_commu(Community $community){
         $this->sqlcommu->deleteCommunity($community);
     }
 
-    public function edit_commu($name, $description, $tag){
-        $community = $this->sqlcommu->getCommunityByID($id);
-        $community->setName($name);
-        $community->setDescription($description);
+    public function edit_commu($community, $name, $description, $tag){
+        $community->setCommunityName($name);
+        $community->setCommunityDescription($description);
         $community->setTag($tag->getTag());
         $this->sqlcommu->editCommunity($community, $name, $description);
         $this->sqlcommu->edittag($community, $tag);
@@ -33,7 +37,9 @@ class CommunityController {
     }
 
     public function insertSubOwner(Community $community, User $subowner){
-        $community = $this->sqlcommu->getCommunityByID($id);
+        $tempsub = $community->getSubOwner();
+        array_push($tempsub, $subowner);
+        $community->setSubOwner($tempsub);
         $this->sqlcommu->insertsubOwner($community, $subowner);
     }
 
