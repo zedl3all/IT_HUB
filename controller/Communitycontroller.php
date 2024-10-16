@@ -18,10 +18,11 @@ class CommunityController {
         $this->tagsql = new Tag_Sql_Controller();
         ob_start();
         session_start();
-       
-        if ((isset($_GET['communityName'])) && isset($_GET['enrollKey']) && isset($_GET['customTag']) && isset($_GET['description'])&& isset($_GET['u_id'])){
-            $this->community = $this->createNewCommunity();
-            header('Location: '.$_SERVER['PHP_SELF']."?c_id=".$this->c_id."&u_id=".$_GET['u_id']."");
+        if(count($_GET) === 5){
+            if ((isset($_GET['communityName'])) && isset($_GET['enrollKey']) && isset($_GET['customTag']) && isset($_GET['description']) && isset($_GET['u_id'])){
+                $this->community = $this->create_commu($_GET['communityName'], $_GET['enrollKey'], $_GET['description'], $this->usersql->getUserByID($_GET['u_id']), explode("%2C+", $_GET['customTag']));
+                header('Location: '.$_SERVER['PHP_SELF']."?c_id=".$this->c_id."&u_id=".$_GET['u_id']."");
+            }
         }
         else if (isset($_GET['c_id'])) { 
             $_SESSION['an_c'] = $_GET['c_id'];
@@ -61,7 +62,7 @@ class CommunityController {
         //     $_SESSION["community"] = $this->community;
         // }
 
-        $announcements = $this->announcesql->getAnnouncementsByCommunity($this->community->getCommunityID());
+        $announcements = $this->announcesql->getAnnouncementsByCommunity($this->community->getCommunityID($_GET['c_id']));
 
         $this->commupage = new CommunityPage();
         $this->commupage->setUser($this->user);
@@ -70,11 +71,24 @@ class CommunityController {
     }
 
     public function create_commu(String $name, String $enroll, String $description, User $owner, array $tag): Community {
+        $tag = $tag[0];
+        $tags = [];
+        foreach($tag as $t){
+            $tagData = $this->tagsql->getTagByName(trim($t));
+            if($tagData == null){
+                $tags[] = $this->tagsql->createTag(trim($t), "");
+            }else{
+                $tags[] = $tagData;
+            }
+        }
         $this->sqlcommu->createCommunity($name, $description, $owner);
         $community = $this->sqlcommu->getCommunityByName($name);
+        $this->sqlcommu->addtag($community, $tags);
         $this->sqlcommu->addenrollkey($community, $enroll);
-        $this->sqlcommu->addtag($community, $tag);
-
+        $this->sqlcommu->insertOwner($community, $owner);
+        
+        header("Location: " . $_SERVER['PHP_SELF']."?c_id=".$community->getCommunityID()."&u_id=".$owner->getUserID()."");
+        exit();
         return $community;
     }
 
@@ -138,28 +152,32 @@ class CommunityController {
         }
     }
     public function createNewCommunity(): Community{
-        $cName = "Test01";
-        if ((isset($_GET['communityName'])) && isset($_GET['enrollKey']) && isset($_GET['customTag']) && isset($_GET['description'])&& isset($_GET['u_id'])){
+        if (count($_GET) === 5 && (isset($_GET['communityName'])) && isset($_GET['enrollKey']) && isset($_GET['customTag']) && isset($_GET['description'])&& isset($_GET['u_id'])){
             $cName = $_GET['communityName'];
             $key = $_GET['enrollKey'];
-            $createUser = $this->getUsersql()->getUserByID($_GET['u_id']);
-            // $tag = $_GET['customTag'];
-            $tag = $this->getTagsql()->getTagByID(1);
             $description = $_GET['description'];
-            $this->create_commu($cName, $key, $description, $createUser, [$tag]);
+            $createUser = $this->getUsersql()->getUserByID($_GET['u_id']);
+            $tempTags = explode("%2C+", $_GET['customTag']);
+            $tags = [];
+            foreach($tempTags as $t){
+                if($this->getTagsql()->getTagByName($t) == null){
+                    $tags[] = $this->getTagsql()->createTag($t, "");
+                }else{
+                    $tags[] = $this->getTagsql()->getTagByName($t);
+                }
+            }
+            
+            return $this->create_commu($cName, $key, $description, $createUser, $tags);
             header("Location: " . $_SERVER['PHP_SELF']);
             exit();
             
         }
-        echo $cName;
-        return $this->getSqlcommu()->getCommunityByName($cName);
     }
 }
 
 // Create an instance of the controller and render the CommunityPage
 $controller = new CommunityController();
 $controller->checkUserRole();
-$controller->createNewCommunity();
 $controller->getCommupage()->render();
 ob_end_flush();
 ?>
