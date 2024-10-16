@@ -241,7 +241,11 @@ class HomePage {
 
     // ส่วนของ Role Toggle
     private function getRoleToggle() {
-        $role = $_SESSION["user_use_now"]->getRole();
+        if(!isset($_SESSION["user_use_now"])){
+            $role = "S";
+        }else{
+            $role = $_SESSION["user_use_now"]->getRole();
+        }
 
         return '
             <div class="role-toggle">
@@ -272,6 +276,7 @@ class HomePage {
         return '<script src="/ISAD/view/HomePage/HomePage.js"></script>'; // เปลี่ยนเป็น path ที่ถูกต้อง
     }
 }
+// For testing
 if ($_SESSION["user_use_now"]){
     echo $_SESSION["user_use_now"]->getFirstname();
     echo " Role: ";
