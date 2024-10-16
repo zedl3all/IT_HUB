@@ -179,16 +179,14 @@ class HomePage {
         return '
         <div class="repeat-discover_commu">
             <a href="/ISAD/controller/Join_Leave_Controller.php?c_id='.$id.'&u_id='.$_SESSION["user_use_now"]->getUserID().'">
-                <div class="community-card discover_commu">
+                <div class="community-card discover_community">
                     <div class="community-image">
                         <i class="fas fa-image"></i>
                     </div>
                     <div class="community-info">' . htmlspecialchars($name, ENT_QUOTES, 'UTF-8') . '</div>
                     <div class="community-info">' . htmlspecialchars($members, ENT_QUOTES, 'UTF-8') . '</div>
                     <div class="community-tags">' . htmlspecialchars($tags, ENT_QUOTES, 'UTF-8') . '</div>
-                    <div class="locked-icon">
-                        <i class="fas fa-lock"></i>
-                    </div>
+                    
                 </div>
             </a>
         </div>';
