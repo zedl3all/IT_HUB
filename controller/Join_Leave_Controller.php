@@ -13,8 +13,6 @@ class Join_Leave_Controller {
         ob_start();
         session_start();
 
-        $_SESSION["user_use_now"];
-
         $this->commusql = new Community_Sql_Controller();
         $this->usersql = new User_Sql_Controller();
         if(isset($_SESSION["user_use_now"])){
