@@ -96,12 +96,24 @@ class Join_Leave_Controller {
             exit();
         }
     }
+    public function leaveFromCommunity(){
+        if ((isset($_GET['lc_id'])) && isset($_GET['lu_id'])){
+            $c_id = $_GET['lc_id'];
+            $u_id = $_GET['lu_id'];
+            $l_commu = $this->commusql->getCommunityByID($c_id);
+            $l_user = $this->usersql->getUserByID($u_id);
+            $this->leaveCommunities($l_user, $l_commu);
+            header("Location: " . $_SERVER['PHP_SELF']);
+            exit();
+        }
+    }
 }
 
 // สร้าง instance ของ controller และเรนเดอร์หน้า HomePage
 $controller = new Join_Leave_Controller();
 $controller->checkUserRole();
 $controller->joinToCommunity();
+$controller->leaveFromCommunity();
 $controller->getHomePage()->render();
 ob_end_flush();
 ?>

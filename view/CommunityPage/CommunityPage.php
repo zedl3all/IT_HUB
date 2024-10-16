@@ -244,10 +244,12 @@ class CommunityPage {
                     </div>
 
                     <div id="leave-option" class="leave-option hidden">
+                        <a href="/ISAD/controller/Join_Leave_Controller.php?lu_id='.$this->getUser()->getUserID().'&lc_id='.$this->getCommunity()->getCommunityID().'">
                         <div class="leave-header">
                             <i class="fas fa-sign-out-alt"></i>
                             <span>Leave Community</span>
                         </div>
+                        </a>
                     </div>
 
                     <div class="sidebar-actions">
