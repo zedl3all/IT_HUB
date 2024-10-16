@@ -174,18 +174,14 @@ class CommunityPage {
                 <textarea class="post-details" placeholder="Add more details..."></textarea>
             </div>
             <div class="post-footer">
-                <div class="tag-section">
-                    <p>Tags:</p>
-                    <div id="selectedTags" class="tag-container-post"></div>
-                    <div class="select-container">
-                        <select id="tagSelect">
-                            <option value="">Select Tag:</option>
-                        </select>
-                        <button id="addCustomTagBtn">+</button>
+                <form action="/ISAD/controller/CommunityController.php" method="GET" onsubmit="return addTagsToForm()">
+                    <div class="tag-section">
+                        <p>Tags:</p>
+                        <div class="tag-container" id="tagContainer"></div>
+                        <input type="text" id="Tags" name="customTag" placeholder="Add Tag like Tag1, Tag2, Tag3">
                     </div>
-                    <input type="text" id="customTagInput" placeholder="Add custom tag" style="display: none;">
-                </div>
-                <button class="post-button">Post</button>
+                    <button class="post-button">Post</button>
+                </form>
             </div>
         </div>';
     }
