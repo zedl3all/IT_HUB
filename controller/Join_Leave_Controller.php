@@ -71,18 +71,23 @@ class Join_Leave_Controller {
     public function getHomePage(){
         return $this->homepage;
     }
+
+    // ฟังก์ชันตรวจสอบบทบาทของผู้ใช้
+    public function checkUserRole() {
+        if (isset($_GET["role"])) {
+            $_SESSION["user_use_now"] = $this->usersql->getUserByID($_GET["role"]);
+            header("Location: " . $_SERVER['PHP_SELF']);
+            exit(); // หยุดการทำงานของสคริปต์หลังจากส่ง header
+        } else {
+            // Enter First Time
+            $_SESSION["user_use_now"] = $this->user;
+        }
+    }
 }
 
 // สร้าง instance ของ controller และเรนเดอร์หน้า HomePage
 $controller = new Join_Leave_Controller();
+$controller->checkUserRole();
 $controller->getHomePage()->render();
-if (isset($_GET["role"])) {
-    $_SESSION["user_use_now"] = $controller->getUsersql()->getUserByID($_GET["role"]);
-    //$_SESSION["role"] = $_GET["role"];
-    header("Location: " . $_SERVER['PHP_SELF']);
-    exit(); // หยุดการทำงานของสคริปต์หลังจากส่ง header
-} else {
-    $_SESSION["user_use_now"] = $controller->getUser();
-}
 ob_end_flush();
 ?>
