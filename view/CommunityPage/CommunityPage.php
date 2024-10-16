@@ -1,7 +1,9 @@
 <?php
 
 class CommunityPage {
-
+    public function __construct() {
+        $this->render();
+    }
     public function render() {
         echo $this->getHead();
         echo $this->getHeader();
