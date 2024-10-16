@@ -5,19 +5,19 @@ class Community {
     private String $enrollKey;
     private array $tag = [];
     private int $c_amount_of_members = 1;
-    private String $C_Owner;
-    private array $C_Subowner;
-    private String $C_create_date;
-    private String $C_description;
-    private array $C_User;
-    private array $C_question;
-    private array $C_announcement;
+    private User $owner;
+    private array $subowner;
+    private String $createdate;
+    private String $description;
+    private array $user;
+    private array $question;
+    private array $announcement;
 
     public function getCommunityID(): int{
         return $this->communityID;
     }
 
-    public function setCommunityID($communityID){
+    public function setCommunityID(int $communityID){
         $this->communityID = $communityID;
     }
 
@@ -25,7 +25,7 @@ class Community {
         return $this->communityName;
     }
 
-    public function setCommunityName($communityName){
+    public function setCommunityName(string $communityName){
         $this->communityName = $communityName;
     }
 
@@ -33,86 +33,86 @@ class Community {
         return $this->enrollKey;
     }
 
-    public function setEnroll($enrollKey){
+    public function setEnroll(string $enrollKey){
         $this->enrollKey = $enrollKey;
     }
     
-    public function getOwner(): String{
-        return $this->C_Owner;
+    public function getOwner(): User{
+        return $this->owner;
     }
 
-    public function setOwner($C_Owner){
-        $this->C_Owner = $C_Owner;
+    public function setOwner(User $owner){
+        $this->owner = $owner;
     }
 
     public function getTag(): array{
         return $this->tag;
     }
 
-    public function setTag($tag){
+    public function setTag(array $tag){
         $this->tag = $tag;
     }
 
     public function getCommunityDescription(): String{
-        return $this->C_description;
+        return $this->description;
     }
 
-    public function setCommunityDescription($C_description){
-        $this->C_description = $C_description;
+    public function setCommunityDescription(string $description){
+        $this->description = $description;
     }
 
     public function getAnnouncement(): array{
-        return $this->C_announcement;
+        return $this->announcement;
     }
 
-    public function setAnnouncement($C_announcement){
-        $this->C_announcement = $C_announcement;
+    public function setAnnouncement(array $announcement){
+        $this->announcement = $announcement;
     }
 
     public function getQuestion(): array{
-        return $this->C_question;
+        return $this->question;
     }
 
-    public function setQuestion($C_question){
-        $this->C_question = $C_question;
+    public function setQuestion(array $question){
+        $this->question = $question;
     }
 
     public function getSubOwner(): array{
-        return $this->C_Subowner;
+        return $this->subowner;
     }
 
-    public function setSubOwner($C_Subowner){
-        $this->C_Subowner = $C_Subowner;
+    public function setSubOwner(array $subowner){
+        $this->subowner = $subowner;
     }
 
     public function getCommunityCreateDate(): String{
-        return $this->C_create_date;
+        return $this->createdate;
     }
 
-    public function setCommunityCreateDate($C_create_date){
-        $this->C_create_date = $C_create_date;
+    public function setCommunityCreateDate(string $createdate){
+        $this->createdate = $createdate;
     }
 
     public function getUser() :array{
-        return $this->C_User;
+        return $this->user;
     }
 
-    public function setUser($C_User){
-        $this->C_User = $C_User;
+    public function setUser($user){
+        $this->user = $user;
     }
-    public function checkEnrollkey($enrollKey): bool{
+    public function checkEnrollkey(string $enrollKey): bool{
         return strcmp($this->enrollKey, $enrollKey);
     }
 
-    public function insertUser($C_User){
-        array_push($this->C_User, $C_User);
+    public function insertUser(User $user){
+        array_push($this->user, $user);
     }
 
     public function getAmoutOfMembers(): int{
         return $this->c_amount_of_members;
     }
 
-    public function setAmoutOfMembers($c_amount_of_members){
+    public function setAmoutOfMembers(int $c_amount_of_members){
         $this->c_amount_of_members = $c_amount_of_members;
     }
 
