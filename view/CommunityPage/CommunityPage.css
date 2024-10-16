@@ -848,3 +848,55 @@ h2{
 .editPopup .action-buttons button {
     width: 48%;
 }
+
+.add-ta-menu {
+    border-radius: 10px;
+    margin: 1.2rem auto;
+    background-color: #CFE2F3;
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1rem; 
+    color: #1864AB;
+    text-align: left;
+    margin-left: 12px;
+}
+
+.add-ta-menu span{
+    font-weight: 600;
+}
+
+#amount_ta {
+    margin-left: 8px;
+}
+
+.add-ta-menu [type=text]{
+    background-color: #1864AB;
+    border: none;
+    padding: 0.6rem;
+    margin-top: 8px;
+    color: #CFE2F3;
+    border-radius: 4px;
+    width: 200px;
+}
+
+.add-ta-menu [type=text]::placeholder{
+    color: #CFE2F3;
+    opacity: 50%;
+}
+
+.add-ta-menu [type=submit]{
+    margin-top: 16px;
+    background-color: #1864AB;
+    color: #CFE2F3;
+    border: none;
+    padding: 0.3rem;
+    border-radius: 4px;
+    width: 80px;
+    cursor: pointer;
+}
+
+.add-ta-menu [type=submit]:hover{
+    background-color: #113e68;
+}
