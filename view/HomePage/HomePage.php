@@ -262,6 +262,13 @@ class HomePage {
                 }else{
                     createCommunityBtn.style.display = "none";
                 }
+                let closePopup = document.querySelector("#closeCreatePopup")
+                let closePopupCreate = document.querySelector("#createPopup")
+                let backpopup = document.querySelector("#createPopupOverlay")
+                closePopup.addEventListener("click", ()=> {
+                    closePopupCreate.style.display = "none";
+                    backpopup.style.display = "none";
+                })
             </script>
             <style>
                 .nick:hover{
