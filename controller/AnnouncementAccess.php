@@ -9,7 +9,7 @@ class AnnouncementAccess implements IAnnouncementAccess{
     $this->anmC = new AnnouncementController();
     $this->anmC->getAnnouncementPage()->render();
   }
-  public function createAnm(String $title, String $description, User $anm_userId, Community $communityId, array $anm_tag): Announcement{
+  public function createAnm(String $title, String $description, User $anm_userId, Community $communityId, string $anm_tag): Announcement{
     return $this->anmC->createAnnouncement($title, $description, $anm_userId, $communityId, $anm_tag);
   }
   public function deleteAnm(Announcement $an){

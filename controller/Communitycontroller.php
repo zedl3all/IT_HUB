@@ -17,6 +17,8 @@ class CommunityController {
         ob_start();
         session_start();
 
+        $_SESSION['an_c'] = $_GET['c_id'];
+        $_SESSION['an_u'] = $_GET['u_id'];
         if (isset($_GET['c_id'])) {
             $c_id = $_GET['c_id'];
             $this->community = $this->sqlcommu->getCommunityByID($c_id);

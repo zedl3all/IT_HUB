@@ -20,8 +20,12 @@ class Community_ANM_Controller{
 
   }
 }
-session_start();
-$createAn = new Community_ANM_Controller();
+new Community_ANM_Controller();
+if (isset($_GET["Page"])) {
+  
+  exit; // หยุดการทำงานหลังจากส่ง header
+}
+
 // $Ian = $createAn->getAnmAccess();
 // $Ian->createAnm("ISAD", "Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis, reiciendis praesentium aliquam, nostrum nemo optio quasi eos sequi velit sit corrupti saepe suscipit placeat natus id ut dignissimos assumenda earum.
 // ", $_SESSION["user_use_now"], $_SESSION["community"], []);
