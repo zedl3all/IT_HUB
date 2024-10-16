@@ -277,3 +277,19 @@ document.getElementById('editPopupOverlay').addEventListener('click', function(e
 // Add event listeners to inputs for checking changes
 document.getElementById('communityNameInput').addEventListener('input', checkFields);
 document.getElementById('communityDescriptionInput').addEventListener('input', checkFields);
+
+// Show Leave Community Option
+function toggleLeaveOption(event) {
+    const leaveOption = document.getElementById("leave-option");
+    leaveOption.style.display = (leaveOption.style.display === "none" || leaveOption.style.display === "") ? "block" : "none"; // แสดงหรือซ่อน "Leave Community"
+    event.stopPropagation(); // หยุดการแพร่กระจายเหตุการณ์เพื่อไม่ให้ทำงานกับคลิกที่ปุ่ม
+}
+
+// ปิด leave-option เมื่อคลิกที่พื้นที่อื่น
+document.addEventListener('click', function(event) {
+    const leaveOption = document.getElementById("leave-option");
+    const toggleButton = document.querySelector('.fa-ellipsis'); // ใช้ selector เพื่อค้นหาไอคอน ellipsis
+    if (leaveOption.style.display === "block" && !leaveOption.contains(event.target) && !toggleButton.contains(event.target)) {
+        leaveOption.style.display = "none"; // ซ่อน leave-option
+    }
+});
