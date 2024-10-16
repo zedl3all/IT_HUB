@@ -1,6 +1,5 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'].'/ISAD/autoload.php';
-require_once '../view/CommunityPage/CommunityPage.php'; // Include CommunityPage class
 
 class CommunityController {
     private $sqlcommu;
@@ -29,7 +28,7 @@ class CommunityController {
         if (isset($_SESSION["community_id"])) {
             $this->community = $_SESSION["community"];
         } else {
-            $this->community = $this->sqlcommu->getCommunityByID(8);
+            $this->community = $this->sqlcommu->getCommunityByID(1);
             $_SESSION["community"] = $this->community;
         }
 
