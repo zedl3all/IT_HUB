@@ -1,6 +1,7 @@
 <?php
 
 require_once $_SERVER['DOCUMENT_ROOT'].'/ISAD/autoload.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/ISAD/view/AnnouncementPage/announcementPage.php';
 
 class AnnouncementController {
     private $ANMSqlController;
@@ -42,6 +43,9 @@ class AnnouncementController {
         return $this->ANMSqlController->getAnnouncementsByCommunity($communityId);
     }
 }
+
+$runPageAn = new AnnouncementPage();
+$runPageAn->render();
 
 if (isset($_GET["Page"])) {
     echo "Hello World";

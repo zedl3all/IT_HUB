@@ -50,7 +50,7 @@ class AnnouncementPage {
         return '
         <div class="container">
             <nav class="left-sidebar">
-                <a href="/HomePage/HomePage.html" class="nav-item"><i class="fas fa-home"></i> Home</a>
+                <a href="/ISAD/controller/Join_Leave_Controller.php" class="nav-item"><i class="fas fa-home"></i> Home</a>
                 <a href="/AnnouncementPage/announcementPage.html" class="nav-item active"><i class="fas fa-bullhorn"></i> Announcement</a>
                 <a href="#" class="nav-item"><i class="fas fa-user"></i> Profile Feed</a>
             </nav>
