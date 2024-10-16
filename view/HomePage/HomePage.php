@@ -205,7 +205,7 @@ class HomePage {
                         <input type="text" name="communityName" placeholder="Community name" id="communityNameInput" required>
                         
                         <p>Enroll Key</p>
-                        <input type="text" name="enrollKey" placeholder="Enroll Key" id="enrollKeyInput" required>
+                        <input type="text" name="enrollKey" placeholder="Enroll Key" id="enrollKeyInput">
                         
                         <p>Tags</p>
                         <div class="tag-container" id="tagContainer"></div>
