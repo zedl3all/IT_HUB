@@ -1,14 +1,9 @@
 <?php
 // HomePage.php
 
-<<<<<<< Updated upstream
-require_once $_SERVER['DOCUMENT_ROOT'].'/ISAD/autoload.php';
-
-=======
 require_once $_SERVER['DOCUMENT_ROOT'].'/ISAD/model/Community.php';
 require_once $_SERVER['DOCUMENT_ROOT'].'/ISAD/model/User.php';
 require_once $_SERVER['DOCUMENT_ROOT'].'/ISAD/autoload.php';
->>>>>>> Stashed changes
 
 class HomePage {
     private User $user;
