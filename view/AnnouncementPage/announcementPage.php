@@ -57,7 +57,7 @@ class AnnouncementPage {
     private function getHeader() {
         return '
         <header>
-            <div class="logo"><a href="/CommunityPage/CommunityPage.html">&lt;i&gt; Hub</a></div>
+            <div class="logo"><a href="#">&lt;i&gt; Hub</a></div>
             <div class="search-container">
                 <input type="text" class="search-input" placeholder="Search <i>Hub">
             </div>

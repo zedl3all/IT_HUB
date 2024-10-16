@@ -53,6 +53,13 @@ class CommunityPage {
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
             <link rel="stylesheet" href="\ISAD\view\CommunityPage\CommunityPage.css">
             <style>
+                .nav-item:first-child {
+                    background: #CFE2F3;
+                    color: #1864AB;
+                }
+                .nav-item:first-child i{
+                    color: #1864AB;
+                }
                 @import url(\'https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap\');
             </style>
         </head>';
@@ -61,7 +68,7 @@ class CommunityPage {
     private function getHeader() {
         return '
         <header>
-            <div class="logo"><a href="/HomePage/HomePage.html">&lt;i&gt; Hub</a></div>
+            <div class="logo"><a href="/ISAD/controller/Join_Leave_Controller.php">&lt;i&gt; Hub</a></div>
             <div class="search-container">
                 <input type="search" class="search-input" placeholder="Search <i>Hub">
             </div>
@@ -88,7 +95,7 @@ class CommunityPage {
     private function getLeftSidebar() {
         return '
         <nav class="left-sidebar">
-            <a href="/ISAD/controller/Join_Leave_Controller.php" class="nav-item">
+            <a href="#" class="nav-item">
                 <i class="fas fa-home"></i>
                 Home
             </a>
