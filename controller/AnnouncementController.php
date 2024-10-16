@@ -2,6 +2,7 @@
 
 require_once $_SERVER['DOCUMENT_ROOT'].'/ISAD/autoload.php';
 
+session_start();
 // เปิด output buffering
 ob_start();
 
@@ -18,22 +19,20 @@ class AnnouncementController {
         $this->userSql = new User_Sql_Controller();
         $this->sqlcommu = new Community_Sql_Controller();
 
-        if (isset($_SESSION["user_use_now"])) {
-            $this->user = $_SESSION["user_use_now"];
-        } else {
-            $this->user = $this->userSql->getUserByID(1); // Default user ID
-            $_SESSION["user_use_now"] = $this->user;
+        if (isset($_SESSION['an_c'])) {
+            $this->community = $this->sqlcommu->getCommunityByID($_SESSION['an_c']);
+        }else{
+            $this->community = $this->sqlcommu->getCommunityByID(1);
+        }
+        
+        if (isset($_SESSION['an_u'])) {
+            $this->user = $this->userSql->getUserByID($_SESSION['an_u']);
+        }else{
+            $this->user = $this->userSql->getUserByID(1);
         }
 
-        // Handle community session
-        if (isset($_SESSION["community_id"])) {
-            $this->community = $_SESSION["community"];
-        } else {
-            $this->community = $this->sqlcommu->getCommunityByID(1);
-            $_SESSION["community"] = $this->community;
-        }
-        $this->announcementPage->setUserAn($_SESSION["user_use_now"]);
-        $this->announcementPage->setCommunityAn($_SESSION["community"]);
+        $this->announcementPage->setUserAn($this->user);
+        $this->announcementPage->setCommunityAn($this->community);
 
     }
     public function setUserAn($user){
@@ -55,19 +54,28 @@ class AnnouncementController {
         return $this->announcementPage;
     }
 
-    public function createAnnouncement(String $title, String $description, User $user, Community $community, array $anm_tag): Announcement {
+    public function createAnnouncement(String $title, String $description, User $user, Community $community, string $anm_tag): Announcement {
         $announcement = new Announcement();
         $announcement->setAnnouncementTitle($title);
         $announcement->setAnnouncementDescription($description);
         $announcement->setAnnouncementUserId($user->getUserID());
         $announcement->setAnnouncementCommunityId($community->getCommunityID());
-        $announcement->setAnnouncementTag($anm_tag);
+        $tags = explode("%2C",$anm_tag);
+        $objectTaglist = [];
+        $tagsql = new Tag_Sql_Controller();
+        foreach ($tags as $tag) {
+            $temp = $tagsql->getTagByName($tag);
+            if ($temp != null) {
+                $tagsql->createTag($tag, '');
+                $objectTaglist[] = $tagsql->getTagByName($tag);
+            }else{
+                $objectTaglist[] = $temp;
+            }
+        }
+        $announcement->setAnnouncementTag($objectTaglist);
 
         $this->ANMSqlController->createAnnouncement($title, $description, $community->getCommunityID(), u_id: $user->getUserID());
-
-        for ($i = 0; $i < count($anm_tag); $i++) {
-            $this->ANMSqlController->addtag($announcement, $anm_tag[$i]);
-        }
+        $this->ANMSqlController->addtag($announcement, $objectTaglist);
 
         return $announcement;
     }
@@ -92,10 +100,6 @@ class AnnouncementController {
 // สร้างและเรียกใช้ AnnouncementPage
 // $controller->createAnnouncement("Nickel", 'Helldadadadadadadadada', $_SESSION["user_use_now"], $_SESSION["community"], []);
 // การตรวจสอบว่ามีค่าใน $_GET["Page"] และส่ง header
-if (isset($_GET["Page"])) {
-    header("Location: " . $_SERVER['PHP_SELF']);
-    exit; // หยุดการทำงานหลังจากส่ง header
-}
 
 // ปิด output buffering และส่งข้อมูลที่บันทึกไว้
 ob_end_flush();
