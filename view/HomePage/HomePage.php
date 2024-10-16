@@ -255,6 +255,10 @@ class HomePage {
             </div>
             <script>
                 var role = "'.$role.'";
+                let closePopup = document.querySelector("#closeCreatePopup")
+                let closePopupCreate = document.querySelector("#createPopup")
+                let backpopup = document.querySelector("#createPopupOverlay")
+                let createBtn = document.querySelector(".create-community")
                 console.log("Role: ", role);
                 const createCommunityBtn = document.querySelector(".create-community");
                 if (role == "T"){
@@ -262,13 +266,15 @@ class HomePage {
                 }else{
                     createCommunityBtn.style.display = "none";
                 }
-                let closePopup = document.querySelector("#closeCreatePopup")
-                let closePopupCreate = document.querySelector("#createPopup")
-                let backpopup = document.querySelector("#createPopupOverlay")
                 closePopup.addEventListener("click", ()=> {
                     closePopupCreate.style.display = "none";
                     backpopup.style.display = "none";
                 })
+                createBtn.addEventListener("click", ()=> {
+                    closePopupCreate.style.display = "block";
+                    backpopup.style.display = "block";
+                })
+                
             </script>
             <style>
                 .nick:hover{
