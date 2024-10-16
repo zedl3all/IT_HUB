@@ -5,6 +5,7 @@ function selectRole(role) {
     const editPopup = document.getElementById('editPopup');
     const announcementBtn = document.querySelector('.announcement-btn');
     const postTypeSelect = document.getElementById('postTypeSelect');
+    const taMenu = document.querySelector('.add-ta-menu');
 
     // Reset active class for all role buttons
     document.querySelectorAll('.role-toggle button').forEach(btn => {
@@ -18,17 +19,20 @@ function selectRole(role) {
         settingIconBtn.style.display = 'inline-block';
         deleteBtn.style.display = 'inline-block';
         announcementBtn.style.display = 'inline-block';
+        taMenu.style.display = 'inline-block';
         updatePostTypeOptions(['Announcement', 'Question', 'Poll']);
     } 
     else if (role === 'ta') {
         settingIconBtn.style.display = 'inline-block';
         deleteBtn.style.display = 'none';
         announcementBtn.style.display = 'inline-block';
+        taMenu.style.display = 'none';
         updatePostTypeOptions(['Announcement', 'Question', 'Poll']);
     }
     else {
         settingIconBtn.style.display = 'none';
         announcementBtn.style.display = 'none';
+        taMenu.style.display = 'none';
         updatePostTypeOptions(['Question', 'Poll']);
     }
 }
