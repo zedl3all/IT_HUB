@@ -222,7 +222,7 @@ class HomePage {
     }
 
     // ส่วนของ Join Popup
-    public function getJoinPopup() {
+    private function getJoinPopup() {
         return '
         <div class="joinPopup-overlay" id="joinPopupOverlay">
             <div class="joinPopup" id="joinPopup">
