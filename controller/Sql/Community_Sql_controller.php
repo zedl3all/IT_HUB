@@ -42,7 +42,7 @@ class Community_Sql_Controller extends SqlController {
     }
 
     public function getCommunityByName(string $name): Community{
-        $sql = "SELECT * FROM community WHERE c_name = $name";
+        $sql = "SELECT * FROM community WHERE c_name = '{$name}'";
         $result = $this->query($sql);
 
         if ($result->num_rows > 0) {

@@ -201,6 +201,7 @@ class HomePage {
                 <div class="createPopup-content">
                     <h2>Create Community</h2>
                     <form action="/ISAD/controller/CommunityController.php" method="GET">
+                        <input type="hidden" name="u_id" value="'.$_SESSION["user_use_now"]->getUserID().'">
                         <p>Community name</p>
                         <input type="text" name="communityName" placeholder="Community name" id="communityNameInput" required>
                         

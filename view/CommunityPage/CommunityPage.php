@@ -225,11 +225,7 @@ class CommunityPage {
         return '
         <div class="line-right">
             <aside class="right-sidebar">
-                <div class="settings-icon" style="display: none;" onclick="openEditPopup()">
-                    <svg viewBox="0 0 24 24">
-                        <path d="M19.43 12.98c.04-.32.07-.66.07-1.01s-.03-.69-.07-1.01l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.68-.98l-.38-2.65C14.21 3.18 13.99 3 13.72 3h-3.44c-.27 0-.49.18-.53.43l-.38 2.65c-.61.25-1.16.58-1.68.98l-2.49-1c-.23-.08-.49 0-.61.22l-2 3.46c-.12.22-.07.49.12.64l2.11 1.65c-.04.32-.07.66-.07 1.01s.03.69.07 1.01l-2.11 1.65c-.19.15-.24.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1c.52.4 1.08.73 1.68.98l.38 2.65c.04.25.26.43.53.43h3.44c.27 0 .49-.18.53-.43l.38-2.65c.61-.25 1.16-.58 1.68-.98l2.49 1c.23.08.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"/>
-                    </svg>
-                </div>
+                ' . $this->getEdit() . '
                 <div class="community-image">
                     <svg viewBox="0 0 24 24">
                         <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zm-5-7l-3 3.72L9 13l-3 4h12l-4-5z"/>
@@ -268,7 +264,35 @@ class CommunityPage {
                     </div>
                 </div>
             </aside>
-            <div class="add-ta-menu" style="display: none;">
+            ' . $this->getAddTA() . '
+        </div>';
+    }
+
+    private function getEdit(){
+        if(!isset($_SESSION["user_use_now"])){
+            $role = "S"; // ถ้าไม่มีผู้ใช้ในเซสชันให้เป็น "S"
+        }else{
+            $role = $_SESSION["user_use_now"]->getRole(); // ถ้ามีผู้ใช้ให้ดึง role
+        }
+        if ($role != "S"){
+            return '
+            <div class="settings-icon" style="display: inline-block;" onclick="openEditPopup()">
+                <svg viewBox="0 0 24 24">
+                    <path d="M19.43 12.98c.04-.32.07-.66.07-1.01s-.03-.69-.07-1.01l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.68-.98l-.38-2.65C14.21 3.18 13.99 3 13.72 3h-3.44c-.27 0-.49.18-.53.43l-.38 2.65c-.61.25-1.16.58-1.68.98l-2.49-1c-.23-.08-.49 0-.61.22l-2 3.46c-.12.22-.07.49.12.64l2.11 1.65c-.04.32-.07.66-.07 1.01s.03.69.07 1.01l-2.11 1.65c-.19.15-.24.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1c.52.4 1.08.73 1.68.98l.38 2.65c.04.25.26.43.53.43h3.44c.27 0 .49-.18.53-.43l.38-2.65c.61-.25 1.16-.58 1.68-.98l2.49 1c.23.08.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"/>
+                </svg>
+            </div>';
+        }
+    }
+
+    private function getAddTA(){
+        if(!isset($_SESSION["user_use_now"])){
+            $role = "S"; // ถ้าไม่มีผู้ใช้ในเซสชันให้เป็น "S"
+        }else{
+            $role = $_SESSION["user_use_now"]->getRole(); // ถ้ามีผู้ใช้ให้ดึง role
+        }
+        if ($role != "S"){
+            return '
+            <div class="add-ta-menu" style="display: inline-block;">
                 <span>Teacher Assistant<span id="amount_ta">0</span></span>
                 <div>
                     <!-- <form action="/action_page.php"> -->
@@ -276,8 +300,8 @@ class CommunityPage {
                         <input type="submit" value="Submit">
                     <!-- </form> -->
                 </div>
-            </div>
-        </div>';
+            </div>';
+        }
     }
 
     private function getFooter() {
