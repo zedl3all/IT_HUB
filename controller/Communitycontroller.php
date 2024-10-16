@@ -151,28 +151,6 @@ class CommunityController {
             exit(); // Stop script execution after sending header
         }
     }
-    public function createNewCommunity(): Community{
-        if (count($_GET) === 5 && (isset($_GET['communityName'])) && isset($_GET['enrollKey']) && isset($_GET['customTag']) && isset($_GET['description'])&& isset($_GET['u_id'])){
-            $cName = $_GET['communityName'];
-            $key = $_GET['enrollKey'];
-            $description = $_GET['description'];
-            $createUser = $this->getUsersql()->getUserByID($_GET['u_id']);
-            $tempTags = explode("%2C+", $_GET['customTag']);
-            $tags = [];
-            foreach($tempTags as $t){
-                if($this->getTagsql()->getTagByName($t) == null){
-                    $tags[] = $this->getTagsql()->createTag($t, "");
-                }else{
-                    $tags[] = $this->getTagsql()->getTagByName($t);
-                }
-            }
-            
-            return $this->create_commu($cName, $key, $description, $createUser, $tags);
-            header("Location: " . $_SERVER['PHP_SELF']);
-            exit();
-            
-        }
-    }
 }
 
 // Create an instance of the controller and render the CommunityPage
