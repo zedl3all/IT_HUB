@@ -8,11 +8,12 @@
     <link rel="stylesheet" href="CommunityPage.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
+        @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css');
     </style>
 </head>
 <body>
     <header>
-        <div class="logo"><a href="/HomePage/HomePage.html">&lt;i&gt; Hub</a></div>
+        <div class="logo"><a href="/view/HomePage/HomePage.html">&lt;i&gt; Hub</a></div>
         <div class="search-container">
             <input type="search" class="search-input" placeholder="Search <i>Hub">
         </div>
@@ -22,18 +23,18 @@
                 <span class="notification-count" id="notification-count">1</span>
             </div>
             <div class="notification-icon"></div>
-            <div class="profile-icon"></div>
+            <div class="profile-icon"><i class="fas fa-user"></i></i></div>
         </div>
     </header>
 
     <div class="container">
         <!-- left side เป็นฝั่งของโดยรวม เช่น announcement จะเป็น announcement ของทุก commu ที่เราอยู่-->
         <nav class="left-sidebar">
-            <a href="/HomePage/HomePage.html" class="nav-item active">
+            <a href="/view/HomePage/HomePage.html" class="nav-item active">
                 <i class="fas fa-home"></i>
                 Home
             </a>
-            <a href="#" class="nav-item">
+            <a href="/view/AnnouncementPage/announcementPage.html" class="nav-item">
                 <i class="fas fa-bullhorn"></i>
                 Announcement
             </a>
@@ -46,59 +47,104 @@
         <main class="main-content">
             <div class="post-creator">
                 <div class="create-post-header">
-                    <div class="profile-icon"><i class="fas fa-user"></i></div> <!-- รูป profile ยืด-->
-                    <input type="text" class="post-input" placeholder="Create Announcement, Question or Poll">
-                </div>
-                <hr><br>
-                <div class="post-actions">
-                    <button class="post-type-btn">
-                        <i class="fas fa-bullhorn"></i>
-                        Announcement
-                    </button>
-                    <button class="post-type-btn">
-                        <i class="fas fa-question-circle"></i>
-                        Question
-                    </button>
-                    <button class="post-type-btn">
-                        <i class="fas fa-poll"></i>
-                        Poll
-                    </button>
-                </div>
-            </div>
-
-            
-            <!-- เป็นส่วน post content
-            <div class="post-card">
-                <div class="post-header">
-                    <div class="post-user">
-                        <div class="profile-icon"><i class="fas fa-user"></i></div>
-                        <div>
-                            <div>Firstname Lastname</div>
-                            <div class="post-time">Just now</div>
-                        </div>
+                    <div class="profile-icon">
+                        <i class="fas fa-user"></i></i>
                     </div>
-                    <i class="fas fa-ellipsis-h threedot"></i>
+                    <input type="text" class="post-input" placeholder="You can post something here.." style="height: 50px;"></input>
+                </div>
+                <hr>
+                <div class="post-actions">
+                    <button class="post-type-btn announcement-btn" id="post-type-announcement" onclick="expandPostCreator('announcement')">
+                        <i class="fas fa-bullhorn"></i> Announcement
+                    </button>
+                    <button class="post-type-btn" id="post-type-question" onclick="expandPostCreator('question')">
+                        <i class="fas fa-question-circle"></i> Question
+                    </button>
+                    <button class="post-type-btn" id="post-type-poll" onclick="expandPostCreator('poll')">
+                        <i class="fas fa-poll"></i> Poll
+                    </button>
+                </div>
+            </div>            
+              
+              <div class="expanded-post-creator" style="display: none;">
+                <div class="post-header">
+                  <div class="profile-icon">
+                    <i class="fas fa-user"></i></i>
+                  </div>
+                  <div class="profile-info">
+                    <div class="profile-name">Firstname Lastname</div>
+                    <div class="anonymous-mode" style="display: none;">
+                      <span>Anonymous Mode</span>
+                      <label class="switch">
+                        <input type="checkbox" id="anonymousToggle">
+                        <span class="slider round"></span>
+                      </label>
+                    </div>
+                  </div>
+                  <button class="close-button">×</button>
                 </div>
                 <div class="post-content">
-                    Post Content
+                  <div class="post-type-selector">
+                    <select id="postTypeSelect">
+                      <option value="announcement">Announcement</option>
+                      <option value="question">Question</option>
+                      <option value="poll">Poll</option>
+                    </select>
+                  </div>
+                  <input type="text" class="post-topic" placeholder="Add Topic...">
+                  <textarea class="post-details" placeholder="Add more details..."></textarea>
                 </div>
-                <div class="post-actions-bottom">
-                    <div class="action-btn">
-                        <i class="far fa-comment"></i>
-                        Comment
+                <div class="post-footer">
+                    <div class="tag-section">
+                        <p>Tags:</p>
+                        <div id="selectedTags" class="tag-container-post"></div>
+                        <div class="select-container">
+                            <select id="tagSelect">
+                                <option value="">Select Tag:</option>
+                            </select>
+                            <button id="addCustomTagBtn">+</button>
+                        </div>
+                        <input type="text" id="customTagInput" placeholder="Add custom tag" style="display: none;">
+                    </div>
+                    <button class="post-button">Post</button>
+                </div>
+              </div>
+
+              <div class="post-card">
+                <div class="post-header">
+                    <div class="post-user">
+                        <div class="profile-icon announcement-icon" style="margin-right: 0;">
+                            <i class="fas fa-bullhorn"></i>
+                        </div>
+                        <strong style="font-weight: bold;">Announcement</strong>
+                    </div>
+                    <span class="post-time">1 days ago</span>
+                </div>
+                <div class="post-content">
+                    <div id="Topic">Discrete Math Midterm score</div>
+                    <div id="Detail">sorry for who don't have scores announced.</div>
+                </div>
+                <div class="line-post"></div>
+                <div class="post-tags">
+                    <div class="tags-container">
+                        <span id="tag1" class="post-tag">#code</span>
+                        <span id="tag2" class="post-tag">#announcement</span>
+                    </div>
+                    <div class="mark-read-btn">
+                        <button>Mark As Read</button>
                     </div>
                 </div>
-                <div class="comment-input-container">
-                    <div class="profile-icon"><i class="fas fa-user"></i></div>
-                    <input type="text" class="comment-input" placeholder="Write a comment">
-                </div>
-            </div> -->
-
+            </div>
         </main>
         
         <!-- right side เป็นฝั่งของ community เช่น เรียกดู announcement ของใน community ที่อยู่ ณ ตอนนั้น-->
         <div class="line-right">
             <aside class="right-sidebar">
+                <div class="settings-icon"  onclick="openEditPopup()">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M19.43 12.98c.04-.32.07-.66.07-1.01s-.03-.69-.07-1.01l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.68-.98l-.38-2.65C14.21 3.18 13.99 3 13.72 3h-3.44c-.27 0-.49.18-.53.43l-.38 2.65c-.61.25-1.16.58-1.68.98l-2.49-1c-.23-.08-.49 0-.61.22l-2 3.46c-.12.22-.07.49.12.64l2.11 1.65c-.04.32-.07.66-.07 1.01s.03.69.07 1.01l-2.11 1.65c-.19.15-.24.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1c.52.4 1.08.73 1.68.98l.38 2.65c.04.25.26.43.53.43h3.44c.27 0 .49-.18.53-.43l.38-2.65c.61-.25 1.16-.58 1.68-.98l2.49 1c.23.08.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"/>
+                    </svg>
+                </div>
                 <div class="community-image">
                     <svg viewBox="0 0 24 24">
                         <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zm-5-7l-3 3.72L9 13l-3 4h12l-4-5z"/>
@@ -125,5 +171,45 @@
             </aside>
         </div>
     </div>
+
+    <div class="editPopup-overlay" id="editPopupOverlay">
+        <div class="editPopup" id="editPopup">
+            <span class="close" id="closePopup">&times;</span>
+            <div class="editPopup-content">
+                <h2>EDIT COMMUNITY</h2>
+                <p>Community Name:</p>
+                <input type="text" id="communityNameInput" placeholder="Enter your new community name.">
+                <p>Community Description:</p>
+                <textarea id="communityDescriptionInput" placeholder="Enter your new description."></textarea>
+                <p>Tag:</p>
+                <div class="tag-container" id="tagContainer">
+                    <div class="tag">
+                        Old Tag <button class="remove-tag" onclick="removeTag(this)">×</button>
+                    </div>
+                    <div class="tag">
+                        Old Tag <button class="remove-tag" onclick="removeTag(this)">×</button>
+                    </div>
+                </div>
+                <div class="add-tag-container">
+                    <input type="text" class="add-tag-input" id="newTagInput" placeholder="Enter new tag">
+                    <button class="add-tag-button" onclick="addTag()">+</button>
+                </div>
+                <div>
+                    <button id="confirmButton" onclick="confirmEdit()">Confirm</button>
+                    <button onclick="cancelEdit()">Cancel</button>
+                    <button id="deleteButton" onclick="deleteCommunity()" style="background-color: #d9534f; display: none;">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="role-toggle">
+        <button id="studentBtn" onclick="selectRole('student')">Student</button>
+        <button id="teacherBtn" onclick="selectRole('teacher')">Teacher</button>
+        <button id="taBtn" onclick="selectRole('ta')">TA</button>
+    </div>
+
+    <script src="CommunityPage.js"></script>
 </body>
 </html>
