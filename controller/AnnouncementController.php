@@ -45,6 +45,7 @@ class AnnouncementController {
 
 if (isset($_GET["Page"])) {
     echo "Hello World";
+    header("Location: " . $_SERVER['PHP_SELF']);
 } else {
     // Enter First Time
     echo "Did not enter";

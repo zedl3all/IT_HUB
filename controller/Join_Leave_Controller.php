@@ -3,7 +3,6 @@
 
 require_once $_SERVER['DOCUMENT_ROOT'].'/ISAD/autoload.php';
 
-
 class Join_Leave_Controller {
     private $commusql;
     private $user;
@@ -78,9 +77,6 @@ class Join_Leave_Controller {
             $_SESSION["user_use_now"] = $this->usersql->getUserByID($_GET["role"]);
             header("Location: " . $_SERVER['PHP_SELF']);
             exit(); // หยุดการทำงานของสคริปต์หลังจากส่ง header
-        } else {
-            // Enter First Time
-            $_SESSION["user_use_now"] = $this->user;
         }
     }
 }

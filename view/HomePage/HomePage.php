@@ -89,7 +89,7 @@ class HomePage {
         <div class="container">
             <div class="left-sidebar">
                 <nav>
-                    <a href="HomePage.html" class="nav-item active"><i class="fas fa-home"></i> Home</a>
+                    <a href="" class="nav-item active"><i class="fas fa-home"></i> Home</a>
                     <a href="/ISAD/controller/AnnouncementController.php?Page=Anm" class="nav-item"><i class="fas fa-bullhorn"></i> Announcement</a>
                     <a href="#" class="nav-item"><i class="fas fa-user"></i> Profile Feed</a>
                 </nav>
@@ -242,10 +242,11 @@ class HomePage {
     // ส่วนของ Role Toggle
     private function getRoleToggle() {
         if(!isset($_SESSION["user_use_now"])){
-            $role = "S";
+            $role = "S"; // ถ้าไม่มีผู้ใช้ในเซสชันให้เป็น "S"
         }else{
-            $role = $_SESSION["user_use_now"]->getRole();
+            $role = $_SESSION["user_use_now"]->getRole(); // ถ้ามีผู้ใช้ให้ดึง role
         }
+        //echo $role;
 
         return '
             <div class="role-toggle">
@@ -257,6 +258,7 @@ class HomePage {
             </div>
             <script>
                 var role = "'.$role.'";
+                console.log("Role: ", role);
                 const createCommunityBtn = document.querySelector(".create-community");
                 if (role == "T"){
                     createCommunityBtn.style.display = "inline-block";
