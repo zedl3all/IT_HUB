@@ -199,26 +199,22 @@ class HomePage {
                 <span class="close" id="closeCreatePopup">&times;</span>
                 <div class="createPopup-content">
                     <h2>Create Community</h2>
-                    <p>Community name</p>
-                    <input type="text" placeholder="Community name" id="communityNameInput">
-                    <p>Enroll Key</p>
-                    <input type="text" placeholder="Enroll Key" id="enrollKeyInput">
-                    <p>Tags</p>
-                    <div class="tag-container" id="tagContainer"></div>
-                    <div class="tag-input-container">
-                        <select id="tagSelect">
-                            <option value="">Select Tag:</option>
-                            <option value="Math">Math</option>
-                            <option value="Problem Solving">Problem Solving</option>
-                            <option value="Coding">Coding</option>
-                            <option value="Information">Information</option>
-                        </select>
-                        <button id="addCustomTagBtn">+</button>
-                    </div>
-                    <input type="text" id="customTagInput" placeholder="Add custom tag" style="display: none;">
-                    <p>Description</p>
-                    <textarea placeholder="Description" id="descriptionInput" rows="4"></textarea>
-                    <button onclick="CreateSubmit()">Create</button>
+                    <form action="/ISAD/controller/CommunityController.php" method="GET">
+                        <p>Community name</p>
+                        <input type="text" name="communityName" placeholder="Community name" id="communityNameInput" required>
+                        
+                        <p>Enroll Key</p>
+                        <input type="text" name="enrollKey" placeholder="Enroll Key" id="enrollKeyInput" required>
+                        
+                        <p>Tags</p>
+                        <div class="tag-container" id="tagContainer"></div>
+                        <input type="text" id="Tags" name="customTag" placeholder="Add Tag like Tag1, Tag2, Tag3">
+                        
+                        <p>Description</p>
+                        <textarea name="description" placeholder="Description" id="descriptionInput" rows="4"></textarea>
+                        
+                        <button type="submit">Create</button>
+                    </form>
                 </div>
             </div>
         </div>';
