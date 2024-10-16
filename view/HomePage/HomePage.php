@@ -1,8 +1,6 @@
 <?php
 // HomePage.php
 
-require_once $_SERVER['DOCUMENT_ROOT'].'/ISAD/model/Community.php';
-require_once $_SERVER['DOCUMENT_ROOT'].'/ISAD/model/User.php';
 require_once $_SERVER['DOCUMENT_ROOT'].'/ISAD/autoload.php';
 
 class HomePage {
