@@ -12,11 +12,18 @@ class Join_Leave_Controller {
     public function __construct(){
         ob_start();
         session_start();
-        
+
+        $_SESSION["user_use_now"];
+
         $this->commusql = new Community_Sql_Controller();
         $this->usersql = new User_Sql_Controller();
-        $this->user = $this->usersql->getUserByID(1); // ควรทำให้ยืดหยุ่นขึ้น (ไม่ hard-coded ID)
-        $_SESSION["user_use_now"];
+        if(isset($_SESSION["user_use_now"])){
+            $this->user = $_SESSION["user_use_now"];
+        }
+        else{
+            $this->user = $this->usersql->getUserByID(1); // ควรทำให้ยืดหยุ่นขึ้น (ไม่ hard-coded ID)
+            $_SESSION["user_use_now"] = $this->user;
+        }
         
         $this->homepage = new HomePage();
         $this->homepage->setUser($this->user);
@@ -75,6 +82,7 @@ class Join_Leave_Controller {
     public function checkUserRole() {
         if (isset($_GET["role"])) {
             $_SESSION["user_use_now"] = $this->usersql->getUserByID($_GET["role"]);
+            $this->user = $_SESSION["user_use_now"];
             header("Location: " . $_SERVER['PHP_SELF']);
             exit(); // หยุดการทำงานของสคริปต์หลังจากส่ง header
         }
