@@ -12,6 +12,7 @@ class CommunityPage {
         echo '<body>';
         echo $this->getHeader();
         echo $this->getContainer();
+        echo $this->getRoleToggle();
         echo $this->getFooter();
         echo '</body>';
         echo '</html>';
@@ -51,9 +52,10 @@ class CommunityPage {
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>Community Page</title>
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-            <link rel="stylesheet" href="\ISAD\view\CommunityPage\CommunityPage.css">
+            <link rel="stylesheet" href="/ISAD/view/CommunityPage/CommunityPage.css">
             <style>
-                @import url(\'https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap\');
+                @import url(\'https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap\');
+                @import url(\'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css\');
             </style>
         </head>';
     }
@@ -61,7 +63,7 @@ class CommunityPage {
     private function getHeader() {
         return '
         <header>
-            <div class="logo"><a href="/HomePage/HomePage.html">&lt;i&gt; Hub</a></div>
+            <div class="logo"><a href="/view/HomePage/HomePage.html">&lt;i&gt; Hub</a></div>
             <div class="search-container">
                 <input type="search" class="search-input" placeholder="Search <i>Hub">
             </div>
@@ -71,7 +73,7 @@ class CommunityPage {
                     <span class="notification-count" id="notification-count">1</span>
                 </div>
                 <div class="notification-icon"></div>
-                <div class="profile-icon"></div>
+                <div class="profile-icon"><i class="fas fa-user"></i></i></div>
             </div>
         </header>';
     }
@@ -222,7 +224,7 @@ class CommunityPage {
         return '
         <div class="line-right">
             <aside class="right-sidebar">
-                <div class="settings-icon" style="display: none;" onclick="openEditPopup()">
+                <div class="settings-icon" onclick="openEditPopup()">
                     <svg viewBox="0 0 24 24">
                         <path d="M19.43 12.98c.04-.32.07-.66.07-1.01s-.03-.69-.07-1.01l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.68-.98l-.38-2.65C14.21 3.18 13.99 3 13.72 3h-3.44c-.27 0-.49.18-.53.43l-.38 2.65c-.61.25-1.16.58-1.68.98l-2.49-1c-.23-.08-.49 0-.61.22l-2 3.46c-.12.22-.07.49.12.64l2.11 1.65c-.04.32-.07.66-.07 1.01s.03.69.07 1.01l-2.11 1.65c-.19.15-.24.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1c.52.4 1.08.73 1.68.98l.38 2.65c.04.25.26.43.53.43h3.44c.27 0 .49-.18.53-.43l.38-2.65c.61-.25 1.16-.58 1.68-.98l2.49 1c.23.08.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"/>
                     </svg>
@@ -252,6 +254,46 @@ class CommunityPage {
                 </div>
             </aside>
         </div>';
+    }
+
+    private function getRoleToggle() {
+        if(!isset($_SESSION["user_use_now"])){
+            $role = "S"; // ถ้าไม่มีผู้ใช้ในเซสชันให้เป็น "S"
+        }else{
+            $role = $_SESSION["user_use_now"]->getRole(); // ถ้ามีผู้ใช้ให้ดึง role
+        }
+        //echo $role;
+
+        return '
+            <div class="role-toggle">
+                <form action = "/ISAD/controller/Communitycontroller.php" method="GET">
+                    <button class = "nick" name="role" value="1">Student</button>
+                    <button class = "nick" name="role" value="2">Teacher</button>
+                    <button class = "nick" name="role" value="3">TA</button>
+                </form>
+            </div>
+            <script>
+                var role = "'.$role.'";
+                console.log("Role: ", role);
+                const settingIconBtn = document.querySelector(".settings-icon");
+                const deleteBtn = document.getElementById("deleteButton");
+                const editPopup = document.getElementById("editPopup");
+                const announcementBtn = document.querySelector(".announcement-btn");
+                if (role == "T"){
+                    settingIconBtn.style.display = "inline-block";
+                    deleteBtn.style.display = "inline-block";
+                    announcementBtn.style.display = "inline-block";
+                }else{
+                    settingIconBtn.style.display = "none";
+                    deleteBtn.style.display = "none";
+                    announcementBtn.style.display = "none";
+                }
+            </script>
+            <style>
+                .nick:hover{
+                    background-color: #2757A1;
+                    color: white;
+                }</style>';  
     }
 
     private function getFooter() {
