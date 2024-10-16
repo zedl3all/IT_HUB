@@ -114,6 +114,7 @@ class HomePage {
         $cards = '';
         foreach ($this->joinedCommunities as $community) {
             $cards .= $this->renderCommunityCard(
+                $community->getCommunityID(),
                 $community->getCommunityName(),
                 $community->getAmoutOfMembers(),
                 implode(' ', $community->getTag())
@@ -157,10 +158,10 @@ class HomePage {
     }
 
     // ฟังก์ชันสร้างการ์ดสำหรับ My Community
-    private function renderCommunityCard($name, $members, $tags) {
+    private function renderCommunityCard(int $id, string $name, int $members, string $tags) {
         return '
         <div class="repeat-commu">
-            <a href="../CommunityPage/CommunityPage.html">
+            <a href="/ISAD/controller/CommunityController.php?c_id='.$id.'">
                 <div class="community-card">
                     <div class="community-image">
                         <i class="fas fa-image"></i>
