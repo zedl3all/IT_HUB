@@ -272,6 +272,15 @@ class CommunityPage {
                     </div>
                 </div>
             </aside>
+            <div class="add-ta-menu" style="display: none;">
+                <span>Teacher Assistant<span id="amount_ta">0</span></span>
+                <div>
+                    <!-- <form action="/action_page.php"> -->
+                        <input type="text" id="ta_id" placeholder="Enter ID here"><br>
+                        <input type="submit" value="Submit">
+                    <!-- </form> -->
+                </div>
+            </div>
         </div>';
     }
 
