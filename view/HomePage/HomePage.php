@@ -160,7 +160,7 @@ class HomePage {
     private function renderCommunityCard(int $id, string $name, int $members, string $tags) {
         return '
         <div class="repeat-commu">
-            <a href="/ISAD/controller/CommunityController.php?c_id='.$id.'">
+            <a href="/ISAD/controller/CommunityController.php?c_id='.$id.'&u_id='.$_SESSION["user_use_now"]->getUserID().'">
                 <div class="community-card">
                     <div class="community-image">
                         <i class="fas fa-image"></i>
@@ -221,7 +221,7 @@ class HomePage {
     }
 
     // ส่วนของ Join Popup
-    private function getJoinPopup() {
+    public function getJoinPopup() {
         return '
         <div class="joinPopup-overlay" id="joinPopupOverlay">
             <div class="joinPopup" id="joinPopup">
