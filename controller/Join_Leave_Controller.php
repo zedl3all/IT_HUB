@@ -56,13 +56,13 @@ class Join_Leave_Controller {
 
     // ฟังก์ชันเข้าร่วมชุมชน
     public function joinCommunities($user, $community, $enrollkey){
-        if ($community->checkEnrollkey($enrollkey) == 0){
-            echo "Wrong enrollkey"; // ควรเปลี่ยนเป็นการส่งข้อความที่เหมาะสม
-        }
-        else{
+        // if ($community->checkEnrollkey($enrollkey) == 0){
+        //     echo "Wrong enrollkey"; // ควรเปลี่ยนเป็นการส่งข้อความที่เหมาะสม
+        // }
+        // else{
             $this->commusql->adduser($community, $user);
-            echo "Join success"; // เพิ่มข้อความแสดงความสำเร็จ
-        }
+        //     echo "Join success"; // เพิ่มข้อความแสดงความสำเร็จ
+        // }
     }
 
     // ฟังก์ชันออกจากชุมชน
@@ -85,11 +85,23 @@ class Join_Leave_Controller {
             exit(); // หยุดการทำงานของสคริปต์หลังจากส่ง header
         }
     }
+    public function joinToCommunity(){
+        if ((isset($_GET['c_id'])) && isset($_GET['u_id'])){
+            $c_id = $_GET['c_id'];
+            $u_id = $_GET['u_id'];
+            $j_commu = $this->commusql->getCommunityByID($c_id);
+            $j_user = $this->usersql->getUserByID($u_id);
+            $this->joinCommunities($j_user, $j_commu, '');
+            header("Location: " . $_SERVER['PHP_SELF']);
+            exit();
+        }
+    }
 }
 
 // สร้าง instance ของ controller และเรนเดอร์หน้า HomePage
 $controller = new Join_Leave_Controller();
 $controller->checkUserRole();
+$controller->joinToCommunity();
 $controller->getHomePage()->render();
 ob_end_flush();
 ?>
