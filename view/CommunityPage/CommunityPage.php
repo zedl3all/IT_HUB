@@ -244,9 +244,9 @@ class CommunityPage {
 
                     <div class="community-name-wrapper">
                         <div class="community-name">' . htmlspecialchars($this->community->getCommunityName()) . '</div>
-                        <i class="fa-solid fa-ellipsis" onclick="toggleLeaveOption()"></i>
+                        <i class="fa-solid fa-ellipsis" id="leaveBtn"></i>
                     </div>
-    
+
                     <div id="leave-option" class="leave-option hidden">
                         <div class="leave-header">
                             <i class="fas fa-sign-out-alt"></i>
@@ -275,6 +275,19 @@ class CommunityPage {
 
     private function getFooter() {
         return '
+        <script>
+            let leaveBtn = document.querySelector("#leaveBtn")
+            const leaveOption = document.getElementById("leave-option");
+            leaveBtn.addEventListener("click", ()=> {
+                leaveOption.style.display = (leaveOption.style.display === "none" || leaveOption.style.display === "") ? "block" : "none";
+            })
+            document.addEventListener("click", (e)=> {
+                const toggleButton = document.querySelector(".fa-ellipsis")
+                if (leaveOption.style.display === "block" && !leaveOption.contains(e.target) && !toggleButton.contains(e.target)) {
+                    leaveOption.style.display = "none"
+                }
+            })
+        </script>
         <footer>
             <p>&copy; 2023 Community Page</p>
         </footer>';
