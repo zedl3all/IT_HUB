@@ -28,7 +28,11 @@ class AnnouncementPage {
                 }
                 .post-card:first-child{
                     margin-top: 20px;
-                }   
+                }
+                .mark-as-read {
+                    margin-left: auto;
+                    margin-right: 0;
+                }
                 @import url(\'https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap\');
             </style>
         </head>';
@@ -84,9 +88,10 @@ class AnnouncementPage {
                     <div class="post-tags">';
                     
                 // เริ่มต้นการวนลูปเพื่อแสดง tags
-                $tags = $announcement->getAnnouncementTag(); // สมมติว่า getAnnouncementTag() คืนค่า array ของ tags
-                foreach ($tags as $tag) {
-                    $output .= '<span class="post-tag">#' . htmlspecialchars($tag) . '</span>';
+                $tags = new Tag_Sql_Controller();
+                $tagnows = $tags->getTagByAnnouncement($announcement); // สมมติว่า getAnnouncementTag() คืนค่า array ของ tags
+                foreach ($tagnows as $tag) {
+                    $output .= '<span class="post-tag">#' . htmlspecialchars($tag->getTagName()) . '</span>';
                 }
                 
                 $output .= '</div>'; // ปิด div.post-tags
@@ -99,6 +104,7 @@ class AnnouncementPage {
                     <div class="post-author">
                         <div class="profile-icon user-profile"><i class="fa-solid fa-users"></i></div>
                         <div>Community: '. htmlspecialchars($commusql->getCommunityByID($announcement->getAnnouncementCommunityId())->getCommunityName()) . '</div>
+                        <button class="mark-as-read">Mark As Read</button>
                     </div>
                 </div>'; // ปิด div.post-card
             }

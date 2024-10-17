@@ -29,7 +29,7 @@ if (isset($_GET["Page"])) {
   $newCommu = $commuSql->getCommunityByID($_SESSION['an_c']);
 
   //test 1
-  $ian->createAnm("sewq", "dcvcv", $newUser, $newCommu, "tag");
+  // $ian->createAnm("ISAD", "sdsdsdsdsdds", $newUser, $newCommu, "OOP%2C+ISAD");
   // exit; // หยุดการทำงานหลังจากส่ง header
 }
 

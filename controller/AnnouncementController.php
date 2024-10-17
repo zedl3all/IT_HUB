@@ -30,17 +30,16 @@ class AnnouncementController {
         $tagsql = new Tag_Sql_Controller();
         foreach ($tags as $tag) {
             $temp = $tagsql->getTagByName(trim($tag));
-            if ($temp != null) {
+            if ($temp == null) {
                 $tagsql->createTag(trim($tag), trim(''));
                 $objectTaglist[] = $tagsql->getTagByName(trim($tag));
             }else{
                 $objectTaglist[] = $temp;
             }
         }
-
         $announcement->setAnnouncementTag($objectTaglist);
         $this->ANMSqlController->createAnnouncement($title, $description, $community->getCommunityID(), $user->getUserID());
-        $anNow = $this->ANMSqlController
+        $anNow = $this->ANMSqlController->getAnnouncementByLast($user->getUserID());
         $this->ANMSqlController->addtag($anNow, $objectTaglist);
         return $announcement;
     }
