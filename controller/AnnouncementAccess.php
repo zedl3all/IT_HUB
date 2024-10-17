@@ -7,6 +7,8 @@ class AnnouncementAccess implements IAnnouncementAccess{
   private $anmC;
   public function __construct(){
     $this->anmC = new AnnouncementController();
+  }
+  public function runPageAn(){
     $this->anmC->getAnnouncementPage()->render();
   }
   public function createAnm(String $title, String $description, User $anm_userId, Community $communityId, string $anm_tag): Announcement{
