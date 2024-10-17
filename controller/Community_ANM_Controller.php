@@ -49,9 +49,9 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
       // รีไดเรกต์กลับไปยังหน้าเดียวกัน พร้อมพารามิเตอร์ c_id และ u_id
       $c_id = $_SESSION['an_c']; // หรือใช้ค่าที่เหมาะสม
       $u_id = $_SESSION['an_u']; // หรือใช้ค่าที่เหมาะสม
-      header("Location: " . $_SERVER['PHP_SELF']);
+      header('Location: ' . $_SERVER['HTTP_REFERER']);
       exit();
-  }
+    }
 }
 
 // $ian->runPageAn();
