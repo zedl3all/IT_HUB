@@ -93,7 +93,7 @@ class CommunityPage {
     private function getLeftSidebar() {
         return '
         <nav class="left-sidebar">
-            <a href="#" class="nav-item">
+            <a href="/ISAD/controller/Join_Leave_Controller.php" class="nav-item">
                 <i class="fas fa-home"></i>
                 Home
             </a>
