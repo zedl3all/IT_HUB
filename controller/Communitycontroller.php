@@ -18,7 +18,7 @@ class CommunityController {
         $this->tagsql = new Tag_Sql_Controller();
         ob_start();
         session_start();
-        if(count($_GET) === 5){
+        if ((count($_GET) === 5) && !(isset($_GET['ta_id']))){
             if ((isset($_GET['communityName'])) && isset($_GET['enrollKey']) && isset($_GET['customTag']) && isset($_GET['description']) && isset($_GET['u_id'])){
                 if (is_null($this->sqlcommu->getCommunityByName($_GET['communityName'])) == 1){
                     $this->community = $this->create_commu($_GET['communityName'], $_GET['enrollKey'], $_GET['description'], $this->usersql->getUserByID($_GET['u_id']), explode("%2C+", $_GET['customTag']));
@@ -29,13 +29,20 @@ class CommunityController {
                 }
             }
         }
-        else if (isset($_GET['c_id'])) { 
+        else if ((isset($_GET['c_id'])) && !(isset($_GET['ta_id']))){ 
             $_SESSION['an_c'] = $_GET['c_id'];
             
             $c_id = $_GET['c_id'];
             $this->community = $this->sqlcommu->getCommunityByID($c_id);
 
             // Use $community_id to fetch community details, for example from the database.
+        } else if ((isset($_GET['ta_id'])) && (isset($_GET['c_id']))){
+            $c_id = $_GET['c_id'];
+            $ta_id = $_GET['ta_id'];
+            $this->community = $this->sqlcommu->getCommunityByID($c_id);
+            $ta = $this->usersql->getUserByID($ta_id);
+            $this->sqlcommu->adduser($this->community, $ta);
+            $this->sqlcommu->insertsubOwner($this->community, $ta);
         } else {
             // Handle the case where community_id is not provided
             echo "Community ID not found!";
@@ -51,21 +58,6 @@ class CommunityController {
             // Handle the case where community_id is not provided
             echo "User ID not found!";
         }
-
-        // // Handle user session
-        // if (isset($_SESSION["user_use_now"])) {
-        //     $this->user = $_SESSION["user_use_now"];
-        // } else {
-        //     $this->user = $this->usersql->getUserByID(1); // Default user ID
-        //     $_SESSION["user_use_now"] = $this->user;
-        // }
-        // Handle community session
-        // if (isset($_SESSION["community_id"])) {
-        //     $this->community = $_SESSION["community"];
-        // } else {
-        //     $this->community = $this->sqlcommu->getCommunityByID($community_id);
-        //     $_SESSION["community"] = $this->community;
-        // }
 
         $announcements = $this->announcesql->getAnnouncementsByCommunity($this->community->getCommunityID($_GET['c_id']));
 

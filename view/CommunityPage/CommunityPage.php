@@ -296,6 +296,11 @@ class CommunityPage {
     }
 
     private function getAddTA(){
+        if (isset($_GET['c_id']) && isset($_GET['u_id'])) {
+            // Get the values of 'c_id' and 'u_id'
+            $community_id = $_GET['c_id'];
+            $user_id = $_GET['u_id'];
+        }
         if(!isset($_SESSION["user_use_now"])){
             $role = "S"; // ถ้าไม่มีผู้ใช้ในเซสชันให้เป็น "S"
         }else{
@@ -306,10 +311,12 @@ class CommunityPage {
             <div class="add-ta-menu" style="display: inline-block;">
                 <span>Teacher Assistant<span id="amount_ta">0</span></span>
                 <div>
-                    <!-- <form action="/action_page.php"> -->
-                        <input type="text" id="ta_id" placeholder="Enter ID here"><br>
+                    <form method="GET" action = "/ISAD/controller/Communitycontroller.php">
+                         <input type="hidden" name="c_id" value="'.$community_id.'">
+                        <input type="hidden" name="u_id" value="'.$user_id.'">
+                        <input type="text" id="ta_id" name="ta_id" placeholder="Enter ID here"><br>
                         <input type="submit" value="Submit">
-                    <!-- </form> -->
+                    </form>
                 </div>
             </div>';
         }
