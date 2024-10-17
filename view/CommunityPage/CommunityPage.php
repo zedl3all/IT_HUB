@@ -323,6 +323,7 @@ class CommunityPage {
     }
 }
 
+
 // To render the page, create an instance of CommunityPage and call the render method
 // $page = new CommunityPage();
 // $page->render();
