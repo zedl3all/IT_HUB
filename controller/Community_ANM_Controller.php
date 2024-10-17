@@ -23,6 +23,7 @@ class Community_ANM_Controller {
 
 $anm = new Community_ANM_Controller();
 $ian = $anm->getAnmAccess();
+
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
   if (isset($_GET['myButton'])) {
       // รับค่า input จากฟอร์ม
@@ -39,17 +40,13 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
       $title = htmlspecialchars($title);
       $detail = htmlspecialchars($detail);
       $tag = htmlspecialchars($tag);
-      
-      $anm = new Community_ANM_Controller();
-      $ian = $anm->getAnmAccess();
+
       // เรียกฟังก์ชัน createAnm เมื่อกดปุ่ม
       $ian->createAnm($title, $detail, $newUser, $newCommu, $tag);
 
-      // รีไดเรกต์กลับไปยังหน้าเดียวกัน พร้อมพารามิเตอร์ c_id และ u_id
-      $c_id = $_SESSION['an_c']; // หรือใช้ค่าที่เหมาะสม
-      $u_id = $_SESSION['an_u']; // หรือใช้ค่าที่เหมาะสม
-      header("Location: " . $_SERVER['PHP_SELF']);
-      exit();
+      // รีไดเรกต์ไปยัง CommunityController พร้อมส่ง c_id และ u_id
+      header("Location:/ISAD/controller/CommunityController.php?".'c_id='.$_SESSION['an_c'].'&u_id='.$_SESSION['an_u']);
+      exit(); // หยุดการทำงานของสคริปต์
   }
 }
 
