@@ -25,8 +25,7 @@ class CommunityController {
                     header('Location: '.$_SERVER['PHP_SELF']."?c_id=".$this->c_id."&u_id=".$_GET['u_id']."");
                 }
                 else{
-                    header('Location: '."Join_Leave_Controller.php");
-                    echo "Already Used Communityname";
+                    header('Location: '."Join_Leave_Controller.php?create=1");
                 }
             }
         }

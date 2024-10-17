@@ -22,11 +22,17 @@ class Join_Leave_Controller {
             $this->user = $this->usersql->getUserByID(1); // ควรทำให้ยืดหยุ่นขึ้น (ไม่ hard-coded ID)
             $_SESSION["user_use_now"] = $this->user;
         }
-        
         $this->homepage = new HomePage();
         $this->homepage->setUser($this->user);
         $this->homepage->setJoinedCommunities($this->commusql->getJoinedCommunities($this->user));
         $this->homepage->setUnjoinedCommunities($this->commusql->getUnjoinedCommunities($this->user)); // เพิ่มการตั้งค่า unjoinedCommunities
+        if (isset($_GET["create"])){
+            echo "<script>
+            alert('Already have this community name');
+            
+            </script>";
+        }
+        
     }
 
     // Getter และ Setter ต่างๆ
