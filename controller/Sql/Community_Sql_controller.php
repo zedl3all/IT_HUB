@@ -24,7 +24,7 @@ class Community_Sql_Controller extends SqlController {
         }
     }
 
-    public function getCommunityByID(int $id): Community{
+    public function getCommunityByID(int $id){
         $sql = "SELECT * FROM community WHERE c_id = $id";
         $result = $this->query($sql);
 
@@ -41,7 +41,7 @@ class Community_Sql_Controller extends SqlController {
         }
     }
 
-    public function getCommunityByName(string $name): Community{
+    public function getCommunityByName(string $name){
         $sql = "SELECT * FROM community WHERE c_name = '{$name}'";
         $result = $this->query($sql);
 
@@ -58,7 +58,7 @@ class Community_Sql_Controller extends SqlController {
         }
     }
 
-    public function getCommunityByLast(User $user): Community{
+    public function getCommunityByLast(User $user){
         $sql = "SELECT * FROM community WHERE c_create_date = (SELECT MAX(c_create_date) FROM community WHERE u_id = {$user->getUserID()})";
         $result = $this->query($sql);
 
