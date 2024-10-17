@@ -1,6 +1,9 @@
 <?php
 
 class AnnouncementPage {
+    private User $user;
+    // private array $announcements;
+
     public function render() {
         echo '<!DOCTYPE html>';
         echo '<html lang="en">';
@@ -12,6 +15,15 @@ class AnnouncementPage {
         echo $this->getFooter();
         echo '</body>';
         echo '</html>';
+    }
+
+    // Getter and Setter for user
+    public function getUser(): User {
+        return $this->user;
+    }
+
+    public function setUser(User $user): void {
+        $this->user = $user;
     }
 
     private function getHead() {
@@ -70,9 +82,9 @@ class AnnouncementPage {
         $anmC = new Announcement_Sql_Controller();
         $usersql = new User_Sql_Controller();
         $commusql = new Community_Sql_Controller();
-        $announcements = $anmC->getAnnouncements();
+        $announcements = $anmC->getAnnouncementsByUserID($this->user->getUserID());
         $output = '<main class="main-content">';
-    
+
         if (!empty($announcements)) {
             foreach ($announcements as $announcement) {
                 $output .= '
@@ -87,14 +99,14 @@ class AnnouncementPage {
                     <div class="post-content">' . htmlspecialchars($announcement->getAnnouncementDescription()) . '</div>
                     <div class="post-tags">';
                     
-                // เริ่มต้นการวนลูปเพื่อแสดง tags
+                // Loop to display tags
                 $tags = new Tag_Sql_Controller();
-                $tagnows = $tags->getTagByAnnouncement($announcement); // สมมติว่า getAnnouncementTag() คืนค่า array ของ tags
+                $tagnows = $tags->getTagByAnnouncement($announcement);
                 foreach ($tagnows as $tag) {
                     $output .= '<span class="post-tag">#' . htmlspecialchars($tag->getTagName()) . '</span>';
                 }
                 
-                $output .= '</div>'; // ปิด div.post-tags
+                $output .= '</div>'; // Close div.post-tags
                 $output .= '
                     <div class="line-post" style="border-top: 2px solid #90A7BA; margin-bottom: 8px;"></div>
                     <div class="post-author" style="margin-bottom: 16px; margin-top: 16px;">
@@ -104,9 +116,12 @@ class AnnouncementPage {
                     <div class="post-author">
                         <div class="profile-icon user-profile"><i class="fa-solid fa-users"></i></div>
                         <div>Community: '. htmlspecialchars($commusql->getCommunityByID($announcement->getAnnouncementCommunityId())->getCommunityName()) . '</div>
-                        <button class="mark-as-read">Mark As Read</button>
+                            <form method="post" action="/ISAD/controller/NotificationController.php">
+                                <input type="hidden" name="announcement_id" value="' . htmlspecialchars($announcement->getAnnouncementID()) . '">
+                                <button type="submit" name="mark_as_read" class="mark-as-read">Mark As Read</button>
+                            </form>
                     </div>
-                </div>'; // ปิด div.post-card
+                </div>'; // Close div.post-card
             }
         } else {
             $output .= '<p>No announcements available.</p>';
@@ -120,5 +135,9 @@ class AnnouncementPage {
         return '';
     }
 }
+
+// To render the page, create an instance of CommunityPage and call the render method
+// $page = new AnnouncementPage();
+// $page->render();
 
 ?>

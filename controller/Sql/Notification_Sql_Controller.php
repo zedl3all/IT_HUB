@@ -24,7 +24,7 @@ class Notification_Sql_Controller extends SqlController {
     }
 
     public function getNotificationByID(int $id): Notification{
-        $sql = "SELECT * FROM notification WHERE id = $id";
+        $sql = "SELECT * FROM notification WHERE amn_id = $id";
         $result = $this->query($sql);
 
         if ($result->num_rows > 0) {
@@ -80,6 +80,24 @@ class Notification_Sql_Controller extends SqlController {
             return $notifications;
         } else {
             return [];
+        }
+    }
+
+    public function getNotificationByAnmID(Announcement $announcement): ?Notification {
+        $sql = "SELECT * FROM notification WHERE anm_id = {$announcement->getAnnouncementID()}";
+        $result = $this->query($sql);
+
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $notification = new Notification();
+            $notification->setNotificationId($row['n_id']);
+            $notification->setCommunityId($row['c_id']);
+            $notification->setUserID($row['u_id']);
+            $notification->setAnnouncementId($row['anm_id']);
+            $notification->setSeen($row['n_is_seen']);
+            return $notification;
+        } else {
+            return null;
         }
     }
 
@@ -143,7 +161,8 @@ class Notification_Sql_Controller extends SqlController {
     }
 
     public function createNotification(int $c_id, int $u_id, int $anm_id, bool $n_is_seen): bool {
-        $sql = "INSERT INTO notification (c_id, u_id, anm_id, n_is_seen) VALUES ($c_id, $u_id, $anm_id, $n_is_seen)";
+        $n_is_seen_int = $n_is_seen ? 1 : 0;
+        $sql = "INSERT INTO notification (c_id, u_id, anm_id, n_is_seen) VALUES ($c_id, $u_id, $anm_id, $n_is_seen_int)";
         return $this->query($sql);
     }
 }

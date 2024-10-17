@@ -25,8 +25,30 @@ class Announcement_Sql_Controller extends SqlController {
         }
     }
 
+    public function getAnnouncementsByUserID(int $id): array {
+        $sql = "SELECT * FROM announcement WHERE u_id = $id ORDER BY anm_create_date DESC";
+        $result = $this->query($sql);
+
+        if ($result->num_rows > 0) {
+            $announcements = [];
+            while($row = $result->fetch_assoc()) {
+                $announcement = new Announcement();
+                $announcement->setAnnouncementID($row['anm_id']);
+                $announcement->setAnnouncementTitle($row['anm_name']);
+                $announcement->setAnnouncementDescription($row['anm_description']);
+                $announcement->setAnnouncementCreateDate($row['anm_create_date']);
+                $announcement->setAnnouncementUserId($row['u_id']);
+                $announcement->setAnnouncementCommunityId($row['c_id']);
+                $announcements[] = $announcement;
+            }
+            return $announcements;
+        } else {
+            return [];
+        }
+    }
+
     public function getAnnouncementByID(int $id){
-        $sql = "SELECT * FROM announcement WHERE id = $id ORDER BY anm_create_date DESC";
+        $sql = "SELECT * FROM announcement WHERE anm_id = $id ORDER BY anm_create_date DESC LIMIT 1";
         $result = $this->query($sql);
 
         if ($result->num_rows > 0) {

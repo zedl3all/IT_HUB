@@ -59,6 +59,10 @@ class AnnouncementController {
     public function getAnnounementByCommunity(int $communityId): array {
         return $this->ANMSqlController->getAnnouncementsByCommunity($communityId);
     }
+
+    public function getAnnounementC(): void {
+        return $this->ANMSqlController;
+    }
 }
 
 // สร้างและเรียกใช้ AnnouncementPage
