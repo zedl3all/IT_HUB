@@ -17,16 +17,15 @@ class Community_ANM_Controller {
   }
 
   public function notifyCompleteAnnouncement() {
-    // Notify logic here
   }
 }
 
 $anm = new Community_ANM_Controller();
 $ian = $anm->getAnmAccess();
-
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
   if (isset($_GET['myButton'])) {
       // รับค่า input จากฟอร์ม
+      $notifysql = new Notification_Sql_Controller();
       $usersql = new User_Sql_Controller();
       $newUser = $usersql->getUserByID($_SESSION['an_u']);
       $commuSql = new Community_Sql_Controller();
@@ -40,15 +39,20 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
       $title = htmlspecialchars($title);
       $detail = htmlspecialchars($detail);
       $tag = htmlspecialchars($tag);
-
+      
       // เรียกฟังก์ชัน createAnm เมื่อกดปุ่ม
       $ian->createAnm($title, $detail, $newUser, $newCommu, $tag);
 
-      // รีไดเรกต์ไปยัง CommunityController พร้อมส่ง c_id และ u_id
-      header("Location:/ISAD/controller/CommunityController.php?".'c_id='.$_SESSION['an_c'].'&u_id='.$_SESSION['an_u']);
-      exit(); // หยุดการทำงานของสคริปต์
+      $lastanm = $ian->getAC()->getAnnounementSQL()->getAnnouncementByLast($newUser->getUserID());
+      $notifysql->createNotification($newCommu->getCommunityID(), $newUser->getUserID(), $lastanm->getAnnouncementID(), 0);
+
+      // รีไดเรกต์กลับไปยังหน้าเดียวกัน พร้อมพารามิเตอร์ c_id และ u_id
+      $c_id = $_SESSION['an_c']; // หรือใช้ค่าที่เหมาะสม
+      $u_id = $_SESSION['an_u']; // หรือใช้ค่าที่เหมาะสม
+      header("Location: " . $_SERVER['PHP_SELF']);
+      exit();
   }
 }
 
-$ian->runPageAn();
+// $ian->runPageAn();
 ?>

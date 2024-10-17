@@ -29,5 +29,9 @@ class AnnouncementAccess implements IAnnouncementAccess{
   public function insertToCommu(array $anm, Community $community){
     $community->setAnnouncement($anm);
   }
+
+  public function getAC(): AnnouncementController{
+    return $this->anmC;
+  }
 }
 ?>
