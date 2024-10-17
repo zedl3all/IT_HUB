@@ -20,13 +20,18 @@ class Community_ANM_Controller{
 
   }
 }
-new Community_ANM_Controller();
+$anm = new Community_ANM_Controller();
 if (isset($_GET["Page"])) {
   
   exit; // หยุดการทำงานหลังจากส่ง header
 }
+$ian = $anm->getAnmAccess();
+$usersql = new User_Sql_Controller();
+$newUser = $usersql->getUserByID($_SESSION['an_u']);
+$commuSql = new Community_Sql_Controller();
+$newCommu = $commuSql->getCommunityByID($_SESSION['an_c']);
 
-// $Ian = $createAn->getAnmAccess();
-// $Ian->createAnm("ISAD", "Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis, reiciendis praesentium aliquam, nostrum nemo optio quasi eos sequi velit sit corrupti saepe suscipit placeat natus id ut dignissimos assumenda earum.
-// ", $_SESSION["user_use_now"], $_SESSION["community"], []);
-?>
+
+// $ian->createAnm("OOP", "Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis, reiciendis praesentium aliquam, nostrum nemo optio quasi eos sequi velit sit corrupti saepe suscipit placeat natus id ut dignissimos assumenda earum.
+// ",$newUser, $newCommu, "");
+// ?>

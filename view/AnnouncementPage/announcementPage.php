@@ -1,26 +1,6 @@
 <?php
 
 class AnnouncementPage {
-    private User $user;
-    private Community $community;
-
-
-    public function getUserAn(): User {
-        return $this->user;
-    }
-
-    public function setUserAn(User $user): void {
-        $this->user = $user;
-    }
-
-    // Getter and Setter for community
-    public function getCommunityAn(): Community {
-        return $this->community;
-    }
-
-    public function setCommunityAn(Community $community): void {
-        $this->community = $community;
-    }
     public function render() {
         echo '<!DOCTYPE html>';
         echo '<html lang="en">';
@@ -84,6 +64,8 @@ class AnnouncementPage {
 
     private function getMainContent() {
         $anmC = new Announcement_Sql_Controller();
+        $usersql = new User_Sql_Controller();
+        $commusql = new Community_Sql_Controller();
         $announcements = $anmC->getAnnouncements();
         $output = '<main class="main-content">';
     
@@ -112,11 +94,11 @@ class AnnouncementPage {
                     <div class="line-post" style="border-top: 2px solid #90A7BA; margin-bottom: 8px;"></div>
                     <div class="post-author" style="margin-bottom: 16px; margin-top: 16px;">
                         <div class="profile-icon user-profile"><i class="fas fa-user"></i></div>
-                        <div>Post by: '. htmlspecialchars($this->user->getFirstname()) . '</div>
+                        <div>Post by: '. htmlspecialchars($usersql->getUserByID($announcement->getAnnouncementUserId())->getFirstname()) . '</div>
                     </div>
                     <div class="post-author">
                         <div class="profile-icon user-profile"><i class="fa-solid fa-users"></i></div>
-                        <div>Community: '. htmlspecialchars($this->community->getCommunityName()) . '</div>
+                        <div>Community: '. htmlspecialchars($commusql->getCommunityByID($announcement->getAnnouncementCommunityId())->getCommunityName()) . '</div>
                     </div>
                 </div>'; // ปิด div.post-card
             }

@@ -15,6 +15,8 @@ class Announcement_Sql_Controller extends SqlController {
                 $announcement->setAnnouncementTitle($row['anm_name']);
                 $announcement->setAnnouncementDescription($row['anm_description']);
                 $announcement->setAnnouncementCreateDate($row['anm_create_date']);
+                $announcement->setAnnouncementUserId($row['u_id']);
+                $announcement->setAnnouncementCommunityId($row['c_id']);
                 $announcements[] = $announcement;
             }
             return $announcements;

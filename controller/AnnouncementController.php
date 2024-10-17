@@ -9,46 +9,10 @@ ob_start();
 class AnnouncementController {
     private $ANMSqlController;
     private $announcementPage;
-    private $user;
-    private $community;
-    private $userSql;
-    private $sqlcommu;
     public function __construct() {
         $this->ANMSqlController = new Announcement_Sql_Controller();
         $this->announcementPage = new AnnouncementPage();
-        $this->userSql = new User_Sql_Controller();
-        $this->sqlcommu = new Community_Sql_Controller();
-
-        if (isset($_SESSION['an_c'])) {
-            $this->community = $this->sqlcommu->getCommunityByID($_SESSION['an_c']);
-        }else{
-            $this->community = $this->sqlcommu->getCommunityByID(1);
-        }
-        
-        if (isset($_SESSION['an_u'])) {
-            $this->user = $this->userSql->getUserByID($_SESSION['an_u']);
-        }else{
-            $this->user = $this->userSql->getUserByID(1);
-        }
-
-        $this->announcementPage->setUserAn($this->user);
-        $this->announcementPage->setCommunityAn($this->community);
-
     }
-    public function setUserAn($user){
-        $this->user = $user;
-    }
-    public function getUserAn(): User{
-        return $this->user;
-    }
-    public function setComAn($commu){
-        $this->community = $commu;
-    }
-    public function getComAn(): Community{
-        return $this->community;
-    }
-
-
 
     public function getAnnouncementPage(){
         return $this->announcementPage;
