@@ -113,7 +113,7 @@ class CommunityPage {
                 <i class="fas fa-home"></i>
                 Home
             </a>
-            <a href="/ISAD/controller/Community_ANM_Controller.php" class="nav-item">
+            <a href="/ISAD/controller/NotificationController.php?u_id=' . $_SESSION["user_use_now"]->getUserID() . '" class="nav-item">
                 <i class="fas fa-bullhorn"></i>
                 Announcement
             </a>
