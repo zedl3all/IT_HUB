@@ -67,7 +67,7 @@ class Notification_Sql_Controller extends SqlController {
         $result = $this->query($sql);
 
         if ($result->num_rows > 0) {
-            $notifications = [];
+          $notifications = [];
             while($row = $result->fetch_assoc()) {
                 $notification = new Notification();
                 $notification->setNotificationId($row['n_id']);
@@ -125,6 +125,18 @@ class Notification_Sql_Controller extends SqlController {
         }
     }
 
+    public function getCountUnseenNotification(User $user): int {
+        $sql = "SELECT count(n_is_seen) as unseen_count FROM notification WHERE u_id = {$user->getUserID()} AND n_is_seen = 0";
+        $result = $this->query($sql);
+
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            return (int)$row['unseen_count'];
+        } else {
+            return 0;
+        }
+    }
+
     public function setSeenNotification(Notification $notification): bool {
         $sql = "UPDATE notification SET n_is_seen = 1 WHERE n_id = {$notification->getNotificationId()}";
         return $this->query($sql);
@@ -135,4 +147,4 @@ class Notification_Sql_Controller extends SqlController {
         return $this->query($sql);
     }
 }
-?>
+?>  
