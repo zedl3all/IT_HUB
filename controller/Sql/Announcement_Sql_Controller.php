@@ -62,6 +62,23 @@ class Announcement_Sql_Controller extends SqlController {
         }
     }
 
+    public function getAnnouncementByLast(int $u_id): Announcement{
+        $sql = "SELECT * FROM announcement WHERE u_id = $u_id ORDER BY anm_create_date DESC LIMIT 1";
+        $result = $this->query($sql);
+
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $announcement = new Announcement();
+            $announcement->setAnnouncementID($row['anm_id']);
+            $announcement->setAnnouncementTitle($row['anm_name']);
+            $announcement->setAnnouncementDescription($row['anm_description']);
+            $announcement->setAnnouncementCreateDate($row['anm_create_date']);
+            return $announcement;
+        } else {
+            return null;
+        }
+    }
+
     public function createAnnouncement(string $name, string $discription, int $c_id, int $u_id): bool {
         $sql = "INSERT INTO announcement (anm_name, anm_description, c_id, u_id) VALUES ('$name', '$discription', $c_id, $u_id)";
         return $this->query($sql);
