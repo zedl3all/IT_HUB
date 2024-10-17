@@ -58,6 +58,22 @@ class CommunityPage {
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
             <link rel="stylesheet" href="\ISAD\view\CommunityPage\CommunityPage.css">
             <style>
+                .post-tag {
+                    margin-top: 10px;
+                    padding: 10px;
+                    background-color: #fff;
+                    border: 5px solid #a5c7e7;
+                    border-radius: 10px;
+                }
+                .post-button {
+                    text-transform: uppercase;
+                    font-weight: 1000;
+                    padding: 12px 25px;
+                    align-self: flex-end;
+                }
+                .post-button:hover {
+                    background-color: #164A7F;
+                }
                 @import url(\'https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap\');
             </style>
         </head>';
@@ -171,7 +187,7 @@ class CommunityPage {
                     <div class="tag-section">
                         <p>Tags:</p>
                         <div class="tag-container" id="tagContainer"></div>
-                        <input type="text" id="Tags" name="customTag" placeholder="Add Tag like Tag1, Tag2, Tag3">
+                        <input type="text" id="Tags" name="customTag" placeholder="Add Tag like Tag1, Tag2, Tag3" class="post-tag">
                     </div>
                     <button class="post-button" type="submit" name="myButton">Post</button>
                 </div>
@@ -200,8 +216,10 @@ class CommunityPage {
                 <div class="line-post"></div>
                 <div class="post-tags">
                     <div class="tags-container">';
-            foreach ($announcement->getAnnouncementTag() as $tag) {
-                $html .= '<span class="post-tag">#' . htmlspecialchars($tag) . '</span>';
+            $tags = new Tag_Sql_Controller();
+            $tagnows = $tags->getTagByCommunity($this->getCommunity());
+            foreach ($tagnows as $tag) {
+                $html .= '<span class="post-tag">#' . htmlspecialchars($tag->getTagName()) . '</span>';
             }
             $html .= '
                     </div>
