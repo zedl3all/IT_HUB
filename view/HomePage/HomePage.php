@@ -281,7 +281,14 @@ class HomePage {
                 .nick:hover{
                     background-color: #2757A1;
                     color: white;
-                }</style>';  
+                }   
+                .role{
+                    position: fixed;
+                    right: 20px;
+                    bottom: 10px;
+                    margin: 10px 5px;
+                }
+                </style>';  
     }
 
     // ส่วนของ Scripts
@@ -291,8 +298,6 @@ class HomePage {
 }
 // For testing
 if ($_SESSION["user_use_now"]){
-    echo $_SESSION["user_use_now"]->getFirstname();
-    echo " Role: ";
-    echo $_SESSION["user_use_now"]->getRole();
+    echo "<div class='role'>".$_SESSION["user_use_now"]->getFirstname()." -> Role: ". $_SESSION["user_use_now"]->getRole(). "</div>";
 }
 ?>

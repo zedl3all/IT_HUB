@@ -24,23 +24,24 @@ class AnnouncementController {
         $announcement->setAnnouncementDescription($description);
         $announcement->setAnnouncementUserId($user->getUserID());
         $announcement->setAnnouncementCommunityId($community->getCommunityID());
-        $tags = explode("%2C",$anm_tag);
+        $tags = explode("%2C+",$anm_tag);
+        
         $objectTaglist = [];
         $tagsql = new Tag_Sql_Controller();
         foreach ($tags as $tag) {
-            $temp = $tagsql->getTagByName($tag);
+            $temp = $tagsql->getTagByName(trim($tag));
             if ($temp != null) {
-                $tagsql->createTag($tag, '');
-                $objectTaglist[] = $tagsql->getTagByName($tag);
+                $tagsql->createTag(trim($tag), trim(''));
+                $objectTaglist[] = $tagsql->getTagByName(trim($tag));
             }else{
                 $objectTaglist[] = $temp;
             }
         }
+
         $announcement->setAnnouncementTag($objectTaglist);
-
-        $this->ANMSqlController->createAnnouncement($title, $description, $community->getCommunityID(), u_id: $user->getUserID());
-        $this->ANMSqlController->addtag($announcement, $objectTaglist);
-
+        $this->ANMSqlController->createAnnouncement($title, $description, $community->getCommunityID(), $user->getUserID());
+        $anNow = $this->ANMSqlController
+        $this->ANMSqlController->addtag($anNow, $objectTaglist);
         return $announcement;
     }
 
