@@ -60,7 +60,7 @@ class AnnouncementController {
         return $this->ANMSqlController->getAnnouncementsByCommunity($communityId);
     }
 
-    public function getAnnounementC(): Announcement_Sql_Controller {
+    public function getAnnounementSQL(): Announcement_Sql_Controller {
         return $this->ANMSqlController;
     }
 }
