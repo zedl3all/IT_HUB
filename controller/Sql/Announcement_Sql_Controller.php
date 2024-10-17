@@ -85,7 +85,7 @@ class Announcement_Sql_Controller extends SqlController {
     }
 
     public function getAnnouncementByLast(int $u_id){
-        $sql = "SELECT * FROM announcement WHERE u_id = $u_id ORDER BY anm_create_date DESC LIMIT 1";
+        $sql = "SELECT * FROM announcement WHERE u_id = $u_id ORDER BY anm_id DESC LIMIT 1";
         $result = $this->query($sql);
 
         if ($result->num_rows > 0) {
