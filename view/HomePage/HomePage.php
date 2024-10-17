@@ -109,14 +109,14 @@ class HomePage {
                         <p>No communities joined yet.</p>
                     </section>';
         }
-        
+        $tagsql = new Tag_Sql_Controller();
         $cards = '';
         foreach ($this->joinedCommunities as $community) {
             $cards .= $this->renderCommunityCard(
                 $community->getCommunityID(),
                 $community->getCommunityName(),
                 $community->getAmoutOfMembers(),
-                implode(' ', $community->getTag())
+                $tagsql->getTagByCommunity($community)
             );
         }
         
@@ -137,14 +137,14 @@ class HomePage {
                         <p>No communities to discover.</p>
                     </section>';
         }
-    
+        $tagsql = new Tag_Sql_Controller();
         $cards = '';
         foreach ($this->unjoinedCommunities as $community) {
             $cards .= $this->renderDiscoverCommunityCard(
                 $community->getCommunityID(),
                 $community->getCommunityName(),
                 $community->getAmoutOfMembers(),
-                implode(' ', $community->getTag())
+                $tagsql->getTagByCommunity($community)
             );
         }
     
@@ -158,24 +158,33 @@ class HomePage {
     }
 
     // ฟังก์ชันสร้างการ์ดสำหรับ My Community
-    private function renderCommunityCard(int $id, string $name, int $members, string $tags) {
+    private function renderCommunityCard(int $id, string $name, int $members, array $tags) {
+        $tagOutput = '';
+        foreach ($tags as $tag) {
+            $tagOutput .= '<span class="post-tag">#' . htmlspecialchars($tag->getTagName(), ENT_QUOTES, 'UTF-8') . '</span> ';
+        }
         return '
         <div class="repeat-commu">
-            <a href="/ISAD/controller/CommunityController.php?c_id='.$id.'&u_id='.$_SESSION["user_use_now"]->getUserID().'">
+            <a href="/ISAD/controller/CommunityController.php?c_id=' . $id . '&u_id=' . $_SESSION["user_use_now"]->getUserID() . '">
                 <div class="community-card">
                     <div class="community-image">
                         <i class="fas fa-image"></i>
                     </div>
                     <div class="community-info">' . htmlspecialchars($name, ENT_QUOTES, 'UTF-8') . '</div>
                     <div class="community-info">' . htmlspecialchars($members, ENT_QUOTES, 'UTF-8') . '</div>
-                    <div class="community-tags">' . htmlspecialchars($tags, ENT_QUOTES, 'UTF-8') . '</div>
+                    <div class="community-tags">' . $tagOutput . '</div>
                 </div>
             </a>
         </div>';
     }
+    
 
     // ฟังก์ชันสร้างการ์ดสำหรับ Discover Community
-    private function renderDiscoverCommunityCard(int $id, string $name, int $members, string $tags) {
+    private function renderDiscoverCommunityCard(int $id, string $name, int $members, array $tags) {
+        $tagOutput = '';
+        foreach ($tags as $tag) {
+            $tagOutput .= '<span class="post-tag">#' . htmlspecialchars($tag->getTagName(), ENT_QUOTES, 'UTF-8') . '</span> ';
+        }
         return '
         <div class="repeat-discover_commu">
             <a href="/ISAD/controller/Join_Leave_Controller.php?c_id='.$id.'&u_id='.$_SESSION["user_use_now"]->getUserID().'">
@@ -185,7 +194,7 @@ class HomePage {
                     </div>
                     <div class="community-info">' . htmlspecialchars($name, ENT_QUOTES, 'UTF-8') . '</div>
                     <div class="community-info">' . htmlspecialchars($members, ENT_QUOTES, 'UTF-8') . '</div>
-                    <div class="community-tags">' . htmlspecialchars($tags, ENT_QUOTES, 'UTF-8') . '</div>
+                    <div class="community-tags">' . $tagOutput . '</div>
                     
                 </div>
             </a>
