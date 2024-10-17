@@ -93,7 +93,7 @@ class CommunityPage {
     private function getLeftSidebar() {
         return '
         <nav class="left-sidebar">
-            <a href="#" class="nav-item">
+            <a href="/ISAD/controller/Join_Leave_Controller.php" class="nav-item">
                 <i class="fas fa-home"></i>
                 Home
             </a>
@@ -118,65 +118,65 @@ class CommunityPage {
 
     private function getPostCreator() {
         return '
-        <div class="post-creator">
-            <div class="create-post-header">
-                <div class="profile-icon">
-                    <i class="fas fa-user"></i>
-                </div>
-                <input type="text" class="post-input" placeholder="You can post something here.." style="height: 50px;">
-            </div>
-            <hr>
-            <div class="post-actions">
-                <button class="post-type-btn announcement-btn" id="post-type-announcement" onclick="expandPostCreator(\'announcement\')">
-                    <i class="fas fa-bullhorn"></i> Announcement
-                </button>
-                <button class="post-type-btn" id="post-type-question" onclick="expandPostCreator(\'question\')">
-                    <i class="fas fa-question-circle"></i> Question
-                </button>
-                <button class="post-type-btn" id="post-type-poll" onclick="expandPostCreator(\'poll\')">
-                    <i class="fas fa-poll"></i> Poll
-                </button>
-            </div>
-        </div>
-        <div class="expanded-post-creator" style="display: none;">
-            <div class="post-header">
-                <div class="profile-icon">
-                    <i class="fas fa-user"></i>
-                </div>
-                <div class="profile-info">
-                    <div class="profile-name">' . $this->getUserFNametoShow() . '</div>
-                    <div class="anonymous-mode" style="display: none;">
-                        <span>Anonymous Mode</span>
-                        <label class="switch">
-                            <input type="checkbox" id="anonymousToggle">
-                            <span class="slider round"></span>
-                        </label>
+        <form action="/ISAD/controller/Community_ANM_Controller.php" method="GET">
+            <div class="post-creator">
+                <div class="create-post-header">
+                    <div class="profile-icon">
+                        <i class="fas fa-user"></i>
                     </div>
+                    <input type="text" class="post-input" placeholder="You can post something here.." style="height: 50px;">
                 </div>
-                <button class="close-button">×</button>
-            </div>
-            <div class="post-content">
-                <div class="post-type-selector">
-                    <select id="postTypeSelect">
-                        <option value="announcement">Announcement</option>
-                        <option value="question">Question</option>
-                        <option value="poll">Poll</option>
-                    </select>
+                <hr>
+                <div class="post-actions">
+                    <button class="post-type-btn announcement-btn" id="post-type-announcement" onclick="expandPostCreator(\'announcement\')">
+                        <i class="fas fa-bullhorn"></i> Announcement
+                    </button>
+                    <button class="post-type-btn" id="post-type-question" onclick="expandPostCreator(\'question\')">
+                        <i class="fas fa-question-circle"></i> Question
+                    </button>
+                    <button class="post-type-btn" id="post-type-poll" onclick="expandPostCreator(\'poll\')">
+                        <i class="fas fa-poll"></i> Poll
+                    </button>
                 </div>
-                <input type="text" class="post-topic" placeholder="Add Topic...">
-                <textarea class="post-details" placeholder="Add more details..."></textarea>
             </div>
-            <div class="post-footer">
-                <form action="/ISAD/controller/CommunityController.php" method="GET" onsubmit="return addTagsToForm()">
+            <div class="expanded-post-creator" style="display: none;">
+                <div class="post-header">
+                    <div class="profile-icon">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="profile-info">
+                        <div class="profile-name">' . $this->getUserFNametoShow() . '</div>
+                        <div class="anonymous-mode" style="display: none;">
+                            <span>Anonymous Mode</span>
+                            <label class="switch">
+                                <input type="checkbox" id="anonymousToggle">
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <button class="close-button">×</button>
+                </div>
+                <div class="post-content">
+                    <div class="post-type-selector">
+                        <select id="postTypeSelect">
+                            <option value="announcement">Announcement</option>
+                            <option value="question">Question</option>
+                            <option value="poll">Poll</option>
+                        </select>
+                    </div>
+                    <input type="text" class="post-topic" placeholder="Add Topic..." name="title">
+                    <textarea class="post-details" placeholder="Add more details..." name="detail"></textarea>
+                </div>
+                <div class="post-footer">
                     <div class="tag-section">
                         <p>Tags:</p>
                         <div class="tag-container" id="tagContainer"></div>
                         <input type="text" id="Tags" name="customTag" placeholder="Add Tag like Tag1, Tag2, Tag3">
                     </div>
-                    <button class="post-button">Post</button>
-                </form>
+                    <button class="post-button" type="submit" name="myButton">Post</button>
+                </div>
             </div>
-        </div>';
+        </form>';
     }
 
     private function getPostAnnouncements() {
@@ -322,6 +322,7 @@ class CommunityPage {
         return '<script src="/ISAD/view/CommunityPage/CommunityPage.js"></script>'; // เปลี่ยนเป็น path ที่ถูกต้อง
     }
 }
+
 
 // To render the page, create an instance of CommunityPage and call the render method
 // $page = new CommunityPage();
