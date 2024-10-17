@@ -108,9 +108,11 @@ function CreateSubmit() {
     });
 
     // Clear input fields after submission
-    clearCreateForm();
-
-    closeCreatePopup();
+    if (communityName === 'ABC') {
+        alert("Already have this community name");
+    } else{
+        closeCreatePopup();
+    }
 }
 
 function clearCreateForm() {
@@ -141,7 +143,6 @@ function openCreatePopup() {
 }
 
 function closeCreatePopup() {
-    clearCreateForm();
     document.getElementById('createPopupOverlay').style.display = 'none';
 }
 
