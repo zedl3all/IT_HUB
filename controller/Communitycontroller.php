@@ -20,8 +20,14 @@ class CommunityController {
         session_start();
         if(count($_GET) === 5){
             if ((isset($_GET['communityName'])) && isset($_GET['enrollKey']) && isset($_GET['customTag']) && isset($_GET['description']) && isset($_GET['u_id'])){
-                $this->community = $this->create_commu($_GET['communityName'], $_GET['enrollKey'], $_GET['description'], $this->usersql->getUserByID($_GET['u_id']), explode("%2C+", $_GET['customTag']));
-                header('Location: '.$_SERVER['PHP_SELF']."?c_id=".$this->c_id."&u_id=".$_GET['u_id']."");
+                if (is_null($this->sqlcommu->getCommunityByName($_GET['communityName'])) == 1){
+                    $this->community = $this->create_commu($_GET['communityName'], $_GET['enrollKey'], $_GET['description'], $this->usersql->getUserByID($_GET['u_id']), explode("%2C+", $_GET['customTag']));
+                    header('Location: '.$_SERVER['PHP_SELF']."?c_id=".$this->c_id."&u_id=".$_GET['u_id']."");
+                }
+                else{
+                    header('Location: '."Join_Leave_Controller.php");
+                    echo "Already Used Communityname";
+                }
             }
         }
         else if (isset($_GET['c_id'])) { 
