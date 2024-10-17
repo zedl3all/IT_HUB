@@ -36,8 +36,8 @@ class Tag_Sql_Controller extends SqlController {
         }
     }
 
-    public function getTagByName(string $name): Tag{
-        $sql = "SELECT * FROM tag WHERE t_name = $name";
+    public function getTagByName(string $name){
+        $sql = "SELECT * FROM tag WHERE t_name = '$name'";
         $result = $this->query($sql);
 
         if ($result->num_rows > 0) {

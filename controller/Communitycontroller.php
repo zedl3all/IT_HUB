@@ -71,13 +71,18 @@ class CommunityController {
     }
 
     public function create_commu(String $name, String $enroll, String $description, User $owner, array $tag): Community {
-        $tag = $tag[0];
+        $tag = explode(",", $tag[0]);
+        //echo $tag[0];
         $tags = [];
         foreach($tag as $t){
             $tagData = $this->tagsql->getTagByName(trim($t));
+            
             if($tagData == null){
-                $tags[] = $this->tagsql->createTag(trim($t), "");
+                //echo "create";
+                $this->tagsql->createTag(trim($t), trim($t));
+                $tags[] = $this->tagsql->getTagByName(trim($t));
             }else{
+                //echo "not create";
                 $tags[] = $tagData;
             }
         }
