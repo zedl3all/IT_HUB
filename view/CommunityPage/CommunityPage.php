@@ -74,6 +74,10 @@ class CommunityPage {
                 .post-button:hover {
                     background-color: #164A7F;
                 }
+                .post-card{
+                    margin-top: 20px;
+                    margin-bottom: 5px;
+                }
                 @import url(\'https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap\');
             </style>
         </head>';
