@@ -165,5 +165,27 @@ class Notification_Sql_Controller extends SqlController {
         $sql = "INSERT INTO notification (c_id, u_id, anm_id, n_is_seen) VALUES ($c_id, $u_id, $anm_id, $n_is_seen_int)";
         return $this->query($sql);
     }
+
+    public function getNotificationAnnouncementByUser(User $user): array{
+        $sql = "SELECT * FROM announcement WHERE anm_id IN (SELECT anm_id FROM notification WHERE u_id = {$user->getUserID()})";
+        $result = $this->query($sql);
+
+        if ($result->num_rows > 0) {
+            $announcements = [];
+            while($row = $result->fetch_assoc()) {
+                $announcement = new Announcement();
+                $announcement->setAnnouncementID($row['anm_id']);
+                $announcement->setAnnouncementCommunityId($row['c_id']);
+                $announcement->setAnnouncementUserId($row['u_id']);
+                $announcement->setAnnouncementTitle($row['anm_title']);
+                $announcement->setAnnouncementDescription($row['anm_content']);
+                $announcement->setAnnouncementCreateDate($row['anm_date']);
+                $announcements[] = $announcement;
+            }
+            return $announcements;
+        } else {
+            return [];
+        }
+    }
 }
 ?>  
