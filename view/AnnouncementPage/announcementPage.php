@@ -41,8 +41,9 @@ class AnnouncementPage {
                 .post-card:first-child{
                     margin-top: 20px;
                 }
-                .mark-as-read {
-                    margin-left: 450px;
+                .container-mark-as-read {
+                    margin-left: auto;
+                    margin-right: 0;
                 }
                 @import url(\'https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap\');
             </style>
@@ -115,7 +116,7 @@ class AnnouncementPage {
                     <div class="post-author">
                         <div class="profile-icon user-profile"><i class="fa-solid fa-users"></i></div>
                         <div>Community: '. htmlspecialchars($commusql->getCommunityByID($announcement->getAnnouncementCommunityId())->getCommunityName()) . '</div>
-                            <form method="post" action="/ISAD/controller/NotificationController.php">
+                            <form method="post" action="/ISAD/controller/NotificationController.php" class="container-mark-as-read">
                                 <input type="hidden" name="announcement_id" value="' . htmlspecialchars($announcement->getAnnouncementID()) . '">
                                 <button type="submit" name="mark_as_read" class="mark-as-read">Mark As Read</button>
                             </form>
