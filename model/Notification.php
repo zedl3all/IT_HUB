@@ -36,5 +36,10 @@ class Notification{
     public function setCommunityId($community_id){
         $this->community_id = $community_id;
     }
+
+    public function isSeen() {
+        return $this->seen == 1;
+    }
+    
 }
 ?>

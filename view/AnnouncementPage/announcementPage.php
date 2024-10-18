@@ -82,6 +82,7 @@ class AnnouncementPage {
         $anmC = new Announcement_Sql_Controller();
         $usersql = new User_Sql_Controller();
         $commusql = new Community_Sql_Controller();
+        $notiSqlController = new Notification_Sql_Controller();
         $announcements = $anmC->getAnnouncementsByUserID($this->user->getUserID());
         $output = '<main class="main-content">';
 
@@ -115,13 +116,20 @@ class AnnouncementPage {
                     </div>
                     <div class="post-author">
                         <div class="profile-icon user-profile"><i class="fa-solid fa-users"></i></div>
-                        <div>Community: '. htmlspecialchars($commusql->getCommunityByID($announcement->getAnnouncementCommunityId())->getCommunityName()) . '</div>
-                            <form method="post" action="/ISAD/controller/NotificationController.php" class="container-mark-as-read">
-                                <input type="hidden" name="announcement_id" value="' . htmlspecialchars($announcement->getAnnouncementID()) . '">
-                                <button type="submit" name="mark_as_read" class="mark-as-read">Mark As Read</button>
-                            </form>
-                    </div>
-                </div>'; // Close div.post-card
+                        <div>Community: '. htmlspecialchars($commusql->getCommunityByID($announcement->getAnnouncementCommunityId())->getCommunityName()) . '</div>';
+
+                // Fetch notification status
+                $notification = $notiSqlController->getNotificationByAnmID($announcement);
+                if ($notification !== null && !$notification->isSeen()) {
+                    $output .= '
+                        <form method="post" action="/ISAD/controller/NotificationController.php">
+                            <input type="hidden" name="announcement_id" value="' . htmlspecialchars($announcement->getAnnouncementID()) . '">
+                            <button type="submit" name="mark_as_read" class="mark-as-read">Mark As Read</button>
+                        </form>';
+                }
+
+                $output .= '</div>'; // Close div.post-author
+                $output .= '</div>'; // Close div.post-card
             }
         } else {
             $output .= '<p>No announcements available.</p>';
