@@ -122,7 +122,7 @@ class AnnouncementPage {
                 $notification = $notiSqlController->getNotificationByAnmID($announcement);
                 if ($notification !== null && !$notification->isSeen()) {
                     $output .= '
-                        <form method="post" action="/ISAD/controller/NotificationController.php">
+                        <form method="post" action="/ISAD/controller/NotificationController.php" class="container-mark-as-read">
                             <input type="hidden" name="announcement_id" value="' . htmlspecialchars($announcement->getAnnouncementID()) . '">
                             <button type="submit" name="mark_as_read" class="mark-as-read">Mark As Read</button>
                         </form>';
