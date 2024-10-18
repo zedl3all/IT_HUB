@@ -42,6 +42,7 @@ class CommunityController {
             $this->community = $this->sqlcommu->getCommunityByID($c_id);
             $ta = $this->usersql->getUserByID($ta_id);
             $this->insertSubOwner($this->community, $ta);
+            header('Location: '.$_SERVER['PHP_SELF']."?c_id=".$c_id."&u_id=".$_GET['u_id']."");
         } else {
             // Handle the case where community_id is not provided
             echo "Community ID not found!";
@@ -106,7 +107,10 @@ class CommunityController {
     }
 
     public function insertSubOwner(Community $community, User $subowner) {
-        if ($this->sqlcommu->getRoleByUser($community, $subowner) == "Member"){
+        if ($this->sqlcommu->getRoleByUser($community, $subowner) == "Owner"){
+
+        }
+        else if ($this->sqlcommu->getRoleByUser($community, $subowner) == "Member"){
             $this->sqlcommu->updatesubOwner($community, $subowner);
         } else {
             $this->sqlcommu->insertsubOwner($community, $subowner);
