@@ -48,6 +48,10 @@ class NotificationController {
         return $this->notiSqlController;
     }
 
+    public function getUsersqlContoller() : User_Sql_Controller {
+        return $this->usersql;
+    }
+
     public function createNotification($noti_id, $community_id, $user_id, $announce_id, $seen) {
         $this->notiSqlController->insertNotification($noti_id, $community_id, $user_id, $announce_id, $seen);
     }
@@ -74,10 +78,13 @@ $controller = new NotificationController();
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['mark_as_read'])) {
     // $amn = $controller->announcesql->getAnnouncementByID($_POST['announcement_id']);
     $announcement_id = $_POST['announcement_id'];
+    $user_id = $_POST['user_id'];
     $amn = $controller->getAnnounceSql()->getAnnouncementByID($announcement_id);
+    $user = $controller->getUsersqlContoller()->getUserByID($user_id);
+
     // echo $amn->getAnnouncementID();
     if ($amn !== null) {
-        $notifychan = $controller->getNotiSqlController()->getNotificationByAnmID($amn);
+        $notifychan = $controller->getNotiSqlController()->getNotificationByAnmID($amn, $user);
         if ($notifychan !== null) {
             $controller->markAsRead($notifychan);
         }

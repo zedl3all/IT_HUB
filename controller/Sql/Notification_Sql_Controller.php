@@ -83,8 +83,8 @@ class Notification_Sql_Controller extends SqlController {
         }
     }
 
-    public function getNotificationByAnmID(Announcement $announcement): ?Notification {
-        $sql = "SELECT * FROM notification WHERE anm_id = {$announcement->getAnnouncementID()}";
+    public function getNotificationByAnmID(Announcement $announcement, User $user): ?Notification {
+        $sql = "SELECT * FROM notification WHERE anm_id = {$announcement->getAnnouncementID()} AND u_id = {$user->getUserID()}";
         $result = $this->query($sql);
 
         if ($result->num_rows > 0) {

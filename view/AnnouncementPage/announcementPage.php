@@ -131,11 +131,12 @@ class AnnouncementPage {
                         <div>Community: '. htmlspecialchars($commusql->getCommunityByID($announcement->getAnnouncementCommunityId())->getCommunityName()) . '</div>';
 
                 // Fetch notification status
-                $notification = $notiSqlController->getNotificationByAnmID($announcement);
+                $notification = $notiSqlController->getNotificationByAnmID($announcement, $this->user);
                 if ($notification !== null && !$notification->isSeen()) {
                     $output .= '
                         <form method="post" action="/ISAD/controller/NotificationController.php" class="container-mark-as-read">
                             <input type="hidden" name="announcement_id" value="' . htmlspecialchars($announcement->getAnnouncementID()) . '">
+                            <input type="hidden" name="user_id" value="' . htmlspecialchars($this->user->getUserID()) . '">
                             <button type="submit" name="mark_as_read" class="mark-as-read">Mark As Read</button>
                         </form>';
                 }
