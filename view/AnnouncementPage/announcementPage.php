@@ -42,8 +42,7 @@ class AnnouncementPage {
                     margin-top: 20px;
                 }
                 .mark-as-read {
-                    margin-left: auto;
-                    margin-right: 0;
+                    margin-left: 450px;
                 }
                 @import url(\'https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap\');
             </style>
@@ -132,7 +131,15 @@ class AnnouncementPage {
     
 
     private function getFooter() {
-        return '';
+        return '<script>
+            const btnMark = document.querySelectorAll(".mark-as-read")
+            console.log(btnMark)
+            for(let i = 0; i < btnMark.length; i++){
+                btnMark[i].addEventListener("click", ()=> {
+                    btnMark[i].style.display = "none"
+                })
+            }
+        </script>';
     }
 }
 
