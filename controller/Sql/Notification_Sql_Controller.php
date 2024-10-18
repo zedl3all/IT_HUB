@@ -167,7 +167,7 @@ class Notification_Sql_Controller extends SqlController {
     }
 
     public function getNotificationAnnouncementByUser(User $user): array{
-        $sql = "SELECT * FROM announcement WHERE anm_id IN (SELECT anm_id FROM notification WHERE u_id = {$user->getUserID()})";
+        $sql = "SELECT * FROM announcement WHERE anm_id IN (SELECT anm_id FROM notification WHERE u_id = {$user->getUserID()}) ORDER BY anm_create_date DESC";
         $result = $this->query($sql);
 
         if ($result->num_rows > 0) {
