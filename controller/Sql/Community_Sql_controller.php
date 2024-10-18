@@ -135,6 +135,11 @@ class Community_Sql_Controller extends SqlController {
         return $this->query($sql);
     }
 
+    public function updatesubOwner(Community $community, User $user): bool {
+        $sql = "UPDATE community_user SET u_role = 'SubOwner' WHERE c_id = {$community->getCommunityID()} AND u_id = {$user->getUserID()}";
+        return $this->query($sql);
+    }
+
     public function insertOwner(Community $community, User $user): bool {
         $sql = "INSERT INTO community_user (c_id, u_id, u_role) VALUES ('{$community->getCommunityID()}', {$user->getUserID()}, 'Owner')";
         return $this->query($sql);
@@ -199,6 +204,18 @@ class Community_Sql_Controller extends SqlController {
             return $users;
         } else {
             return [];
+        }
+    }
+
+    public function getRoleByUser(Community $community, User $user): string {
+        $sql = "SELECT u_role FROM community_user WHERE c_id = {$community->getCommunityID()} AND u_id = {$user->getUserID()}";
+        $result = $this->query($sql);
+
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            return $row['u_role'];
+        } else {
+            return null;
         }
     }
 }
