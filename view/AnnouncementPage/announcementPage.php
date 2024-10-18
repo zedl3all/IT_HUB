@@ -91,11 +91,11 @@ class AnnouncementPage {
     }
 
     private function getMainContent() {
-        $anmC = new Announcement_Sql_Controller();
+        $notianm = new Notification_Sql_Controller();
         $usersql = new User_Sql_Controller();
         $commusql = new Community_Sql_Controller();
         $notiSqlController = new Notification_Sql_Controller();
-        $announcements = $anmC->getAnnouncementsByUserID($this->user->getUserID());
+        $announcements = $notianm->getNotificationAnnouncementByUser($this->user);
         $output = '<main class="main-content">';
 
         if (!empty($announcements)) {
