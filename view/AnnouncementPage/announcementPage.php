@@ -45,6 +45,19 @@ class AnnouncementPage {
                     margin-left: auto;
                     margin-right: 0;
                 }
+                .noti-an {
+                    position: absolute;
+                    right: 55px;
+                    top: 10px;
+                    border-radius: 50%;
+                    width: 10px;
+                    height: 10px;
+                    background-color: red;
+                    display: none;
+                }
+                .nav-item {
+                    position: relative;
+                }
                 @import url(\'https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap\');
             </style>
         </head>';
@@ -58,10 +71,6 @@ class AnnouncementPage {
                 <input type="text" class="search-input" placeholder="Search <i>Hub">
             </div>
             <div class="user-section">
-                <div class="notification-bell">
-                    <i class="fas fa-bell" id="bell-icon"></i>
-                    <span class="notification-count" id="notification-count">1</span>
-                </div>
                 <div class="notification-icon"></div>
                 <div class="profile-icon user-profile"></div>
             </div>
@@ -73,7 +82,10 @@ class AnnouncementPage {
         <div class="container">
             <nav class="left-sidebar">
                 <a href="/ISAD/controller/Join_Leave_Controller.php" class="nav-item"><i class="fas fa-home"></i> Home</a>
-                <a href="#" class="nav-item active"><i class="fas fa-bullhorn"></i> Announcement</a>
+                <a href="#" class="nav-item active">
+                    <i class="fas fa-bullhorn">
+                    <div class="noti-an">&nbsp;</div>
+                    </i> Announcement</a>
                 <a href="#" class="nav-item"><i class="fas fa-user"></i> Profile Feed</a>
             </nav>';
     }
@@ -140,6 +152,8 @@ class AnnouncementPage {
     
 
     private function getFooter() {
+        $noti = new Notification_Sql_Controller();
+        $countNoti = $noti->getCountUnseenNotification($_SESSION["user_use_now"]);
         return '<script>
             const btnMark = document.querySelectorAll(".mark-as-read")
             console.log(btnMark)
@@ -147,6 +161,14 @@ class AnnouncementPage {
                 btnMark[i].addEventListener("click", ()=> {
                     btnMark[i].style.display = "none"
                 })
+            }
+            const noti = document.querySelector(".noti-an")
+            let notisql = '.$countNoti.';
+            console.log(notisql)
+            if(notisql > 0){
+                noti.style.display = "block"
+            }else{
+                noti.style.display = "none"
             }
         </script>';
     }

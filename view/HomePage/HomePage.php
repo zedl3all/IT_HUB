@@ -57,6 +57,19 @@ class HomePage {
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
             <style>
                 @import url(\'https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap\');
+                .noti-an {
+                    position: absolute;
+                    right: 45px;
+                    top: 10px;
+                    border-radius: 50%;
+                    width: 10px;
+                    height: 10px;
+                    background-color: red;
+                    display: none;
+                }
+                .nav-item {
+                    position: relative;
+                }
             </style>
         </head>';
     }
@@ -72,10 +85,6 @@ class HomePage {
                 <input type="text" class="search-input" placeholder="Search <i>Hub">
             </div>
             <div class="user-section">
-                <div class="notification-bell">
-                    <i class="fas fa-bell" id="bell-icon"></i>
-                    <span class="notification-count" id="notification-count">1</span>
-                </div>
                 <div class="notification-icon"></div>
                 <div class="profile-icon"></div>
             </div>
@@ -84,12 +93,17 @@ class HomePage {
 
     // ส่วนของ container หลัก
     private function getContainer() {
+        $noti = new Notification_Sql_Controller();
+        $countNoti = $noti->getCountUnseenNotification($_SESSION["user_use_now"]);
         return '
         <div class="container">
             <div class="left-sidebar">
                 <nav>
                     <a href="#" class="nav-item active"><i class="fas fa-home"></i> Home</a>
-                    <a href="/ISAD/controller/NotificationController.php?u_id=' . $_SESSION["user_use_now"]->getUserID() . '" class="nav-item"><i class="fas fa-bullhorn"></i> Announcement</a>
+                    <a href="/ISAD/controller/NotificationController.php?u_id=' . $_SESSION["user_use_now"]->getUserID() . '" class="nav-item">
+                    <div class="noti-an">&nbsp;</div>
+                    <i class="fas fa-bullhorn"></i> 
+                    Announcement</a>
                     <a href="#" class="nav-item"><i class="fas fa-user"></i> Profile Feed</a>
                 </nav>
             </div>
@@ -98,7 +112,17 @@ class HomePage {
                 ' . $this->getMyCommunitySection() . '
                 ' . $this->getDiscoverCommunitySection() . '
             </main>
-        </div>';
+        </div>
+        <script>
+            const noti = document.querySelector(".noti-an")
+            let notisql = '.$countNoti.';
+            console.log(notisql)
+            if(notisql > 0){
+                noti.style.display = "block"
+            }else{
+                noti.style.display = "none"
+            }
+        </script>';
     }
 
     // ส่วนของ My Community

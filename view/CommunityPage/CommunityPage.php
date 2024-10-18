@@ -78,6 +78,19 @@ class CommunityPage {
                     margin-top: 20px;
                     margin-bottom: 5px;
                 }
+                .noti-an {
+                    position: absolute;
+                    right: 55px;
+                    top: 10px;
+                    border-radius: 50%;
+                    width: 10px;
+                    height: 10px;
+                    background-color: red;
+                    display: none;
+                }
+                .nav-item {
+                    position: relative;
+                }
                 @import url(\'https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap\');
             </style>
         </head>';
@@ -91,10 +104,6 @@ class CommunityPage {
                 <input type="search" class="search-input" placeholder="Search <i>Hub">
             </div>
             <div class="user-section">
-                <div class="notification-bell">
-                    <i class="fas fa-bell" id="bell-icon"></i>
-                    <span class="notification-count" id="notification-count">1</span>
-                </div>
                 <div class="notification-icon"></div>
                 <div class="profile-icon"></div>
             </div>
@@ -118,6 +127,7 @@ class CommunityPage {
                 Home
             </a>
             <a href="/ISAD/controller/NotificationController.php?u_id=' . $_SESSION["user_use_now"]->getUserID() . '" class="nav-item">
+                <div class="noti-an">&nbsp;</div>
                 <i class="fas fa-bullhorn"></i>
                 Announcement
             </a>
@@ -228,9 +238,6 @@ class CommunityPage {
             }
             $html .= '
                     </div>
-                    <div class="mark-read-btn">
-                        <button>Mark As Read</button>
-                    </div>
                 </div>
             </div>';
         }
@@ -328,6 +335,8 @@ class CommunityPage {
     }
 
     private function getFooter() {
+        $noti = new Notification_Sql_Controller();
+        $countNoti = $noti->getCountUnseenNotification($_SESSION["user_use_now"]);
         return '
         <script>
             let leaveBtn = document.querySelector("#leaveBtn")
@@ -341,6 +350,14 @@ class CommunityPage {
                     leaveOption.style.display = "none"
                 }
             })
+            const noti = document.querySelector(".noti-an")
+            let notisql = '.$countNoti.';
+            console.log(notisql)
+            if(notisql > 0){
+                noti.style.display = "block"
+            }else{
+                noti.style.display = "none"
+            }
         </script>
         <footer>
             <p>&copy; 2023 Community Page</p>
