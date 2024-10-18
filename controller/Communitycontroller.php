@@ -41,7 +41,11 @@ class CommunityController {
             $ta_id = $_GET['ta_id'];
             $this->community = $this->sqlcommu->getCommunityByID($c_id);
             $ta = $this->usersql->getUserByID($ta_id);
-            $this->insertSubOwner($this->community, $ta);
+            if (is_null($ta) == 1){
+                
+            } else {
+                $this->insertSubOwner($this->community, $ta);
+            }
             header('Location: '.$_SERVER['PHP_SELF']."?c_id=".$c_id."&u_id=".$_GET['u_id']."");
         } else {
             // Handle the case where community_id is not provided
