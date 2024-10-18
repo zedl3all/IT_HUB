@@ -321,7 +321,7 @@ class CommunityPage {
         if ($role != "S"){
             return '
             <div class="add-ta-menu" style="display: inline-block;">
-                <span>Teacher Assistant<span id="amount_ta">0</span></span>
+                <span>Teacher Assistant<span id="amount_ta"></span></span>
                 <div>
                     <form method="GET" action = "/ISAD/controller/Communitycontroller.php">
                          <input type="hidden" name="c_id" value="'.$community_id.'">
