@@ -67,7 +67,7 @@ class Notification_Sql_Controller extends SqlController {
         $result = $this->query($sql);
 
         if ($result->num_rows > 0) {
-          $notifications = [];
+            $notifications = [];
             while($row = $result->fetch_assoc()) {
                 $notification = new Notification();
                 $notification->setNotificationId($row['n_id']);
