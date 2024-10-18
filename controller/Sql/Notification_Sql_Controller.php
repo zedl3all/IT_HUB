@@ -177,9 +177,9 @@ class Notification_Sql_Controller extends SqlController {
                 $announcement->setAnnouncementID($row['anm_id']);
                 $announcement->setAnnouncementCommunityId($row['c_id']);
                 $announcement->setAnnouncementUserId($row['u_id']);
-                $announcement->setAnnouncementTitle($row['anm_title']);
-                $announcement->setAnnouncementDescription($row['anm_content']);
-                $announcement->setAnnouncementCreateDate($row['anm_date']);
+                $announcement->setAnnouncementTitle($row['anm_name']);
+                $announcement->setAnnouncementDescription($row['anm_description']);
+                $announcement->setAnnouncementCreateDate($row['anm_create_date']);
                 $announcements[] = $announcement;
             }
             return $announcements;
