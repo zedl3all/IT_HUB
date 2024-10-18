@@ -179,5 +179,27 @@ class Community_Sql_Controller extends SqlController {
             return [];
         }
     }
+
+    public function getUserInCommunity(Community $community): array {
+        $sql = "SELECT * FROM user WHERE u_id IN (SELECT u_id FROM community_user WHERE c_id = {$community->getCommunityID()})";
+        $result = $this->query($sql);
+
+        if ($result->num_rows > 0) {
+            $users = [];
+            while($row = $result->fetch_assoc()) {
+                $user = new User();
+                $user->setUserID($row['u_id']);
+                $user->setFirstname($row['u_name']);
+                $user->setLastname($row['u_lastname']);
+                $user->setUserName($row['u_username']);
+                $user->setEmail($row['u_email']);
+                $user->setCreatedate($row['u_create_date']);
+                $users[] = $user;
+            }
+            return $users;
+        } else {
+            return [];
+        }
+    }
 }
 ?>
