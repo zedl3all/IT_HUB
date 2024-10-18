@@ -44,7 +44,13 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
       $ian->createAnm($title, $detail, $newUser, $newCommu, $tag);
 
       $lastanm = $ian->getAC()->getAnnounementSQL()->getAnnouncementByLast($newUser->getUserID());
-      $notifysql->createNotification($newCommu->getCommunityID(), $newUser->getUserID(), $lastanm->getAnnouncementID(), 0);
+
+      // Fetch all users in the community
+      $joinedUsers = $commuSql->getUserInCommunity($newCommu);
+
+      foreach ($joinedUsers as $user) {
+          $notifysql->createNotification($newCommu->getCommunityID(), $user->getUserID(), $lastanm->getAnnouncementID(), 0);
+      }
 
       // รีไดเรกต์กลับไปยังหน้าเดียวกัน พร้อมพารามิเตอร์ c_id และ u_id
       $c_id = $_SESSION['an_c']; // หรือใช้ค่าที่เหมาะสม
