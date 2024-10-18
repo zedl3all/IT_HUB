@@ -132,6 +132,7 @@ class CommunityPage {
         </main>';
     }
 
+    // currently bug, so put type button in those buttons to prevent nav to communityANMcontroller same to x button
     private function getPostCreator() {
         return '
         <form action="/ISAD/controller/Community_ANM_Controller.php" method="GET">
@@ -144,13 +145,13 @@ class CommunityPage {
                 </div>
                 <hr>
                 <div class="post-actions">
-                    <button class="post-type-btn announcement-btn" id="post-type-announcement" onclick="expandPostCreator(\'announcement\')">
+                    <button type="button" class="post-type-btn announcement-btn" id="post-type-announcement" onclick="expandPostCreator(\'announcement\')">
                         <i class="fas fa-bullhorn"></i> Announcement
                     </button>
-                    <button class="post-type-btn" id="post-type-question" onclick="expandPostCreator(\'question\')">
+                    <button type="button" class="post-type-btn" id="post-type-question" onclick="expandPostCreator(\'question\')">
                         <i class="fas fa-question-circle"></i> Question
                     </button>
-                    <button class="post-type-btn" id="post-type-poll" onclick="expandPostCreator(\'poll\')">
+                    <button type="button" class="post-type-btn" id="post-type-poll" onclick="expandPostCreator(\'poll\')">
                         <i class="fas fa-poll"></i> Poll
                     </button>
                 </div>
@@ -170,7 +171,7 @@ class CommunityPage {
                             </label>
                         </div>
                     </div>
-                    <button class="close-button">×</button>
+                    <button type="button" class="close-button">×</button>
                 </div>
                 <div class="post-content">
                     <div class="post-type-selector">
