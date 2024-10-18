@@ -41,8 +41,7 @@ class CommunityController {
             $ta_id = $_GET['ta_id'];
             $this->community = $this->sqlcommu->getCommunityByID($c_id);
             $ta = $this->usersql->getUserByID($ta_id);
-            $this->sqlcommu->adduser($this->community, $ta);
-            $this->sqlcommu->insertsubOwner($this->community, $ta);
+            $this->insertSubOwner($this->community, $ta);
         } else {
             // Handle the case where community_id is not provided
             echo "Community ID not found!";
@@ -107,10 +106,11 @@ class CommunityController {
     }
 
     public function insertSubOwner(Community $community, User $subowner) {
-        $tempsub = $community->getSubOwner();
-        array_push($tempsub, $subowner);
-        $community->setSubOwner($tempsub);
-        $this->sqlcommu->insertsubOwner($community, $subowner);
+        if ($this->sqlcommu->getRoleByUser($community, $subowner) == "Member"){
+            $this->sqlcommu->updatesubOwner($community, $subowner);
+        } else {
+            $this->sqlcommu->insertsubOwner($community, $subowner);
+        }
     }
 
     // Getter and Setter methods
