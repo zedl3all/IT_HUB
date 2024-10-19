@@ -91,7 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['mark_as_read'])) {
     // $amn = $controller->announcesql->getAnnouncementByID($_POST['announcement_id']);
     $announcement_id = $_POST['announcement_id'];
     $user_id = $_POST['user_id'];
-    $amn = $controller->getacmuntyANMCtrl()->getanmAccess()->getAnnouncementController()->getAnnounementSQLcontroller()->getAnnouncementByID($announcement_id);
+    $amn = $controller->getacmuntyANMCtrl()->getanmAccess()->getAnnouncementByID($announcement_id);
     $user = $controller->getUsersqlContoller()->getUserByID($user_id);
 
     // echo $amn->getAnnouncementID();
