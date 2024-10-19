@@ -3,7 +3,7 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/ISAD/autoload.php';
 
 class NotificationController {
     private $notiSqlController;
-    private $announcesql;
+    private $anmAccess;
     private $usersql;
     private $tagsql;
     private $user;
@@ -11,7 +11,7 @@ class NotificationController {
 
     public function __construct() {
         $this->notiSqlController = new Notification_Sql_Controller();
-        $this->announcesql = new Announcement_Sql_Controller();
+        $this->announcesql = new AnnouncementAccess();
         $this->usersql = new User_Sql_Controller();
         $this->tagsql = new Tag_Sql_Controller();
         ob_start();
@@ -40,8 +40,8 @@ class NotificationController {
         $this->notifypage->setUser($this->user);
     }
 
-    public function getAnnounceSql() : Announcement_Sql_Controller {
-        return $this->announcesql;
+    public function getanmAccess() : AnnouncementAccess {
+        return $this->anmAccess;
     }
 
     public function getNotiSqlController() : Notification_Sql_Controller {
@@ -54,10 +54,6 @@ class NotificationController {
 
     public function createNotification($noti_id, $community_id, $user_id, $announce_id, $seen) {
         $this->notiSqlController->insertNotification($noti_id, $community_id, $user_id, $announce_id, $seen);
-    }
-
-    public function showNotificationAnnouncement($notify) {
-        return $this->notiSqlController->getNotificationAnnouncement($notify);
     }
 
     public function markAsRead($notify) {
@@ -79,7 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['mark_as_read'])) {
     // $amn = $controller->announcesql->getAnnouncementByID($_POST['announcement_id']);
     $announcement_id = $_POST['announcement_id'];
     $user_id = $_POST['user_id'];
-    $amn = $controller->getAnnounceSql()->getAnnouncementByID($announcement_id);
+    $amn = $controller->getanmAccess()->getAC()->getAnnounementSQL()->getAnnouncementByID($announcement_id);
     $user = $controller->getUsersqlContoller()->getUserByID($user_id);
 
     // echo $amn->getAnnouncementID();
