@@ -7,6 +7,8 @@ interface IAnnouncementAccess{
   public function getAnmById(int $anm_id): Announcement;
   public function getAnmsByCommunity(int $communityId): array;
   public function insertToCommu(array $anm, Community $community);
+  public function runPageAn();
+  public function getAnnouncementController(): AnnouncementController;
 }
 
 ?>
