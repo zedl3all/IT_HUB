@@ -36,7 +36,7 @@ class HomePage {
     }
 
     // ฟังก์ชันเรนเดอร์หน้าเว็บ
-    public function render() {
+    public function render() : void{
         echo $this->getHead();
         echo $this->getHeader();
         echo $this->getContainer();
@@ -47,7 +47,7 @@ class HomePage {
     }
 
     // ส่วนของ head
-    private function getHead(){
+    private function getHead(): string {
         return '
         <head>
             <meta charset="UTF-8">
@@ -75,7 +75,7 @@ class HomePage {
     }
 
     // ส่วนของ header
-    private function getHeader() {
+    private function getHeader() : string {
         return '
         <header>
             <div class="logo">
@@ -92,7 +92,7 @@ class HomePage {
     }
 
     // ส่วนของ container หลัก
-    private function getContainer() {
+    private function getContainer() : string {
         $noti = new Notification_Sql_Controller();
         $countNoti = $noti->getCountUnseenNotification($_SESSION["user_use_now"]);
         return '
@@ -126,7 +126,7 @@ class HomePage {
     }
 
     // ส่วนของ My Community
-    private function getMyCommunitySection() {
+    private function getMyCommunitySection() : string {
         if (empty($this->joinedCommunities)) {
             return '<section>
                         <h2 style="border-bottom: 2px solid white; padding-bottom: 16px;">My Community</h2>
@@ -154,7 +154,7 @@ class HomePage {
     }
 
     // ส่วนของ Discover Community
-    private function getDiscoverCommunitySection() {
+    private function getDiscoverCommunitySection() : string {
         if (empty($this->unjoinedCommunities)) {
             return '<section>
                         <h2 style="border-top: 2px solid white; border-bottom: 2px solid white; margin-top: 16px; padding-top: 16px; padding-bottom: 16px;">Discover Community</h2>
@@ -182,7 +182,7 @@ class HomePage {
     }
 
     // ฟังก์ชันสร้างการ์ดสำหรับ My Community
-    private function renderCommunityCard(int $id, string $name, int $members, array $tags) {
+    private function renderCommunityCard(int $id, string $name, int $members, array $tags) : string {
         $tagOutput = '';
         foreach ($tags as $tag) {
             $tagOutput .= '<span class="post-tag">#' . htmlspecialchars($tag->getTagName(), ENT_QUOTES, 'UTF-8') . '</span> ';
@@ -204,7 +204,7 @@ class HomePage {
     
 
     // ฟังก์ชันสร้างการ์ดสำหรับ Discover Community
-    private function renderDiscoverCommunityCard(int $id, string $name, int $members, array $tags) {
+    private function renderDiscoverCommunityCard(int $id, string $name, int $members, array $tags) : string {
         $tagOutput = '';
         foreach ($tags as $tag) {
             $tagOutput .= '<span class="post-tag">#' . htmlspecialchars($tag->getTagName(), ENT_QUOTES, 'UTF-8') . '</span> ';
@@ -226,7 +226,7 @@ class HomePage {
     }
 
     // ส่วนของ Create Popup
-    private function getCreatePopup() {
+    private function getCreatePopup() : string {
         return '
         <div class="createPopup-overlay" id="createPopupOverlay">
             <div class="createPopup" id="createPopup">
@@ -256,7 +256,7 @@ class HomePage {
     }
 
     // ส่วนของ Join Popup
-    private function getJoinPopup() {
+    private function getJoinPopup() : string {
         return '
         <div class="joinPopup-overlay" id="joinPopupOverlay">
             <div class="joinPopup" id="joinPopup">
@@ -271,7 +271,7 @@ class HomePage {
     }
 
     // ส่วนของ Role Toggle
-    private function getRoleToggle() {
+    private function getRoleToggle() : string {
         if(!isset($_SESSION["user_use_now"])){
             $role = "S"; // ถ้าไม่มีผู้ใช้ในเซสชันให้เป็น "S"
         }else{
@@ -325,11 +325,11 @@ class HomePage {
     }
 
     // ส่วนของ Scripts
-    private function getScripts() {
+    private function getScripts() : string {
         return '<script src="/ISAD/view/HomePage/HomePage.js"></script>'; // เปลี่ยนเป็น path ที่ถูกต้อง
     }
 }
-// For testing
+// For Demo
 if ($_SESSION["user_use_now"]){
     echo "<div class='role'>".$_SESSION["user_use_now"]->getFirstname()." -> Role: ". $_SESSION["user_use_now"]->getRole(). "</div>";
 }
