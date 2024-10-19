@@ -4,10 +4,10 @@
 require_once $_SERVER['DOCUMENT_ROOT'].'/ISAD/autoload.php';
 
 class Join_Leave_Controller {
-    private $commusql;
-    private $user;
-    private $usersql;
-    private $homepage;
+    private Community_Sql_Controller $commusql;
+    private User $user;
+    private User_Sql_Controller $usersql;
+    private HomePage $homepage;
 
     public function __construct(){
         ob_start();
@@ -36,54 +36,54 @@ class Join_Leave_Controller {
     }
 
     // Getter และ Setter ต่างๆ
-    public function getCommusql(){
+    public function getCommusql(): Community_Sql_Controller{
         return $this->commusql;
     }
 
-    public function getUser(){
+    public function getUser(): User{
         return $this->user;
     }
 
-    public function setUser($user){
+    public function setUser($user): void{
         $this->user = $user;
     }
 
-    public function getUsersql(){
+    public function getUsersql(): User_Sql_Controller{
         return $this->usersql;
     }
 
-    public function setUsersql($usersql){
+    public function setUsersql($usersql): void{
         $this->usersql = $usersql;
     }
 
-    public function setCommusql($commusql){
+    public function setCommusql($commusql): void{
         $this->commusql = $commusql;
     }
 
+    public function getHomePage(): HomePage{
+        return $this->homepage;
+    }
+
     // ฟังก์ชันเข้าร่วมชุมชน
-    public function joinCommunities($user, $community, $enrollkey){
+    public function joinCommunities($user, $community, $enrollkey): void{
         // if ($community->checkEnrollkey($enrollkey) == 0){
         //     echo "Wrong enrollkey"; // ควรเปลี่ยนเป็นการส่งข้อความที่เหมาะสม
         // }
         // else{
             $this->commusql->adduser($community, $user);
+            echo '<script>alert("Join Success")</script>';
         //     echo "Join success"; // เพิ่มข้อความแสดงความสำเร็จ
         // }
     }
 
     // ฟังก์ชันออกจากชุมชน
-    public function leaveCommunities($user, $community){
+    public function leaveCommunities($user, $community): void{
         $this->commusql->removeuser($community, $user);
-        echo "Remove success"; // ควรเปลี่ยนเป็นการส่งข้อความที่เหมาะสม
-    }
-
-    // ฟังก์ชันรับหน้า HomePage
-    public function getHomePage(){
-        return $this->homepage;
+        echo '<script>alert("Leave Success")</script>';
     }
 
     // ฟังก์ชันตรวจสอบบทบาทของผู้ใช้
-    public function checkUserRole() {
+    public function checkUserRole(): void{
         if (isset($_GET["role"])) {
             $_SESSION["user_use_now"] = $this->usersql->getUserByID($_GET["role"]);
             $this->user = $_SESSION["user_use_now"];
@@ -91,7 +91,9 @@ class Join_Leave_Controller {
             exit(); // หยุดการทำงานของสคริปต์หลังจากส่ง header
         }
     }
-    public function joinToCommunity(){
+
+    // ฟังก์ชันเข้าร่วมชุมชน
+    public function joinToCommunity(): void{
         if ((isset($_GET['c_id'])) && isset($_GET['u_id'])){
             $c_id = $_GET['c_id'];
             $u_id = $_GET['u_id'];
@@ -102,7 +104,9 @@ class Join_Leave_Controller {
             exit();
         }
     }
-    public function leaveFromCommunity(){
+
+    // ฟังก์ชันออกจากชุมชน
+    public function leaveFromCommunity(): void{
         if ((isset($_GET['lc_id'])) && isset($_GET['lu_id'])){
             $c_id = $_GET['lc_id'];
             $u_id = $_GET['lu_id'];
