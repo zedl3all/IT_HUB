@@ -91,11 +91,10 @@ class AnnouncementPage {
     }
 
     private function getMainContent() {
-        $notianm = new Notification_Sql_Controller();
+        $notify = new NotificationController();
         $usersql = new User_Sql_Controller();
         $commusql = new Community_Sql_Controller();
-        $notiSqlController = new Notification_Sql_Controller();
-        $announcements = $notianm->getNotificationAnnouncementByUser($this->user);
+        $announcements = $notify->getNotiSqlController()->getNotificationAnnouncementByUser($this->user);
         $output = '<main class="main-content">';
 
         if (!empty($announcements)) {
@@ -131,7 +130,7 @@ class AnnouncementPage {
                         <div>Community: '. htmlspecialchars($commusql->getCommunityByID($announcement->getAnnouncementCommunityId())->getCommunityName()) . '</div>';
 
                 // Fetch notification status
-                $notification = $notiSqlController->getNotificationByAnmID($announcement, $this->user);
+                $notification = $notify->getNotiSqlController()->getNotificationByAnmID($announcement, $this->user);
                 if ($notification !== null && !$notification->isSeen()) {
                     $output .= '
                         <form method="post" action="/ISAD/controller/NotificationController.php" class="container-mark-as-read">
