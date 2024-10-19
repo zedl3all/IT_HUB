@@ -3,7 +3,7 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/ISAD/autoload.php';
 
 class CommunityController {
     private $sqlcommu;
-    private $announcesql;
+    private $announcement_controller;
     private $user;
     private $usersql;
     private $commupage;
@@ -13,11 +13,13 @@ class CommunityController {
 
     public function __construct() {
         $this->sqlcommu = new Community_Sql_Controller();
-        $this->announcesql = new Announcement_Sql_Controller();
+        $this->announcement_controller = new Community_ANM_Controller();
         $this->usersql = new User_Sql_Controller();
         $this->tagsql = new Tag_Sql_Controller();
         ob_start();
-        session_start();
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
         if ((count($_GET) === 5) && !(isset($_GET['ta_id']))){
             if ((isset($_GET['communityName'])) && isset($_GET['enrollKey']) && isset($_GET['customTag']) && isset($_GET['description']) && isset($_GET['u_id'])){
                 if (is_null($this->sqlcommu->getCommunityByName($_GET['communityName'])) == 1){
@@ -64,7 +66,7 @@ class CommunityController {
             echo "User ID not found!";
         }
 
-        $announcements = $this->announcesql->getAnnouncementsByCommunity($this->community->getCommunityID($_GET['c_id']));
+        $announcements = $this->announcement_controller->getAnmAccess()->getAnnouncementController()->getAnnounementSQLcontroller()->getAnnouncementsByCommunity($this->community->getCommunityID($_GET['c_id']));
 
         $this->commupage = new CommunityPage();
         $this->commupage->setUser($this->user);
