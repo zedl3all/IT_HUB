@@ -30,7 +30,7 @@ class User_Sql_Controller extends SqlController {
         }
     }
 
-    public function getUserByID(int $id): User{
+    public function getUserByID(int $id): ?User{
         $sql = "SELECT * FROM user WHERE u_id = $id";
         $result = $this->query($sql);
 

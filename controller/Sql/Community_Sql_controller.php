@@ -207,7 +207,7 @@ class Community_Sql_Controller extends SqlController {
         }
     }
 
-    public function getRoleByUser(Community $community, User $user): string {
+    public function getRoleByUser(Community $community, User $user): ?string {
         $sql = "SELECT u_role FROM community_user WHERE c_id = {$community->getCommunityID()} AND u_id = {$user->getUserID()}";
         $result = $this->query($sql);
 

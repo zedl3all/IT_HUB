@@ -189,10 +189,10 @@ class CommunityPage {
                 </div>
                 <div class="post-content">
                     <div class="post-type-selector">
-                        <select id="postTypeSelect">
-                            <option value="announcement">Announcement</option>
-                            <option value="question">Question</option>
-                            <option value="poll">Poll</option>
+                        <select id="postTypeSelect" class="post-type-select">
+                            <option value="announcement" class="an-option">Announcement</option>
+                            <option value="question" class="question-option">Question</option>
+                            <option value="poll" class="poll-option">Poll</option>
                         </select>
                     </div>
                     <input type="text" class="post-topic" placeholder="Add Topic..." name="title">
@@ -321,7 +321,7 @@ class CommunityPage {
         if ($role != "S"){
             return '
             <div class="add-ta-menu" style="display: inline-block;">
-                <span>Teacher Assistant<span id="amount_ta">0</span></span>
+                <span>Teacher Assistant<span id="amount_ta"></span></span>
                 <div>
                     <form method="GET" action = "/ISAD/controller/Communitycontroller.php">
                          <input type="hidden" name="c_id" value="'.$community_id.'">
@@ -337,6 +337,7 @@ class CommunityPage {
     private function getFooter() {
         $noti = new Notification_Sql_Controller();
         $countNoti = $noti->getCountUnseenNotification($_SESSION["user_use_now"]);
+        $usernow = $_SESSION["user_use_now"]->getUserID();
         return '
         <script>
             let leaveBtn = document.querySelector("#leaveBtn")
@@ -351,6 +352,9 @@ class CommunityPage {
                 }
             })
             const noti = document.querySelector(".noti-an")
+            const anBtn = document.querySelector(".announcement-btn")
+            const anOption = document.querySelector(".an-option")
+
             let notisql = '.$countNoti.';
             console.log(notisql)
             if(notisql > 0){
@@ -358,6 +362,14 @@ class CommunityPage {
             }else{
                 noti.style.display = "none"
             }
+            if('.$usernow.'!= 2){
+                anBtn.style.display = "none"
+                anOption.style.display = "none"
+            }else{
+                anBtn.style.display = "block"
+                anOption.style.display = "block"
+            }
+                
         </script>
         <footer>
             <p>&copy; 2023 Community Page</p>
