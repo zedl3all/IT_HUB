@@ -43,7 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
       // เรียกฟังก์ชัน createAnm เมื่อกดปุ่ม
       $ian->createAnm($title, $detail, $newUser, $newCommu, $tag);
 
-      $lastanm = $ian->getAC()->getAnnounementSQL()->getAnnouncementByLast($newUser->getUserID());
+      $lastanm = $ian->getAnnouncementController()->getAnnounementSQLcontroller()->getAnnouncementByLast($newUser->getUserID());
 
       // Fetch all users in the community
       $joinedUsers = $commuSql->getUserInCommunity($newCommu);

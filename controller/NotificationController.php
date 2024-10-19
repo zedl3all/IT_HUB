@@ -1,5 +1,6 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'].'/ISAD/autoload.php';
+require_once 'AnnouncementAccess.php';
 
 class NotificationController {
     private $notiSqlController;
@@ -11,11 +12,16 @@ class NotificationController {
 
     public function __construct() {
         $this->notiSqlController = new Notification_Sql_Controller();
-        $this->announcesql = new AnnouncementAccess();
+        $this->anmAccess = new AnnouncementAccess();
         $this->usersql = new User_Sql_Controller();
         $this->tagsql = new Tag_Sql_Controller();
+        
+        // Check if session is not already started
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+        
         ob_start();
-        session_start();
         
         try {
             if (isset($_GET['u_id'])) {
