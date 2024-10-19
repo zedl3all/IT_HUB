@@ -92,8 +92,8 @@ class AnnouncementPage {
 
     private function getMainContent() {
         $notify = new NotificationController();
-        $usersql = new User_Sql_Controller();
-        $commusql = new Community_Sql_Controller();
+        $usersql = $notify->getUsersqlContoller();
+        $commusql = $notify->getCommunitysqlController();
         $announcements = $notify->getNotiSqlController()->getNotificationAnnouncementByUser($this->user);
         $output = '<main class="main-content">';
 
@@ -112,7 +112,7 @@ class AnnouncementPage {
                     <div class="post-tags">';
                     
                 // Loop to display tags
-                $tags = new Tag_Sql_Controller();
+                $tags = $notify->gettagsqlContoller();
                 $tagnows = $tags->getTagByAnnouncement($announcement);
                 foreach ($tagnows as $tag) {
                     $output .= '<span class="post-tag">#' . htmlspecialchars($tag->getTagName()) . '</span>';

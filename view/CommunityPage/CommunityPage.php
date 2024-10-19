@@ -232,7 +232,7 @@ class CommunityPage {
                 <div class="post-tags">
                     <div class="tags-container">';
             $tags = new Tag_Sql_Controller();
-            $tagnows = $tags->getTagByCommunity($this->getCommunity());
+            $tagnows = $tags->getTagByAnnouncement($announcement);
             foreach ($tagnows as $tag) {
                 $html .= '<span class="post-tag">#' . htmlspecialchars($tag->getTagName()) . '</span>';
             }
