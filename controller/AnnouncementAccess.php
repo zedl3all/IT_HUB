@@ -30,7 +30,7 @@ class AnnouncementAccess implements IAnnouncementAccess{
     $community->setAnnouncement($anm);
   }
 
-  public function getAC(): AnnouncementController{
+  public function getAnnouncementController(): AnnouncementController{
     return $this->anmC;
   }
 }
