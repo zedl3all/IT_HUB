@@ -2,7 +2,8 @@
 
 class AnnouncementPage {
     private User $user;
-    // private array $announcements;
+    private array $announcements;
+    private int $countNoti;
 
     public function render() {
         echo '<!DOCTYPE html>';
@@ -24,6 +25,22 @@ class AnnouncementPage {
 
     public function setUser(User $user): void {
         $this->user = $user;
+    }
+
+    public function getAnnouncements(): array {
+        return $this->announcements;
+    }
+
+    public function setAnnouncements(array $announcements): void {
+        $this->announcements = $announcements;
+    }
+
+    public function getCountNoti(): int {
+        return $this->countNoti;
+    }
+
+    public function setCountNoti(int $countNoti): void {
+        $this->countNoti = $countNoti;
     }
 
     private function getHead() {
@@ -94,11 +111,10 @@ class AnnouncementPage {
         $notify = new NotificationController();
         $usersql = $notify->getUsersqlContoller();
         $commusql = $notify->getCommunitysqlController();
-        $announcements = $notify->getNotiSqlController()->getNotificationAnnouncementByUser($this->user);
         $output = '<main class="main-content">';
 
-        if (!empty($announcements)) {
-            foreach ($announcements as $announcement) {
+        if (!empty($this->announcements)) {
+            foreach ($this->announcements as $announcement) {
                 $output .= '
                 <div class="post-card">
                     <div class="post-header">
@@ -152,8 +168,6 @@ class AnnouncementPage {
     
 
     private function getFooter() {
-        $noti = new Notification_Sql_Controller();
-        $countNoti = $noti->getCountUnseenNotification($_SESSION["user_use_now"]);
         return '<script>
             const btnMark = document.querySelectorAll(".mark-as-read")
             console.log(btnMark)
@@ -163,7 +177,7 @@ class AnnouncementPage {
                 })
             }
             const noti = document.querySelector(".noti-an")
-            let notisql = '.$countNoti.';
+            let notisql = '.$this->countNoti.';
             console.log(notisql)
             if(notisql > 0){
                 noti.style.display = "block"

@@ -46,6 +46,8 @@ class NotificationController {
 
         $this->notifypage = new AnnouncementPage();
         $this->notifypage->setUser($this->user);
+        $this->notifypage->setAnnouncements($this->notiSqlController->getNotificationAnnouncementByUser($this->user));
+        $this->notifypage->setCountNoti($this->notiSqlController->getCountUnseenNotification($_SESSION["user_use_now"]));
     }
 
     public function getacmuntyANMCtrl() : Community_ANM_Controller {
@@ -91,7 +93,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['mark_as_read'])) {
     // $amn = $controller->announcesql->getAnnouncementByID($_POST['announcement_id']);
     $announcement_id = $_POST['announcement_id'];
     $user_id = $_POST['user_id'];
-    $amn = $controller->getacmuntyANMCtrl()->getanmAccess()->getAnnouncementByID($announcement_id);
+    $amn = $controller->getacmuntyANMCtrl()->getanmAccess()->getAnmById($announcement_id);
     $user = $controller->getUsersqlContoller()->getUserByID($user_id);
 
     // echo $amn->getAnnouncementID();
